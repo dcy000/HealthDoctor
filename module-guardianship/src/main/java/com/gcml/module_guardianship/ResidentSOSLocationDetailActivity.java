@@ -198,7 +198,7 @@ public class ResidentSOSLocationDetailActivity extends StateBaseActivity impleme
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (user.getPhone().equals(familyBeans.get(position).getMobileNum())) {
+                if (user.getTel().equals(familyBeans.get(position).getMobileNum())) {
                     showCannotCallSelfDialog();
                     return;
                 }

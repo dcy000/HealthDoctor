@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.PersonDetailMenuBean;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -37,7 +38,7 @@ public class PersonDetailActivity extends StateBaseActivity {
     private CircleImageView mCivHead;
     private TextView mTvName;
     private ArrayList<PersonDetailMenuBean> menuBeans = new ArrayList<>();
-    private GuardianshipBean guardianshipBean;
+    private ResidentBean guardianshipBean;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -94,7 +95,7 @@ public class PersonDetailActivity extends StateBaseActivity {
         });
     }
 
-    private void showPhoneTipsDialog(GuardianshipBean item) {
+    private void showPhoneTipsDialog(ResidentBean item) {
         FDialog.build()
                 .setSupportFM(getSupportFragmentManager())
                 .setLayoutId(R.layout.dialog_layout_phone_tips)

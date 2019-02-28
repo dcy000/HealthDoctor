@@ -64,7 +64,7 @@ public class FamilyInputNamePresenter extends BasePresenter {
                     @Override
                     public ObservableSource<UserEntity> apply(Object o) throws Exception {
                         return Box.getRetrofit(LoginApi.class)
-                                .loginWithGuardianship(mobileNum, password)
+                                .login(mobileNum, password)
                                 .compose(RxUtils.httpResponseTransformer());
                     }
                 })

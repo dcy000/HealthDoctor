@@ -74,9 +74,9 @@ public class FamilyDoctorServiceActivity extends StateBaseActivity {
     private void fillData() {
         UserEntity user = Box.getSessionManager().getUser();
         Glide.with(Box.getApp())
-                .load(user.getHeadPath())
+                .load(user.getDocter_photo())
                 .into(mCivHead);
-        mTvName.setText(user.getUserName() + "，您好！");
+        mTvName.setText(user.getDoctername() + "，您好！");
     }
 
     private void initRv() {

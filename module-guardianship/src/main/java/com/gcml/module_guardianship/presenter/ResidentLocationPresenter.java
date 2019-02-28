@@ -63,7 +63,7 @@ public class ResidentLocationPresenter extends BasePresenter {
     public void postDealSOSResult(String warningId, String result) {
         UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
-                .postSOSDealResult(warningId, user.getUserId(), result)
+                .postSOSDealResult(warningId, user.getDocterid()+"", result)
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(mLifecycleOwner))
                 .subscribe(new CommonObserver<Object>() {

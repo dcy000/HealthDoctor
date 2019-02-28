@@ -101,9 +101,9 @@ public class MainActivity extends StateBaseActivity {
         mToolbar.setVisibility(View.GONE);
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-        final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "监护");
-        final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "预警处理");
-        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "健康管理");
+        final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "签约");
+        final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "消息");
+        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "业务");
         final BottomBarTab mine = new BottomBarTab(this, R.drawable.ic_fourth, "我的");
 
         //设置各个模块未读信息的数量

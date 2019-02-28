@@ -15,6 +15,7 @@ import com.gcml.module_guardianship.bean.FamilyBean;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -35,7 +36,7 @@ public class CustodyCircleActivity extends StateBaseActivity {
     private RecyclerView mRvContent;
     private List<FamilyBean> familyBeans = new ArrayList<>();
     private ResidentLocationPresenter residentLocationPresenter;
-    private GuardianshipBean guardianshipBean;
+    private ResidentBean guardianshipBean;
     private BaseQuickAdapter<FamilyBean, BaseViewHolder> adapter;
     private LinearLayout mLlAddCustody;
 

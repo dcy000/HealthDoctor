@@ -22,7 +22,7 @@ public class MsgTodoPresenter extends BasePresenter {
         UserEntity user = Box.getSessionManager().getUser();
         //处理状态 0：未处理 1：已处理
         Box.getRetrofit(ShouhuanApi.class)
-                .getMsg(user.getUserId(), "0")
+                .getMsg(user.getDocterid()+"", "0")
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(mLifecycleOwner))
                 .subscribe(new CommonObserver<List<MsgBean>>() {

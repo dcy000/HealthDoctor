@@ -1,6 +1,9 @@
 package com.gzq.lib_resource.bean;
 
-public class ResidentBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ResidentBean implements Parcelable {
 
     private int age;
     private String allergy;
@@ -33,11 +36,62 @@ public class ResidentBean {
     private int waist;
     private String watchBindTime;
     private String watchCode;
-    private int weight;
+    private float weight;
     private String wyyxId;
     private String wyyxPwd;
     private String xfid;
     private String xfuserid;
+
+    protected ResidentBean(Parcel in) {
+        age = in.readInt();
+        allergy = in.readString();
+        bid = in.readInt();
+        birthday = in.readString();
+        bloodType = in.readString();
+        bname = in.readString();
+        categoryid = in.readInt();
+        doid = in.readInt();
+        drink = in.readString();
+        dz = in.readString();
+        eatingHabits = in.readString();
+        eqid = in.readString();
+        exerciseHabits = in.readString();
+        fetation = in.readString();
+        height = in.readInt();
+        hypertensionHand = in.readString();
+        hypertensionLevel = in.readString();
+        hypertensionPrimaryState = in.readString();
+        hypertensionTarget = in.readString();
+        mh = in.readString();
+        serverId = in.readInt();
+        sex = in.readString();
+        sfz = in.readString();
+        smoke = in.readString();
+        state = in.readInt();
+        tel = in.readString();
+        userPhoto = in.readString();
+        vipState = in.readString();
+        waist = in.readInt();
+        watchBindTime = in.readString();
+        watchCode = in.readString();
+        weight = in.readFloat();
+        wyyxId = in.readString();
+        wyyxPwd = in.readString();
+        xfid = in.readString();
+        xfuserid = in.readString();
+    }
+
+    public static final Creator<ResidentBean> CREATOR = new Creator<ResidentBean>() {
+        @Override
+        public ResidentBean createFromParcel(Parcel in) {
+            return new ResidentBean(in);
+        }
+
+        @Override
+        public ResidentBean[] newArray(int size) {
+            return new ResidentBean[size];
+        }
+    };
 
     public int getAge() {
         return age;
@@ -287,11 +341,11 @@ public class ResidentBean {
         this.watchCode = watchCode;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
@@ -325,5 +379,50 @@ public class ResidentBean {
 
     public void setXfuserid(String xfuserid) {
         this.xfuserid = xfuserid;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(age);
+        dest.writeString(allergy);
+        dest.writeInt(bid);
+        dest.writeString(birthday);
+        dest.writeString(bloodType);
+        dest.writeString(bname);
+        dest.writeInt(categoryid);
+        dest.writeInt(doid);
+        dest.writeString(drink);
+        dest.writeString(dz);
+        dest.writeString(eatingHabits);
+        dest.writeString(eqid);
+        dest.writeString(exerciseHabits);
+        dest.writeString(fetation);
+        dest.writeInt(height);
+        dest.writeString(hypertensionHand);
+        dest.writeString(hypertensionLevel);
+        dest.writeString(hypertensionPrimaryState);
+        dest.writeString(hypertensionTarget);
+        dest.writeString(mh);
+        dest.writeInt(serverId);
+        dest.writeString(sex);
+        dest.writeString(sfz);
+        dest.writeString(smoke);
+        dest.writeInt(state);
+        dest.writeString(tel);
+        dest.writeString(userPhoto);
+        dest.writeString(vipState);
+        dest.writeInt(waist);
+        dest.writeString(watchBindTime);
+        dest.writeString(watchCode);
+        dest.writeFloat(weight);
+        dest.writeString(wyyxId);
+        dest.writeString(wyyxPwd);
+        dest.writeString(xfid);
+        dest.writeString(xfuserid);
     }
 }

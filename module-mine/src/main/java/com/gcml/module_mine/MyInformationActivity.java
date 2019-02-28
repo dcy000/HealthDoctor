@@ -39,18 +39,18 @@ public class MyInformationActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         UserEntity user = Box.getSessionManager().getUser();
-        if (user.getAccountType().equals("0")){
-            myInforMenuBeans.add(new MyInforMenuBean("头像", user.getHeadPath(), ""));
-            myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getUserName()));
-            myInforMenuBeans.add(new MyInforMenuBean("手机号", null, user.getPhone()));
-            myInforMenuBeans.add(new MyInforMenuBean("身份", null, user.getAccountType().equals("0") ? "社工" : "家属"));
-            myInforMenuBeans.add(new MyInforMenuBean("单位", null, user.getCommunity()));
-        }else{
-            myInforMenuBeans.add(new MyInforMenuBean("头像", user.getHeadPath(), ""));
-            myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getUserName()));
-            myInforMenuBeans.add(new MyInforMenuBean("手机号", null, user.getPhone()));
-            myInforMenuBeans.add(new MyInforMenuBean("身份", null, user.getAccountType().equals("0") ? "社工" : "家属"));
-        }
+//        if (user.getAccountType().equals("0")){
+//            myInforMenuBeans.add(new MyInforMenuBean("头像", user.getHeadPath(), ""));
+//            myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getUserName()));
+//            myInforMenuBeans.add(new MyInforMenuBean("手机号", null, user.getPhone()));
+//            myInforMenuBeans.add(new MyInforMenuBean("身份", null, user.getAccountType().equals("0") ? "社工" : "家属"));
+//            myInforMenuBeans.add(new MyInforMenuBean("单位", null, user.getCommunity()));
+//        }else{
+//            myInforMenuBeans.add(new MyInforMenuBean("头像", user.getHeadPath(), ""));
+//            myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getUserName()));
+//            myInforMenuBeans.add(new MyInforMenuBean("手机号", null, user.getPhone()));
+//            myInforMenuBeans.add(new MyInforMenuBean("身份", null, user.getAccountType().equals("0") ? "社工" : "家属"));
+//        }
 
     }
 

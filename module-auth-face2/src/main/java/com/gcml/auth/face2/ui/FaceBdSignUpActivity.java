@@ -225,7 +225,7 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
                     @Override
                     public ObservableSource<String> apply(String s) throws Exception {
                         UserEntity user = Box.getSessionManager().getUser();
-                        return viewModel.addFaceByApi(user.getUserId(), s, image)
+                        return viewModel.addFaceByApi(user.getDocterid()+"", s, image)
                                 .subscribeOn(Schedulers.io());
                     }
                 })
@@ -357,7 +357,7 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
                                     if (error.getCode() == FaceBdErrorUtils.ERROR_USER_NOT_EXIST
                                             || error.getCode() == FaceBdErrorUtils.ERROR_USER_NOT_FOUND) {
                                         UserEntity user = Box.getSessionManager().getUser();
-                                        return viewModel.addFace(imageData, user.getUserId())
+                                        return viewModel.addFace(imageData, user.getDocterid()+"")
                                                 .subscribeOn(Schedulers.io());
                                     }
                                 }

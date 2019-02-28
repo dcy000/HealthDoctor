@@ -27,6 +27,7 @@ import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.IResidentLocationView;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -51,7 +52,7 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
     private TextView mTvSosTitle;
     private ImageView mIvNavigation;
     private AMap aMap;
-    private GuardianshipBean guardianshipBean;
+    private ResidentBean guardianshipBean;
     private ResidentLocationPresenter residentLocationPresenter;
     private LatLng latLng;
     private BaseQuickAdapter<String, BaseViewHolder> dialogAdapter;

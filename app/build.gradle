@@ -9,6 +9,4 @@ dependencies {
     addComponent 'module-login-and-register'
     addComponent 'module-shouhuan'
     addComponent 'module-auth-face2'
-    //医生端的模块
-    addComponent 'doctor-login-and-register'
 }

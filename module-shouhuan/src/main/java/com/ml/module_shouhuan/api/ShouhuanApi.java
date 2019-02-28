@@ -16,9 +16,9 @@ public interface ShouhuanApi {
      * @param dealStatus
      * @return
      */
-    @GET("ZZB/api/guardian/warning/")
+    @GET("ZZB/api/doctor/warning/")
     Observable<HttpResult<List<MsgBean>>> getMsg(
-            @Query("guardianId") String userId,
+            @Query("docterId") String userId,
             @Query("dealStatus") String dealStatus
     );
 }

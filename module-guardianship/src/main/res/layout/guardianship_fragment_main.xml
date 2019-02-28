@@ -5,61 +5,26 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl"
+    <EditText
+        android:id="@+id/et_goto_search"
+        android:layout_width="686pt"
+        android:layout_height="56pt"
+        android:layout_marginTop="80pt"
+        android:background="#F8F8F8"
+        android:clickable="true"
+        android:drawableLeft="@drawable/guardianship_ic_search"
+        android:focusable="false"
+        android:hint="搜索"
+        android:paddingLeft="23pt"
+        android:textColorHint="#C0C4CC"
+        android:textSize="24pt" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/layout_tab"
         android:layout_width="match_parent"
-        android:layout_height="96pt">
+        android:layout_height="100pt" />
 
-        <TextView
-            android:id="@+id/ruardianship_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="监护（0）"
-            android:textColor="#333"
-            android:textSize="36pt" />
-
-        <ImageView
-            android:id="@+id/guardianship_add"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="32pt"
-            android:clickable="true"
-            android:src="@drawable/icon_add_guardianship" />
-    </RelativeLayout>
-
-    <View
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_msg"
         android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:background="#dcdcdc" />
-
-    <LinearLayout
-        android:id="@+id/ll_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_goto_search"
-            android:layout_width="686pt"
-            android:layout_height="56pt"
-            android:layout_marginTop="48pt"
-            android:background="#F8F8F8"
-            android:clickable="true"
-            android:drawableLeft="@drawable/guardianship_ic_search"
-            android:focusable="false"
-            android:hint="搜索"
-            android:paddingLeft="23pt"
-            android:textColorHint="#C0C4CC"
-            android:textSize="24pt" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/guardianship_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10pt" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

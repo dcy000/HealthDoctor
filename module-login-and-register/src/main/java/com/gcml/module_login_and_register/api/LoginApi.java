@@ -14,14 +14,14 @@ import retrofit2.http.Query;
 
 public interface LoginApi {
     /**
-     * 监护人登录
+     * 医生登录
      *
      * @param userName
      * @param password
      * @return
      */
-    @POST("ZZB/api/guardian/login/")
-    Observable<HttpResult<UserEntity>> loginWithGuardianship(
+    @POST("ZZB/login/docter_login")
+    Observable<HttpResult<UserEntity>> login(
             @Query("userName") String userName,
             @Query("password") String password
     );
@@ -33,7 +33,7 @@ public interface LoginApi {
      * @param isCheck
      * @return
      */
-    @GET("ZZB/api/guardian/regiseter/valid/")
+    @GET("ZZB/api/doctor/valid/")
     Observable<HttpResult<String>> getMsgCode(
             @Query("mobile") String mobile,
             @Query("check") boolean isCheck
@@ -56,7 +56,7 @@ public interface LoginApi {
      * @param newPassword
      * @return
      */
-    @PUT("ZZB/api/guardian/password/")
+    @PUT("ZZB/api/doctor/password/")
     Observable<HttpResult<Object>> setNewPassword(
             @Query("mobileNum") String mobileNum,
             @Query("password") String newPassword

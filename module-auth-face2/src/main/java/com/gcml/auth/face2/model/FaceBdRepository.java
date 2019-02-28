@@ -222,7 +222,7 @@ public class FaceBdRepository {
                         if (user == null) {
                             user = new UserEntity();
                         }
-                        user.setHeadPath(s);
+                        user.setDocter_photo(s);
                         Box.getSessionManager().setUser(user);
                         return imageData;
                     }

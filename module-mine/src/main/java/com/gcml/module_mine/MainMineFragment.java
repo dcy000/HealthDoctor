@@ -63,10 +63,10 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     private void fillData() {
         UserEntity user = Box.getSessionManager().getUser();
         Glide.with(Box.getApp())
-                .load(user.getHeadPath())
+                .load(user.getDocter_photo())
                 .into(mCivHead);
-        mTvName.setText(user.getUserName());
-        mTvCommunity.setText(user.getCommunity());
+        mTvName.setText(user.getDoctername());
+        mTvCommunity.setText(user.getHosname());
     }
 
     @Override

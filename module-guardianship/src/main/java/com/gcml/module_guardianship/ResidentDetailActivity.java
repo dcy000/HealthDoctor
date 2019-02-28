@@ -24,6 +24,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
@@ -86,7 +87,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private List<HealthDataMenu> healthDataMenus = new ArrayList<>();
     private BaseQuickAdapter<HealthDataMenu, BaseViewHolder> adapter1;
     private ResidentDetailPresenter residentDetailPresenter;
-    private GuardianshipBean guardianshipBean;
+    private ResidentBean guardianshipBean;
     private LinearLayout mLlLocation;
     private TextView mTvAddress;
 
@@ -143,7 +144,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                 .into(mCvHead);
         mTvName.setText(guardianshipBean.getBname());
         mTvHeight.setText(guardianshipBean.getHeight() == 0 ? "未填写" : guardianshipBean.getHeight() + "cm");
-        mTvWeight.setText(TextUtils.isEmpty(guardianshipBean.getWeight()) ? "未填写" : guardianshipBean.getWeight() + "kg");
+        mTvWeight.setText(guardianshipBean.getWeight()==0? "未填写" : guardianshipBean.getWeight() + "kg");
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType() + "型");
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
     }
@@ -230,7 +231,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         showPhoneTipsDialog(guardianshipBean);
     }
 
-    private void showPhoneTipsDialog(GuardianshipBean item) {
+    private void showPhoneTipsDialog(ResidentBean item) {
         FDialog.build()
                 .setSupportFM(getSupportFragmentManager())
                 .setLayoutId(R.layout.dialog_layout_phone_tips)
