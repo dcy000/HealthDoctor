@@ -1,0 +1,14 @@
+ext.mainApp = true
+apply from: rootProject.file('auto-dependences.gradle')
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    addComponent 'module-guardianship'
+    addComponent 'module-health-manager'
+    addComponent 'module-mine'
+    addComponent 'module-login-and-register'
+    addComponent 'module-shouhuan'
+    addComponent 'module-auth-face2'
+    //医生端的模块
+    addComponent 'doctor-login-and-register'
+}
