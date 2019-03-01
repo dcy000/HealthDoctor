@@ -38,5 +38,14 @@
         <activity
             android:name=".HealthMeasureDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthManagerApprovalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RiskAssessmentDealActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RiskAssessmentResultActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

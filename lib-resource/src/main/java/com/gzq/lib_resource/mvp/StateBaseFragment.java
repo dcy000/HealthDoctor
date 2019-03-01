@@ -1,6 +1,5 @@
 package com.gzq.lib_resource.mvp;
 
-import android.arch.lifecycle.LifecycleObserver;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;

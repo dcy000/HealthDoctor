@@ -23,7 +23,7 @@ public interface GuardianshipRouterApi {
     boolean skipAddRelationshipActivity(@Extra("watchInfo") WatchInformationBean watchInformationBean);
 
     @Go("/guardianship/resident/detail")
-    boolean skipResidentDetailActivity(@Extra("data") ResidentBean guardianshipBean);
+    boolean skipResidentDetailActivity(@Extra("data") ResidentBean guardianshipBean,@Extra("vip") int vip);
 
     @Go("/guardianship/resident/location/detail")
     boolean skipResidentLocationDetailActivity(@Extra("data") ResidentBean guardianshipBean);

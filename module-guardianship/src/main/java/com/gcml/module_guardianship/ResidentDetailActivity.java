@@ -74,15 +74,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private TextView mTvDataMore;
     private RecyclerView mRvHealthData;
     private RecyclerView mRvMenu;
-    private ArrayList<String> dataMenu = new ArrayList<String>() {
-        {
-            add("家庭医生服务报告");
-            add("健康管理报告");
-            add("预警信息记录");
-            add("健康检测记录");
-            add("监护圈");
-        }
-    };
+    private ArrayList<String> dataMenu;
     private BaseQuickAdapter<String, BaseViewHolder> adapter;
     private List<HealthDataMenu> healthDataMenus = new ArrayList<>();
     private BaseQuickAdapter<HealthDataMenu, BaseViewHolder> adapter1;
@@ -90,6 +82,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private ResidentBean guardianshipBean;
     private LinearLayout mLlLocation;
     private TextView mTvAddress;
+    private int vip;
 
     @Override
     protected void onStart() {
@@ -106,6 +99,25 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         guardianshipBean = intentArgument.getParcelableExtra("data");
+        vip = intentArgument.getIntExtra("vip", 0);
+        if (vip == 1) {
+            dataMenu = new ArrayList<String>() {
+                {
+                    add("家庭医生服务报告");
+                    add("健康管理报告");
+                    add("预警信息记录");
+                    add("健康检测记录");
+                    add("监护圈");
+                }
+            };
+        } else {
+            dataMenu = new ArrayList<String>() {
+                {
+                    add("家庭医生服务报告");
+                    add("健康检测记录");
+                }
+            };
+        }
     }
 
     @Override
@@ -144,7 +156,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                 .into(mCvHead);
         mTvName.setText(guardianshipBean.getBname());
         mTvHeight.setText(guardianshipBean.getHeight() == 0 ? "未填写" : guardianshipBean.getHeight() + "cm");
-        mTvWeight.setText(guardianshipBean.getWeight()==0? "未填写" : guardianshipBean.getWeight() + "kg");
+        mTvWeight.setText(guardianshipBean.getWeight() == 0 ? "未填写" : guardianshipBean.getWeight() + "kg");
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType() + "型");
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
     }
@@ -175,6 +187,18 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (vip == 2) {
+                    //非付费用户
+                    if (position == 0) {
+                        //家庭医生服务报告
+                        ToastUtils.showShort("该功能还在开发中...");
+                    } else if (position == 1) {
+                        //健康检测记录
+                        ToastUtils.showShort("该功能还在开发中...");
+                    }
+                    return;
+                }
+                //vip用户
                 if (position == 0) {
                     //家庭医生服务报告
                     ToastUtils.showShort("该功能还在开发中...");

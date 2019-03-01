@@ -45,7 +45,7 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
     }};
     private ArrayList<MenuBena> menuBottom = new ArrayList<MenuBena>() {
         {
-            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康监测"));
+            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康检测"));
             add(new MenuBena(R.drawable.healthmanager_ic_family_doctor, "家庭医生服务"));
         }
     };
@@ -136,8 +136,8 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.ll_health_video) {
-            //健康宣教
-            Routerfit.register(HealthManagerRouterApi.class).skipHealthVideoActivity();
+            //健康管理审批
+            Routerfit.register(HealthManagerRouterApi.class).skipHealthManagerApprovalActivity();
         }
     }
 }

@@ -3,6 +3,7 @@ package com.gcml.module_guardianship.presenter;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.mvp.base.BasePresenter;

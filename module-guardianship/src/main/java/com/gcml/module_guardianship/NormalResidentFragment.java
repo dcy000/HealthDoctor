@@ -16,6 +16,7 @@ import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.ResidentBean;
@@ -88,7 +89,7 @@ public class NormalResidentFragment extends StateBaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position));
+                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position), 2);
             }
         });
     }
@@ -126,9 +127,8 @@ public class NormalResidentFragment extends StateBaseFragment {
     private void getData() {
         UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
-                .getResidents(user.getDocterid() + "", "0")
+                .getResidents(user.getDocterid() + "", "2")
                 .compose(RxUtils.httpResponseTransformer())
-                .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<List<ResidentBean>>() {
                     @Override
                     public void onNext(List<ResidentBean> residentBeans) {
@@ -138,6 +138,11 @@ public class NormalResidentFragment extends StateBaseFragment {
                         NormalResidentFragment.this.residentBeans.clear();
                         NormalResidentFragment.this.residentBeans.addAll(residentBeans);
                         adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+
                     }
                 });
     }

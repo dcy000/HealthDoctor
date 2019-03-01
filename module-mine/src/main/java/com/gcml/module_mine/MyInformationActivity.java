@@ -21,6 +21,7 @@ import com.sjtu.yifei.annotation.Route;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 @Route(path = "/mine/my/information")
 public class MyInformationActivity extends StateBaseActivity {
     private RecyclerView mRvMenu;
@@ -39,6 +40,11 @@ public class MyInformationActivity extends StateBaseActivity {
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         UserEntity user = Box.getSessionManager().getUser();
+        myInforMenuBeans.add(new MyInforMenuBean("头像", user.getDocter_photo(), ""));
+        myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getDoctername()));
+        myInforMenuBeans.add(new MyInforMenuBean("手机号", null, user.getTel()));
+        myInforMenuBeans.add(new MyInforMenuBean("身份", null, "医生"));
+        myInforMenuBeans.add(new MyInforMenuBean("单位", null, user.getHosname()));
 //        if (user.getAccountType().equals("0")){
 //            myInforMenuBeans.add(new MyInforMenuBean("头像", user.getHeadPath(), ""));
 //            myInforMenuBeans.add(new MyInforMenuBean("姓名", null, user.getUserName()));
@@ -64,7 +70,7 @@ public class MyInformationActivity extends StateBaseActivity {
 
     private void initRV() {
         mRvMenu.setLayoutManager(new LinearLayoutManager(this));
-        mRvMenu.addItemDecoration(new LinearLayoutDividerItemDecoration(32,1, Color.parseColor("#EEEEEE")));
+        mRvMenu.addItemDecoration(new LinearLayoutDividerItemDecoration(32, 1, Color.parseColor("#EEEEEE")));
         mRvMenu.setAdapter(new BaseQuickAdapter<MyInforMenuBean, BaseViewHolder>(R.layout.item_layout_my_infor_menu, myInforMenuBeans) {
             @Override
             protected void convert(BaseViewHolder helper, MyInforMenuBean item) {

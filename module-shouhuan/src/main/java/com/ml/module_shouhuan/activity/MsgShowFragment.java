@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.gzq.lib_resource.adapter.PageFragmentAdapter;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.ScreenUtils;
 import com.ml.module_shouhuan.R;
-import com.ml.module_shouhuan.adapter.PageFragmentAdapter;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
@@ -47,7 +47,7 @@ public class MsgShowFragment extends StateBaseFragment {
     public void initView(View view) {
         mViewPager = view.findViewById(R.id.vp_msg);
         mTitleTabLayout = view.findViewById(R.id.layout_tab);
-        mViewPager.setAdapter(new PageFragmentAdapter(getFragmentManager(), msgFragments, titleString));
+        mViewPager.setAdapter(new PageFragmentAdapter(getChildFragmentManager(), msgFragments, titleString));
         mTitleTabLayout.setupWithViewPager(mViewPager);
         mRl = view.findViewById(R.id.rl);
         mLlContainer = view.findViewById(R.id.ll_container);

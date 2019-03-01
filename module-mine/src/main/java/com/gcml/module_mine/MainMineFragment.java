@@ -35,6 +35,8 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     private TextView mTvCommunity;
     private LinearLayout mLlServiceHistory;
     private LinearLayout mLlSetup;
+    private LinearLayout mLlMyMoney;
+    private TextView mTvMoney;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
         mLlServiceHistory.setOnClickListener(this);
         mLlSetup = (LinearLayout) view.findViewById(R.id.ll_setup);
         mLlSetup.setOnClickListener(this);
+        mLlMyMoney = view.findViewById(R.id.ll_my_money);
+        mLlMyMoney.setOnClickListener(this);
+        mTvMoney = view.findViewById(R.id.tv_money);
         fillData();
     }
 
@@ -67,6 +72,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
                 .into(mCivHead);
         mTvName.setText(user.getDoctername());
         mTvCommunity.setText(user.getHosname());
+        mTvMoney.setText(user.getAmount() + "元");
     }
 
     @Override
@@ -78,7 +84,9 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.ll_service_history) {
+        if (i == R.id.ll_my_money) {
+
+        } else if (i == R.id.ll_service_history) {
             Routerfit.register(MineRouterApi.class).skipMyServiceHistoryActivity();
         } else if (i == R.id.ll_setup) {
             Routerfit.register(MineRouterApi.class).skipSetupActivity();

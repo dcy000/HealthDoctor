@@ -1,10 +1,11 @@
-package com.gcml.module_guardianship.adapter;
+package com.gzq.lib_resource.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PageFragmentAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> list;

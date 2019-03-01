@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/risk_assessment_result_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="98pt"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="通过"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_normal_size"
+                android:onClick="clickPass"/>
+
+            <View
+                android:layout_width="1pt"
+                android:layout_height="40pt"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="修改"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_normal_size"
+                android:onClick="clickAlert"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

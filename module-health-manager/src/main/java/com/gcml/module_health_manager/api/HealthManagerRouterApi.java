@@ -6,6 +6,8 @@ import com.sjtu.yifei.annotation.Go;
 
 import java.util.ArrayList;
 
+import retrofit2.http.GET;
+
 public interface HealthManagerRouterApi {
     @Go("/healthmanager/health/programme/report")
     boolean skipHealthProgrammeReportActivity();
@@ -44,4 +46,13 @@ public interface HealthManagerRouterApi {
     boolean skipHealthMeasureDetailActivity(
             @Extra("posi") String position,
             @Extra("data") ArrayList<FamilyDoctorServiceBean> familyDoctorServiceBeans);
+
+    @Go("/healthmanager/health/approval")
+    boolean skipHealthManagerApprovalActivity();
+
+    @Go("/healthmanager/risk/assement/deal")
+    boolean skipRiskAssessmentDealActivity();
+
+    @Go("/healthmanager/risk/assement/deal/result")
+    boolean skipRiskAssessmentResultActivity();
 }

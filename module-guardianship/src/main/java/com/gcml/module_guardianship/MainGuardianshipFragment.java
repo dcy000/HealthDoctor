@@ -4,33 +4,19 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.gcml.module_guardianship.adapter.PageFragmentAdapter;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
-import com.gcml.module_guardianship.presenter.GuardianshipPresenter;
-import com.gcml.module_guardianship.presenter.IGuardianshipView;
-import com.gzq.lib_resource.bean.ResidentBean;
-import com.gzq.lib_resource.dialog.DialogViewHolder;
-import com.gzq.lib_resource.dialog.FDialog;
-import com.gzq.lib_resource.dialog.ViewConvertListener;
+import com.gzq.lib_resource.adapter.PageFragmentAdapter;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
-import com.gzq.lib_resource.utils.CallPhoneUtils;
 import com.gzq.lib_resource.utils.ScreenUtils;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import me.jessyan.autosize.utils.AutoSizeUtils;
-import timber.log.Timber;
 
 /**
  * Created by gzq on 19-2-3.
@@ -69,11 +55,9 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
         mViewPager = view.findViewById(R.id.vp_msg);
         mTitleTabLayout = view.findViewById(R.id.layout_tab);
-
         mViewPager.setAdapter(new PageFragmentAdapter(getFragmentManager(), fragments, titleString));
         mTitleTabLayout.setupWithViewPager(mViewPager);
     }
-
 
     @Override
     public IPresenter obtainPresenter() {
@@ -99,11 +83,11 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public void vipNumberChanged(int num) {
-        mTitleTabLayout.getTabAt(0).setText("VIP居民("+num+")");
+        mTitleTabLayout.getTabAt(0).setText("VIP居民(" + num + ")");
     }
 
     @Override
     public void normalNumberChanged(int num) {
-        mTitleTabLayout.getTabAt(1).setText("普通居民("+num+")");
+        mTitleTabLayout.getTabAt(1).setText("普通居民(" + num + ")");
     }
 }

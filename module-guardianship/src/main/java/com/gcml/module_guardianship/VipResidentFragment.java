@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.ResidentBean;
@@ -85,7 +86,7 @@ public class VipResidentFragment extends StateBaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position));
+                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position),1);
             }
         });
     }
@@ -125,7 +126,6 @@ public class VipResidentFragment extends StateBaseFragment {
         Box.getRetrofit(GuardianshipApi.class)
                 .getResidents(user.getDocterid() + "", "1")
                 .compose(RxUtils.httpResponseTransformer())
-                .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<List<ResidentBean>>() {
                     @Override
                     public void onNext(List<ResidentBean> residentBeans) {
@@ -135,6 +135,11 @@ public class VipResidentFragment extends StateBaseFragment {
                         VipResidentFragment.this.residentBeans.clear();
                         VipResidentFragment.this.residentBeans.addAll(residentBeans);
                         adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+
                     }
                 });
     }
