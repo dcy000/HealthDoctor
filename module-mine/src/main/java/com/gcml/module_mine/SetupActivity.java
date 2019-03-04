@@ -101,28 +101,11 @@ public class SetupActivity extends StateBaseActivity {
         int id = v.getId();
         if (id == R.id.tv_login_out) {
             Box.getSessionManager().clear();
-            Routerfit.register(MineRouterApi.class).skipLoginActivity();
-            finish();
         }
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        return new BasePresenter(this) {
-            @Override
-            public void preData(Object... objects) {
-
-            }
-
-            @Override
-            public void refreshData(Object... objects) {
-
-            }
-
-            @Override
-            public void loadMoreData(Object... objects) {
-
-            }
-        };
+        return null;
     }
 }

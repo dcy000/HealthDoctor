@@ -9,6 +9,7 @@ import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
@@ -74,6 +75,11 @@ public class QrCodeScanActivity extends StateBaseActivity implements View.OnClic
                     public void onNext(WatchInformationBean watchInformationBean) {
                         //查到了用户信息
                         Routerfit.register(GuardianshipRouterApi.class).skipAddRelationshipActivity(watchInformationBean);
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+
                     }
                 });
     }

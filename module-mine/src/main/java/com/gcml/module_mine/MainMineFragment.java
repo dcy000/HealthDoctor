@@ -8,8 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gcml.module_mine.api.MineApi;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
@@ -37,7 +40,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     private LinearLayout mLlSetup;
     private LinearLayout mLlMyMoney;
     private TextView mTvMoney;
-
+    private int moneyAmmount;
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.mine_fragment_main;
@@ -67,12 +70,22 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
 
     private void fillData() {
         UserEntity user = Box.getSessionManager().getUser();
+        Box.getRetrofit(MineApi.class)
+                .getMoneyAmmount(user.getDocterid() + "")
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<Integer>() {
+                    @Override
+                    public void onNext(Integer integer) {
+                        moneyAmmount=integer;
+                        mTvMoney.setText(integer + "元");
+                    }
+                });
         Glide.with(Box.getApp())
-                .load(user.getDocter_photo())
+                .load(user.getDocterPhoto())
                 .into(mCivHead);
         mTvName.setText(user.getDoctername());
         mTvCommunity.setText(user.getHosname());
-        mTvMoney.setText(user.getAmount() + "元");
     }
 
     @Override
@@ -85,7 +98,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.ll_my_money) {
-
+            Routerfit.register(MineRouterApi.class).skipMyMoneyPacketActivity(moneyAmmount);
         } else if (i == R.id.ll_service_history) {
             Routerfit.register(MineRouterApi.class).skipMyServiceHistoryActivity();
         } else if (i == R.id.ll_setup) {

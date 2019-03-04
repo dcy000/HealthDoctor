@@ -150,7 +150,7 @@
                 android:layout_width="686pt"
                 android:layout_height="104pt"
                 android:layout_marginTop="24pt"
-                android:layout_marginBottom="36pt"
+                android:layout_marginBottom="80pt"
                 android:background="@drawable/selector_btn_blue"
                 android:clickable="true"
                 android:gravity="center"

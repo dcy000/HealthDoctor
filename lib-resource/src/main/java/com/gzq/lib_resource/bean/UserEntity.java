@@ -8,25 +8,28 @@ public class UserEntity implements Parcelable {
     private int docterid;
     private String doctername;
     private String tel;
+    private String hosname;
     private String adds;
     private String duty;
     private String department;
-    private int state;
-    private int priority;
     private String documents;
     private String card;
+    private int rankid;
+    private int state;
+    private int priority;
     private double amount;
     private String gat;
     private String pro;
     private int pend;
-    private int number;
     private int evaluation;
-    private int apply_amount;
-    private int service_amount;
-    private String docter_photo;
-    private RBean r;
-    private String hosname;
-    private int online_status;
+    private int applyAmount;
+    private int serviceAmount;
+    private String docterPhoto;
+    private int onlineStatus;
+    private String wyyxId;
+    private String wyyxPwd;
+    private String faceId;
+    private String faceGroup;
 
     public UserEntity() {
     }
@@ -35,24 +38,28 @@ public class UserEntity implements Parcelable {
         docterid = in.readInt();
         doctername = in.readString();
         tel = in.readString();
+        hosname = in.readString();
         adds = in.readString();
         duty = in.readString();
         department = in.readString();
-        state = in.readInt();
-        priority = in.readInt();
         documents = in.readString();
         card = in.readString();
+        rankid = in.readInt();
+        state = in.readInt();
+        priority = in.readInt();
         amount = in.readDouble();
         gat = in.readString();
         pro = in.readString();
         pend = in.readInt();
-        number = in.readInt();
         evaluation = in.readInt();
-        apply_amount = in.readInt();
-        service_amount = in.readInt();
-        docter_photo = in.readString();
-        hosname = in.readString();
-        online_status = in.readInt();
+        applyAmount = in.readInt();
+        serviceAmount = in.readInt();
+        docterPhoto = in.readString();
+        onlineStatus = in.readInt();
+        wyyxId = in.readString();
+        wyyxPwd = in.readString();
+        faceId = in.readString();
+        faceGroup = in.readString();
     }
 
     public static final Creator<UserEntity> CREATOR = new Creator<UserEntity>() {
@@ -91,6 +98,14 @@ public class UserEntity implements Parcelable {
         this.tel = tel;
     }
 
+    public String getHosname() {
+        return hosname;
+    }
+
+    public void setHosname(String hosname) {
+        this.hosname = hosname;
+    }
+
     public String getAdds() {
         return adds;
     }
@@ -115,22 +130,6 @@ public class UserEntity implements Parcelable {
         this.department = department;
     }
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public String getDocuments() {
         return documents;
     }
@@ -145,6 +144,30 @@ public class UserEntity implements Parcelable {
 
     public void setCard(String card) {
         this.card = card;
+    }
+
+    public int getRankid() {
+        return rankid;
+    }
+
+    public void setRankid(int rankid) {
+        this.rankid = rankid;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public double getAmount() {
@@ -179,14 +202,6 @@ public class UserEntity implements Parcelable {
         this.pend = pend;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public int getEvaluation() {
         return evaluation;
     }
@@ -195,52 +210,68 @@ public class UserEntity implements Parcelable {
         this.evaluation = evaluation;
     }
 
-    public int getApply_amount() {
-        return apply_amount;
+    public int getApplyAmount() {
+        return applyAmount;
     }
 
-    public void setApply_amount(int apply_amount) {
-        this.apply_amount = apply_amount;
+    public void setApplyAmount(int applyAmount) {
+        this.applyAmount = applyAmount;
     }
 
-    public int getService_amount() {
-        return service_amount;
+    public int getServiceAmount() {
+        return serviceAmount;
     }
 
-    public void setService_amount(int service_amount) {
-        this.service_amount = service_amount;
+    public void setServiceAmount(int serviceAmount) {
+        this.serviceAmount = serviceAmount;
     }
 
-    public String getDocter_photo() {
-        return docter_photo;
+    public String getDocterPhoto() {
+        return docterPhoto;
     }
 
-    public void setDocter_photo(String docter_photo) {
-        this.docter_photo = docter_photo;
+    public void setDocterPhoto(String docterPhoto) {
+        this.docterPhoto = docterPhoto;
     }
 
-    public RBean getR() {
-        return r;
+    public int getOnlineStatus() {
+        return onlineStatus;
     }
 
-    public void setR(RBean r) {
-        this.r = r;
+    public void setOnlineStatus(int onlineStatus) {
+        this.onlineStatus = onlineStatus;
     }
 
-    public String getHosname() {
-        return hosname;
+    public String getWyyxId() {
+        return wyyxId;
     }
 
-    public void setHosname(String hosname) {
-        this.hosname = hosname;
+    public void setWyyxId(String wyyxId) {
+        this.wyyxId = wyyxId;
     }
 
-    public int getOnline_status() {
-        return online_status;
+    public String getWyyxPwd() {
+        return wyyxPwd;
     }
 
-    public void setOnline_status(int online_status) {
-        this.online_status = online_status;
+    public void setWyyxPwd(String wyyxPwd) {
+        this.wyyxPwd = wyyxPwd;
+    }
+
+    public String getFaceId() {
+        return faceId;
+    }
+
+    public void setFaceId(String faceId) {
+        this.faceId = faceId;
+    }
+
+    public String getFaceGroup() {
+        return faceGroup;
+    }
+
+    public void setFaceGroup(String faceGroup) {
+        this.faceGroup = faceGroup;
     }
 
     @Override
@@ -253,49 +284,27 @@ public class UserEntity implements Parcelable {
         dest.writeInt(docterid);
         dest.writeString(doctername);
         dest.writeString(tel);
+        dest.writeString(hosname);
         dest.writeString(adds);
         dest.writeString(duty);
         dest.writeString(department);
-        dest.writeInt(state);
-        dest.writeInt(priority);
         dest.writeString(documents);
         dest.writeString(card);
+        dest.writeInt(rankid);
+        dest.writeInt(state);
+        dest.writeInt(priority);
         dest.writeDouble(amount);
         dest.writeString(gat);
         dest.writeString(pro);
         dest.writeInt(pend);
-        dest.writeInt(number);
         dest.writeInt(evaluation);
-        dest.writeInt(apply_amount);
-        dest.writeInt(service_amount);
-        dest.writeString(docter_photo);
-        dest.writeString(hosname);
-        dest.writeInt(online_status);
-    }
-
-    public static class RBean {
-        /**
-         * rankid : 10001
-         * rankname : 主治医师
-         */
-
-        private int rankid;
-        private String rankname;
-
-        public int getRankid() {
-            return rankid;
-        }
-
-        public void setRankid(int rankid) {
-            this.rankid = rankid;
-        }
-
-        public String getRankname() {
-            return rankname;
-        }
-
-        public void setRankname(String rankname) {
-            this.rankname = rankname;
-        }
+        dest.writeInt(applyAmount);
+        dest.writeInt(serviceAmount);
+        dest.writeString(docterPhoto);
+        dest.writeInt(onlineStatus);
+        dest.writeString(wyyxId);
+        dest.writeString(wyyxPwd);
+        dest.writeString(faceId);
+        dest.writeString(faceGroup);
     }
 }

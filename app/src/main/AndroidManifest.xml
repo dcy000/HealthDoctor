@@ -10,6 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.gcml.healthdoctor.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.gcml.healthdoctor.SplashActivity"

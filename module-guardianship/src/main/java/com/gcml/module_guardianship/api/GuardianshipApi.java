@@ -22,20 +22,6 @@ import retrofit2.http.Query;
  */
 
 public interface GuardianshipApi {
-    //mock数据
-    @GET("healthdata")
-    Observable<HttpResult<List<HealthDataMenu>>> getHealthDatas();
-
-    /**
-     * 获取居民列表
-     *
-     * @param userId
-     * @return
-     */
-    @GET("ZZB/api/guardian/{guardianId}/users/")
-    Observable<HttpResult<List<GuardianshipBean>>> getGuardianships(
-            @Path("guardianId") String userId
-    );
 
     /**
      * 根据手环码查用户信息
@@ -77,7 +63,7 @@ public interface GuardianshipApi {
     @POST("ZZB/api/guardian/warning/{warningId}/")
     Observable<HttpResult<Object>> postSOSDealResult(
             @Path("warningId") String warningId,
-            @Query("guardianId") String guardianId,
+            @Query("docterId") String guardianId,
             @Query("content") String content
     );
 

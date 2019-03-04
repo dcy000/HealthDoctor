@@ -81,7 +81,7 @@ public class AddRelationshipActivity extends StateBaseActivity {
     private void addResident() {
         UserEntity user = Box.getSessionManager().getUser();
         Box.getRetrofit(GuardianshipApi.class)
-                .addResident(watchInfo.getUserid()+"", user.getDocter_photo())
+                .addResident(watchInfo.getUserid() + "", user.getTel())
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<Object>() {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.gzq.lib_core.utils.NetworkUtils;
 import com.gzq.lib_resource.R;
@@ -38,21 +39,19 @@ public abstract class StateBaseFragment extends BaseFragment {
         if (layoutId <= 0) {
             throw new IllegalArgumentException("layout is null");
         }
+        if (mView!=null){
+            ViewGroup  parent = (ViewGroup) mView.getParent();
+            if (parent!=null){
+                parent.removeView(mView);
+            }
+            return mView;
+        }
         if (mView == null) {
             mView = inflater.inflate(layoutId, container, false);
-//            //初始化状态页面
-//            Object rootView = placeView();
-//            if (rootView == null) {
-//                rootView = mView;
-//            }
-//            initStateView(rootView);
             //初始化基本参数
             initParams(getArguments());
             //初始化Presenter
             mPresenter = obtainPresenter();
-//            if (mPresenter == null || !(mPresenter instanceof LifecycleObserver)) {
-//                throw new IllegalArgumentException("obtain a wrong presenter");
-//            }
             if (mPresenter != null) {
                 getLifecycle().addObserver(mPresenter);
             }

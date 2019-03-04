@@ -14,14 +14,72 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/tv_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72pt"
+            android:text="余额"
+            android:textColor="#B3FFFFFF"
+            android:textSize="@dimen/text_normal_size"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_money_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99.00"
+            android:textColor="@color/white"
+            android:textSize="80pt"
+            app:layout_constraintLeft_toLeftOf="@id/tv_title1"
+            app:layout_constraintRight_toRightOf="@id/tv_title1"
+            app:layout_constraintTop_toBottomOf="@id/tv_title1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10pt"
+            android:layout_marginBottom="15pt"
+            android:text="￥"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_normal_size"
+            app:layout_constraintBottom_toBottomOf="@id/tv_money_amount"
+            app:layout_constraintRight_toLeftOf="@id/tv_money_amount" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/ll_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32pt"
         android:layout_marginTop="20pt"
+        android:layout_marginRight="32pt"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/cl_1">
 
+        <View
+            android:layout_width="8pt"
+            android:layout_height="32pt"
+            android:background="@drawable/shape_flag_blue_corner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10pt"
+            android:text="账单明细"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

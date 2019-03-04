@@ -1,5 +1,10 @@
 package com.gcml.module_mine.api;
 
+import android.content.Intent;
+
+import com.gzq.lib_resource.api.IFinishActivity;
+import com.sjtu.yifei.annotation.Extra;
+import com.sjtu.yifei.annotation.Flags;
 import com.sjtu.yifei.annotation.Go;
 
 public interface MineRouterApi {
@@ -11,6 +16,7 @@ public interface MineRouterApi {
 
     @Go("/mine/about/us")
     boolean skipAboutUsActivity();
+
     @Go("/login/phone")
     boolean skipLoginActivity();
 
@@ -19,4 +25,10 @@ public interface MineRouterApi {
 
     @Go("/mine/my/service/history")
     boolean skipMyServiceHistoryActivity();
+
+    @Go("/mine/my/money/packet")
+    boolean skipMyMoneyPacketActivity(@Extra("money") int money);
+
+    @Go("/finish/main/activity")
+    IFinishActivity finishMainActivity();
 }

@@ -136,6 +136,12 @@ android {
     defaultConfig {
         if (project.ext.runAsApp) {
             applicationId "com.gcml.healthdoctor"
+
+            manifestPlaceholders = [
+                    JPUSH_PKGNAME: applicationId,
+                    JPUSH_APPKEY : "9e08ce69fdca28ad25dcb635",
+                    JPUSH_CHANNEL: "developer-default",
+            ]
         }
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
@@ -143,6 +149,10 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        ndk {
+            abiFilters "arm64-v8a"
+        }
     }
 
     signingConfigs {
@@ -161,7 +171,7 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             lintOptions {
                 checkReleaseBuilds false
                 abortOnError false
@@ -169,8 +179,17 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.name == "app") {
+                minifyEnabled false
+                shrinkResources false
+                zipAlignEnabled false
+                debuggable false
+                proguardFiles rootProject.file('proguard-system-common.pro'),
+                        rootProject.file('proguard-second-party.pro'),
+                        rootProject.file('proguard-third-party.pro'),
+                        rootProject.file('proguard-module.pro')
+            }
+
             lintOptions {
                 checkReleaseBuilds false
                 abortOnError false

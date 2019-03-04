@@ -1,5 +1,6 @@
 ext.mainApp = true
 apply from: rootProject.file('auto-dependences.gradle')
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -9,4 +10,5 @@ dependencies {
     addComponent 'module-login-and-register'
     addComponent 'module-shouhuan'
     addComponent 'module-auth-face2'
+    addComponent 'lib-call'
 }

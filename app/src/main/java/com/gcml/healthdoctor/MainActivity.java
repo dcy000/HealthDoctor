@@ -13,7 +13,9 @@ import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonApi;
 import com.gzq.lib_resource.app.AppStore;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
@@ -45,6 +47,22 @@ public class MainActivity extends StateBaseActivity {
 
     private BottomBar mBottomBar;
     private boolean isInit = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UserEntity user = Box.getSessionManager().getUser();
+        Box.getRetrofit(CommonApi.class)
+                .getProfile(user.getDocterid() + "")
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<UserEntity>() {
+                    @Override
+                    public void onNext(UserEntity userEntity) {
+                        Box.getSessionManager().setUser(userEntity);
+                    }
+                });
+    }
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -172,7 +190,7 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     public IPresenter obtainPresenter() {
-        return new MainPresenter(this);
+        return null;
     }
 
     @Override
@@ -187,33 +205,27 @@ public class MainActivity extends StateBaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        AppStore.isShowMsgFragment.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean) {
+                    AppStore.isShowMsgFragment.postValue(false);
+                    mBottomBar.setCurrentItem(1);
+                    showHideFragment(mFragments[1]);
+                }
+            }
+        });
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         AppStore.guardianship.removeObservers(this);
         AppStore.healthManager.removeObservers(this);
         AppStore.sosDeal.removeObservers(this);
         AppStore.mine.removeObservers(this);
-    }
-
-    static class MainPresenter extends BasePresenter {
-
-        public MainPresenter(IView view) {
-            super(view);
-        }
-
-        @Override
-        public void preData(Object... objects) {
-
-        }
-
-        @Override
-        public void refreshData(Object... objects) {
-
-        }
-
-        @Override
-        public void loadMoreData(Object... objects) {
-
-        }
+        AppStore.isShowMsgFragment.removeObservers(this);
     }
 }

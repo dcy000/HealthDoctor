@@ -21,6 +21,7 @@ import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.ResidentDetailPresenter;
 import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
@@ -83,6 +84,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private LinearLayout mLlLocation;
     private TextView mTvAddress;
     private int vip;
+    private LinearLayout mLlHealthData;
 
     @Override
     protected void onStart() {
@@ -145,12 +147,22 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mLlLocation = (LinearLayout) findViewById(R.id.ll_location);
         mLlLocation.setOnClickListener(this);
         mTvAddress = findViewById(R.id.tv_address);
+        mLlHealthData=findViewById(R.id.ll_health_data);
         fillData();
         initMenu();
         initHealthDataRv();
     }
 
     private void fillData() {
+        if (vip==1){
+            mLlHealthData.setVisibility(View.VISIBLE);
+            mRvHealthData.setVisibility(View.VISIBLE);
+            mLlLocation.setClickable(true);
+        }else{
+            mLlHealthData.setVisibility(View.GONE);
+            mRvHealthData.setVisibility(View.GONE);
+            mLlLocation.setClickable(false);
+        }
         Glide.with(Box.getApp())
                 .load(guardianshipBean.getUserPhoto())
                 .into(mCvHead);
@@ -252,10 +264,29 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
 
     @Override
     protected void clickToolbarRight() {
-        showPhoneTipsDialog(guardianshipBean);
+        getWatchInfo(guardianshipBean);
     }
 
-    private void showPhoneTipsDialog(ResidentBean item) {
+    private void getWatchInfo(ResidentBean guardianshipBean) {
+        Box.getRetrofit(GuardianshipApi.class)
+                .getWatchInfo(guardianshipBean.getWatchCode())
+                .compose(RxUtils.httpResponseTransformer())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<WatchInformationBean>() {
+                    @Override
+                    public void onNext(WatchInformationBean watchInformationBean) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(), watchInformationBean.getDeviceMobileNo());
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(), guardianshipBean.getTel());
+                    }
+                });
+    }
+
+    private void showPhoneTipsDialog(String name, String phone) {
+
         FDialog.build()
                 .setSupportFM(getSupportFragmentManager())
                 .setLayoutId(R.layout.dialog_layout_phone_tips)
@@ -265,12 +296,12 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
-                        holder.setText(R.id.tv_title, item.getBname() + "的电话号码");
-                        holder.setText(R.id.tv_message, item.getTel());
+                        holder.setText(R.id.tv_title, name + "的电话号码");
+                        holder.setText(R.id.tv_message, phone);
                         holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, item.getTel());
+                                CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, phone);
                                 dialog.dismiss();
                             }
                         });

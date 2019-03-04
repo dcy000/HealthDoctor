@@ -22,7 +22,7 @@ public interface LoginApi {
      */
     @POST("ZZB/login/docter_login")
     Observable<HttpResult<UserEntity>> login(
-            @Query("userName") String userName,
+            @Query("username") String userName,
             @Query("password") String password
     );
 
