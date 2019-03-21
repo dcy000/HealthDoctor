@@ -97,4 +97,6 @@ dependencies {
     api 'cn.jiguang.sdk:jpush:3.1.1'
     api 'cn.jiguang.sdk:jcore:1.1.9'
 
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
 }

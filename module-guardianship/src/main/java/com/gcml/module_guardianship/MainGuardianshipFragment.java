@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gzq.lib_resource.adapter.PageFragmentAdapter;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
@@ -28,7 +29,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private String[] titleString = {"VIP居民(0)", "普通居民(0)"};
     private ViewPager mViewPager;
-    private TabLayout mTitleTabLayout;
+    private SlidingTabLayout mTitleTabLayout;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -55,8 +56,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
         mViewPager = view.findViewById(R.id.vp_msg);
         mTitleTabLayout = view.findViewById(R.id.layout_tab);
-        mViewPager.setAdapter(new PageFragmentAdapter(getFragmentManager(), fragments, titleString));
-        mTitleTabLayout.setupWithViewPager(mViewPager);
+        mTitleTabLayout.setViewPager(mViewPager,titleString,getActivity(),fragments);
     }
 
     @Override
@@ -83,11 +83,13 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
     @Override
     public void vipNumberChanged(int num) {
-        mTitleTabLayout.getTabAt(0).setText("VIP居民(" + num + ")");
+//        mTitleTabLayout.getTabAt(0).setText("VIP居民(" + num + ")");
+        mTitleTabLayout.getTitleView(0).setText("VIP居民(" + num + ")");
     }
 
     @Override
     public void normalNumberChanged(int num) {
-        mTitleTabLayout.getTabAt(1).setText("普通居民(" + num + ")");
+//        mTitleTabLayout.getTabAt(1).setText("普通居民(" + num + ")");
+        mTitleTabLayout.getTitleView(1).setText("普通居民(" + num + ")");
     }
 }
