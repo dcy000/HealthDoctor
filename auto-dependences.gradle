@@ -208,10 +208,15 @@ android {
         enabled = true
     }
 }
+
 def dependencyMode = GradleVersion.version(project.gradle.gradleVersion) >= GradleVersion.version('4.1') ? 'api' : 'compile'
 //添加公用库的依赖
 //project.dependencies.add(dependencyMode, "com.billy.android:cc:1.1.0")
-
+repositories {
+    flatDir {
+        dirs rootProject.file('aar')
+    }
+}
 dependencies {
     //公共依赖统一管理
     implementation project(':lib-resource')

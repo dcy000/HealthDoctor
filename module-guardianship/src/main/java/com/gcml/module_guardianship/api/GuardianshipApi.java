@@ -5,6 +5,7 @@ import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.LatLonBean;
+import com.gcml.module_guardianship.bean.MeasureDataBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.http.model.HttpResult;
 import com.gzq.lib_resource.bean.ResidentBean;
@@ -99,5 +100,21 @@ public interface GuardianshipApi {
     Observable<HttpResult<List<ResidentBean>>> getResidents(
             @Path("docterId") String docterId,
             @Query("payStatus") String payStatus
+    );
+
+    /**
+     * @param imei 手环码
+     * @param type 类型：1->血压；2->心率
+     * @return
+     */
+    @POST("ZZB/api/wristband/Zh/startMeasure")
+    Observable<HttpResult<Object>> measureByHandRing(
+            @Query("imei") String imei,
+            @Query("type") String type
+    );
+
+    @GET("ZZB/api/user/watch/detection/")
+    Observable<HttpResult<MeasureDataBean>> getMeasureData(
+            @Query("userId") String userId
     );
 }

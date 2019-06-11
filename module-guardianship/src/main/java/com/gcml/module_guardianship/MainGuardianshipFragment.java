@@ -56,7 +56,7 @@ public class MainGuardianshipFragment extends StateBaseFragment implements View.
 
         mViewPager = view.findViewById(R.id.vp_msg);
         mTitleTabLayout = view.findViewById(R.id.layout_tab);
-        mTitleTabLayout.setViewPager(mViewPager,titleString,getActivity(),fragments);
+        mTitleTabLayout.setViewPager(mViewPager, titleString, getActivity(), fragments);
     }
 
     @Override

@@ -105,18 +105,21 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         if (vip == 1) {
             dataMenu = new ArrayList<String>() {
                 {
-                    add("家庭医生服务报告");
-                    add("健康管理报告");
-                    add("预警信息记录");
-                    add("健康检测记录");
+//                    add("家庭医生服务报告");
+//                    add("健康管理报告");
+//                    add("预警信息记录");
+//                    add("健康检测记录");
+//                    add("监护圈");
                     add("监护圈");
+                    add("健康检测记录");
+                    add("远程监控");
                 }
             };
         } else {
             dataMenu = new ArrayList<String>() {
                 {
                     add("家庭医生服务报告");
-                    add("健康检测记录");
+//                    add("健康检测记录");
                 }
             };
         }
@@ -147,18 +150,18 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mLlLocation = (LinearLayout) findViewById(R.id.ll_location);
         mLlLocation.setOnClickListener(this);
         mTvAddress = findViewById(R.id.tv_address);
-        mLlHealthData=findViewById(R.id.ll_health_data);
+        mLlHealthData = findViewById(R.id.ll_health_data);
         fillData();
         initMenu();
         initHealthDataRv();
     }
 
     private void fillData() {
-        if (vip==1){
+        if (vip == 1) {
             mLlHealthData.setVisibility(View.VISIBLE);
             mRvHealthData.setVisibility(View.VISIBLE);
             mLlLocation.setClickable(true);
-        }else{
+        } else {
             mLlHealthData.setVisibility(View.GONE);
             mRvHealthData.setVisibility(View.GONE);
             mLlLocation.setClickable(false);
@@ -201,31 +204,46 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (vip == 2) {
                     //非付费用户
+//                    if (position == 0) {
+//                        //家庭医生服务报告
+//                        ToastUtils.showShort("该功能还在开发中...");
+//                    } else if (position == 1) {
+//                        //健康检测记录
+//                        ToastUtils.showShort("该功能还在开发中...");
+//                    }
                     if (position == 0) {
-                        //家庭医生服务报告
-                        ToastUtils.showShort("该功能还在开发中...");
-                    } else if (position == 1) {
                         //健康检测记录
-                        ToastUtils.showShort("该功能还在开发中...");
+
                     }
                     return;
                 }
                 //vip用户
+//                if (position == 0) {
+//                    //家庭医生服务报告
+//                    ToastUtils.showShort("该功能还在开发中...");
+//                } else if (position == 1) {
+//                    //健康管理报告
+//                    Routerfit.register(GuardianshipRouterApi.class).skipHealthManagerReportActivity();
+//                } else if (position == 2) {
+//                    //预警信息记录
+//                    Routerfit.register(GuardianshipRouterApi.class).skipWarningInformationRecordActivity();
+//                } else if (position == 3) {
+//                    //健康检测记录
+//                    ToastUtils.showShort("该功能还在开发中...");
+//                } else if (position == 4) {
+//                    //监护圈
+//                    Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
+//                }
                 if (position == 0) {
-                    //家庭医生服务报告
-                    ToastUtils.showShort("该功能还在开发中...");
-                } else if (position == 1) {
-                    //健康管理报告
-                    Routerfit.register(GuardianshipRouterApi.class).skipHealthManagerReportActivity();
-                } else if (position == 2) {
-                    //预警信息记录
-                    Routerfit.register(GuardianshipRouterApi.class).skipWarningInformationRecordActivity();
-                } else if (position == 3) {
-                    //健康检测记录
-                    ToastUtils.showShort("该功能还在开发中...");
-                } else if (position == 4) {
                     //监护圈
                     Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
+                } else if (position == 1) {
+                    //健康检测记录
+                    Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity();
+                } else if (position == 2) {
+                    //远程监控
+                    Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(
+                            guardianshipBean.getWatchCode(), guardianshipBean.getBid() + "");
                 }
             }
         });

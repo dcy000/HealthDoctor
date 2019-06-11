@@ -114,7 +114,8 @@
         android:layout_height="92pt"
         android:background="@drawable/selector_linearlayout_item"
         android:clickable="true"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="40pt"

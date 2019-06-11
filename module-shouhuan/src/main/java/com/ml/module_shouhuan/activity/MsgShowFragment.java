@@ -28,7 +28,6 @@ public class MsgShowFragment extends StateBaseFragment {
     private ArrayList<Fragment> msgFragments = new ArrayList<>();
     private String[] titleString;
     private RelativeLayout mRl;
-    private LinearLayout mLlContainer;
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class MsgShowFragment extends StateBaseFragment {
         showSuccess();
         msgFragments.add(Routerfit.register(ShouhuanRouterApi.class).getMsgToDoFragment());
         msgFragments.add(Routerfit.register(ShouhuanRouterApi.class).getMsgAlreadyDoneFragment());
-        msgFragments.add(Routerfit.register(ShouhuanRouterApi.class).getMsgSystemFragment());
+//        msgFragments.add(Routerfit.register(ShouhuanRouterApi.class).getMsgSystemFragment());
         titleString = getResources().getStringArray(R.array.title_msg);
     }
 
@@ -51,7 +50,6 @@ public class MsgShowFragment extends StateBaseFragment {
         mViewPager.setAdapter(new PageFragmentAdapter(getChildFragmentManager(), msgFragments, titleString));
         mTitleTabLayout.setViewPager(mViewPager);
         mRl = view.findViewById(R.id.rl);
-        mLlContainer = view.findViewById(R.id.ll_container);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
         layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
         mRl.setLayoutParams(layoutParams);

@@ -43,7 +43,7 @@ public class MainActivity extends StateBaseActivity {
     public static final int SECOND = 1;
     public static final int THIRD = 2;
     public static final int FOURTH = 3;
-    private SupportFragment[] mFragments = new SupportFragment[4];
+    private SupportFragment[] mFragments = new SupportFragment[3];
 
     private BottomBar mBottomBar;
     private boolean isInit = false;
@@ -98,14 +98,13 @@ public class MainActivity extends StateBaseActivity {
             isInit = true;
             mFragments[FIRST] = Routerfit.register(AppRouterApi.class).getFirstFragment();
             mFragments[SECOND] = Routerfit.register(AppRouterApi.class).getSecondFragment();
-            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
-            mFragments[FOURTH] = Routerfit.register(AppRouterApi.class).getFourthFragment();
+//            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getThirdFragment();
+            mFragments[THIRD] = Routerfit.register(AppRouterApi.class).getFourthFragment();
 
             loadMultipleRootFragment(R.id.fl_tab_container, 0,
                     mFragments[FIRST],
                     mFragments[SECOND],
-                    mFragments[THIRD],
-                    mFragments[FOURTH]);
+                    mFragments[THIRD]);
         }
     }
 
@@ -121,7 +120,7 @@ public class MainActivity extends StateBaseActivity {
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "签约");
         final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "消息");
-        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "业务");
+//        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "业务");
         final BottomBarTab mine = new BottomBarTab(this, R.drawable.ic_fourth, "我的");
 
         //设置各个模块未读信息的数量
@@ -131,7 +130,7 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar
                 .addItem(guardianship)
                 .addItem(sosDeal)
-                .addItem(healthManager)
+//                .addItem(healthManager)
                 .addItem(mine);
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
@@ -166,12 +165,12 @@ public class MainActivity extends StateBaseActivity {
                 guardianship.setUnreadCount(integer);
             }
         });
-        AppStore.healthManager.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                healthManager.setUnreadCount(integer);
-            }
-        });
+//        AppStore.healthManager.observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(@Nullable Integer integer) {
+//                healthManager.setUnreadCount(integer);
+//            }
+//        });
 
         AppStore.sosDeal.observe(this, new Observer<Integer>() {
             @Override
