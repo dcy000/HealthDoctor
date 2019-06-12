@@ -2,4 +2,6 @@ apply from: rootProject.file('auto-dependences.gradle')
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //webview缓存框架
+    implementation 'ren.yale.android:cachewebviewlib:2.1.8'
 }

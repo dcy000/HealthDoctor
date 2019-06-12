@@ -118,8 +118,8 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         } else {
             dataMenu = new ArrayList<String>() {
                 {
-                    add("家庭医生服务报告");
-//                    add("健康检测记录");
+//                    add("家庭医生服务报告");
+                    add("健康检测记录");
                 }
             };
         }
@@ -213,7 +213,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
 //                    }
                     if (position == 0) {
                         //健康检测记录
-
+                        Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity();
                     }
                     return;
                 }

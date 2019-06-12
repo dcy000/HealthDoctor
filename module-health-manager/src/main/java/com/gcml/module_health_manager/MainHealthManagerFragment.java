@@ -39,9 +39,10 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
     private RecyclerView mRvMenuTop;
     private RecyclerView mRvMenuBottom;
     private ArrayList<MenuBena> menuTop = new ArrayList<MenuBena>() {{
-        add(new MenuBena(R.drawable.healthmanager_ic_health_task, "健康任务"));
-        add(new MenuBena(R.drawable.healthmanager_ic_health_report, "健康方案报告"));
-        add(new MenuBena(R.drawable.healthmanager_ic_risk_assessment, "风险评估报告"));
+        add(new MenuBena(R.drawable.healthmanager_ic_health_task, "药物化合物查询"));
+        add(new MenuBena(R.drawable.healthmanager_ic_health_report, "疾病症状查询"));
+        add(new MenuBena(R.drawable.healthmanager_ic_risk_assessment, "基因查询"));
+        add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "通用关系查询"));
     }};
     private ArrayList<MenuBena> menuBottom = new ArrayList<MenuBena>() {
         {
@@ -101,15 +102,24 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
         adapterTop.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                if (position == 0) {
+//                    //健康任务
+//                    Routerfit.register(HealthManagerRouterApi.class).skipHealthTaskActivity();
+//                } else if (position == 1) {
+//                    //健康方案报告
+//                    Routerfit.register(HealthManagerRouterApi.class).skipHealthProgrammeReportActivity();
+//                } else if (position == 2) {
+//                    //风险评估报告
+//                    Routerfit.register(HealthManagerRouterApi.class).skipRiskAssessmentReportActivity();
+//                }
                 if (position == 0) {
-                    //健康任务
-                    Routerfit.register(HealthManagerRouterApi.class).skipHealthTaskActivity();
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000506","药物化合物查询");
                 } else if (position == 1) {
-                    //健康方案报告
-                    Routerfit.register(HealthManagerRouterApi.class).skipHealthProgrammeReportActivity();
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000507","疾病症状查询");
                 } else if (position == 2) {
-                    //风险评估报告
-                    Routerfit.register(HealthManagerRouterApi.class).skipRiskAssessmentReportActivity();
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000508","基因查询");
+                } else if (position == 3) {
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000519","通用关系查询");
                 }
             }
         });
