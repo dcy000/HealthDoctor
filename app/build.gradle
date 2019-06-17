@@ -20,4 +20,6 @@ dependencies {
     addComponent 'module-auth-face2'
     addComponent 'lib-call'
     addComponent 'module-health-record'
+
+    implementation project(':notchtools')
 }

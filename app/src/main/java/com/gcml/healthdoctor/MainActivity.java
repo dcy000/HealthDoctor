@@ -32,6 +32,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import notchtools.geek.com.notchtools.NotchTools;
 import timber.log.Timber;
 
 /**
@@ -114,6 +115,7 @@ public class MainActivity extends StateBaseActivity {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         //设置状态栏的颜色
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
+        NotchTools.getFullScreenTools().fullScreenDontUseStatus(this);
         //加载页面成功
         showSuccess();
         mToolbar.setVisibility(View.GONE);
