@@ -12,11 +12,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
+import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
@@ -77,7 +80,7 @@ public class VipResidentFragment extends StateBaseFragment {
                 helper.getView(R.id.iv_phone).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getWatchInfo(item);
+                        showVoiceOrVideoConnectDialog(item);
                     }
                 });
             }
@@ -91,7 +94,36 @@ public class VipResidentFragment extends StateBaseFragment {
             }
         });
     }
-
+    private void showVoiceOrVideoConnectDialog(ResidentBean familyBean) {
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_voice_video_connect)
+                .setWidth(AutoSizeUtils.pt2px(getContext(), 710))
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(v -> {
+                            ToastUtils.showShort("视频通话");
+                            String wyyxId = familyBean.getWyyxId();
+                            String wyyxPwd = familyBean.getWyyxPwd();
+                            if (!TextUtils.isEmpty(wyyxId)) {
+                                Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                        .launchNoCheckWithCallFamily(getContext(), wyyxId);
+                            }
+                            dialog.dismiss();
+                        });
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(v -> {
+                            getWatchInfo(familyBean);
+                            dialog.dismiss();
+                        });
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(v -> dialog.dismiss());
+                    }
+                })
+                .setOutCancel(false)
+                .setShowBottom(true)
+                .show();
+    }
     private void getWatchInfo(ResidentBean guardianshipBean) {
         Box.getRetrofit(GuardianshipApi.class)
                 .getWatchInfo(guardianshipBean.getWatchCode())
