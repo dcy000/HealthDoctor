@@ -1,6 +1,7 @@
 package com.gcml.module_guardianship;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -29,6 +30,9 @@ import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -38,11 +42,12 @@ import java.util.List;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/fragment/vip/resident")
-public class VipResidentFragment extends StateBaseFragment {
+public class VipResidentFragment extends StateBaseFragment implements OnRefreshListener {
     private NumberChange numberChange;
     private List<ResidentBean> residentBeans = new ArrayList<>();
     private RecyclerView mRv;
     private BaseQuickAdapter<ResidentBean, BaseViewHolder> adapter;
+    private SmartRefreshLayout mRefresh;
 
     public void setNumberChange(NumberChange numberChange) {
         this.numberChange = numberChange;
@@ -61,8 +66,11 @@ public class VipResidentFragment extends StateBaseFragment {
     @Override
     public void initView(View view) {
         mRv = (RecyclerView) view.findViewById(R.id.rv);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
+        mRefresh.autoRefresh();
         initRv();
-        getData();
+
     }
     private void initRv() {
         mRv.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -187,11 +195,12 @@ public class VipResidentFragment extends StateBaseFragment {
                         VipResidentFragment.this.residentBeans.clear();
                         VipResidentFragment.this.residentBeans.addAll(residentBeans);
                         adapter.notifyDataSetChanged();
+                        mRefresh.finishRefresh();
                     }
 
                     @Override
                     protected void onError(ApiException ex) {
-
+                        mRefresh.finishRefresh(false);
                     }
                 });
     }
@@ -199,5 +208,10 @@ public class VipResidentFragment extends StateBaseFragment {
     @Override
     public IPresenter obtainPresenter() {
         return null;
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        getData();
     }
 }

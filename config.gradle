@@ -14,14 +14,15 @@ ext {
             hegui         : "\"http://47.110.60.249:8080/\"",//合规版
             localTest     : "\"http://192.168.200.77:8080/\"",//本地测试
             zuobowen      : "\"http://192.168.200.222:8080/\"",//左博文
-            xionganTest   : "\"http://47.96.98.60:8100/\""//雄安测试服务器
+            xionganTest   : "\"http://47.96.98.60:8100/\"",//雄安测试服务器
+            xionganTest2   : "\"http://47.96.98.60:8020/\""//雄安测试服务器
     ]
     //TODO:开发时只更改开发引用即可，下方的生产引用不要轻易更改。
     //开发使用的IP地址
-    developUrl = api.xionganTest
+    developUrl = api.xionganTest2
 
     //线上正式运行的IP地址
-    produceUrl = api.xionganTest
+    produceUrl = api.xionganTest2
 
     android = [
             compileSdkVersion: 27,
