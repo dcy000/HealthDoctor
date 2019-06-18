@@ -87,7 +87,12 @@ public class AppStore implements AppLifecycle {
         TagAliasOperatorHelper.getInstance().init(application);
         setDefaultJpushNotification();
         //更新用户系统
-        observerSessions();
+        Handlers.ui().post(new Runnable() {
+            @Override
+            public void run() {
+                observerSessions();
+            }
+        });
     }
 
     @Override
