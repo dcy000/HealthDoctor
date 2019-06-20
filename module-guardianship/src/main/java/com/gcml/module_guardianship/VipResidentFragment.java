@@ -117,7 +117,7 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
                             String wyyxPwd = familyBean.getWyyxPwd();
                             if (!TextUtils.isEmpty(wyyxId)) {
                                 Routerfit.register(CommonRouterApi.class).getCallServiceImp()
-                                        .launchNoCheckWithCallFamily(getContext(), wyyxId);
+                                        .launchNoCheckWithCallFamily(getActivity(), wyyxId);
                             }
                             dialog.dismiss();
                         });
