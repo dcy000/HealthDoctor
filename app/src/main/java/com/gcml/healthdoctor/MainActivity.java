@@ -123,7 +123,7 @@ public class MainActivity extends StateBaseActivity {
 
         final BottomBarTab guardianship = new BottomBarTab(this, R.drawable.ic_first, "签约");
         final BottomBarTab sosDeal = new BottomBarTab(this, R.drawable.ic_second, "消息");
-        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "医学文献");
+        final BottomBarTab healthManager = new BottomBarTab(this, R.drawable.ic_third, "业务");
         final BottomBarTab mine = new BottomBarTab(this, R.drawable.ic_fourth, "我的");
 
         //设置各个模块未读信息的数量
