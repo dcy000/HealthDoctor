@@ -66,12 +66,13 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
     @Override
     public void initView(View view) {
         mRv = (RecyclerView) view.findViewById(R.id.rv);
-        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh = view.findViewById(R.id.refresh);
         mRefresh.setOnRefreshListener(this);
         mRefresh.autoRefresh();
         initRv();
 
     }
+
     private void initRv() {
         mRv.setLayoutManager(new LinearLayoutManager(mActivity));
         mRv.addItemDecoration(new LinearLayoutDividerItemDecoration(0, 20));
@@ -98,10 +99,11 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position),1);
+                Routerfit.register(GuardianshipRouterApi.class).skipResidentDetailActivity(residentBeans.get(position), 1);
             }
         });
     }
+
     private void showVoiceOrVideoConnectDialog(ResidentBean familyBean) {
         FDialog.build()
                 .setSupportFM(getFragmentManager())
@@ -132,6 +134,7 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
                 .setShowBottom(true)
                 .show();
     }
+
     private void getWatchInfo(ResidentBean guardianshipBean) {
         Box.getRetrofit(GuardianshipApi.class)
                 .getWatchInfo(guardianshipBean.getWatchCode())

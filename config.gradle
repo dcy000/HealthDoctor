@@ -19,10 +19,10 @@ ext {
     ]
     //TODO:开发时只更改开发引用即可，下方的生产引用不要轻易更改。
     //开发使用的IP地址
-    developUrl = api.xionganTest
+    developUrl = api.xionganTest2
 
     //线上正式运行的IP地址
-    produceUrl = api.xionganTest
+    produceUrl = api.xionganTest2
 
     android = [
             compileSdkVersion: 27,
@@ -30,7 +30,7 @@ ext {
             minSdkVersion    : 18,
             targetSdkVersion : 27,
             versionCode      : 1,
-            versionName      : "App-CM.Doctor.1.0.0.8.beta"
+            versionName      : "App-CM.Doctor.1.0.0"
     ]
 
     version = [

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gcml.module_mine.api.MineApi;
 import com.gcml.module_mine.api.MineRouterApi;
 import com.gzq.lib_core.base.Box;
@@ -83,6 +84,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
                 });
         Glide.with(Box.getApp())
                 .load(user.getDocterPhoto())
+                .apply(new RequestOptions().placeholder(R.drawable.de_head))
                 .into(mCivHead);
         mTvName.setText(user.getDoctername());
         mTvCommunity.setText(user.getHosname());
