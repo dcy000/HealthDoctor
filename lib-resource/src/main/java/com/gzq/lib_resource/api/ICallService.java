@@ -1,14 +1,15 @@
 package com.gzq.lib_resource.api;
 
+import android.app.Activity;
 import android.content.Context;
 
 public interface ICallService {
     /**
      * 拨打视频电话
-     * @param context
+     * @param activity
      * @param phone
      */
-    void launchNoCheckWithCallFamily(Context context, String phone);
+    void launchNoCheckWithCallFamily(Activity activity, String phone);
 
     /**
      * 登录网易

@@ -57,5 +57,8 @@
         <activity
             android:name=".webview.TestWeb"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MedicalLiteratureActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

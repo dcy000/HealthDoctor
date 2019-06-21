@@ -1,6 +1,9 @@
 package com.ml.module_shouhuan.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,6 +24,9 @@ import com.ml.module_shouhuan.R;
 import com.ml.module_shouhuan.api.ShouhuanRouterApi;
 import com.gzq.lib_resource.bean.MsgBean;
 import com.ml.module_shouhuan.presenter.MsgTodoPresenter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -31,18 +37,13 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @Route(path = "/shouhuan/msgTodo")
-public class MsgToDoFragment extends StateBaseFragment {
+public class MsgToDoFragment extends StateBaseFragment implements OnRefreshListener {
     private MsgTodoPresenter msgTodoPresenter;
     private RecyclerView mRvMsgTodo;
     private BaseQuickAdapter<MsgBean, BaseViewHolder> adapter;
     private ArrayList<MsgBean> msgBeans = new ArrayList<>();
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        msgTodoPresenter.preData();
-    }
-
+    private boolean isAlreadyRefresh;
+    private SmartRefreshLayout mRefresh;
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.fragment_msg_todo;
@@ -56,9 +57,21 @@ public class MsgToDoFragment extends StateBaseFragment {
     @Override
     public void initView(View view) {
         mRvMsgTodo = (RecyclerView) view.findViewById(R.id.rv_msg_todo);
+        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
         initRv();
+        oberSOS();
     }
-
+    private void oberSOS() {
+        AppStore.sosJpush.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (mRefresh!=null){
+                    refreshData();
+                }
+            }
+        });
+    }
     private void initRv() {
         mRvMsgTodo.setLayoutManager(new LinearLayoutManager(mContext));
         mRvMsgTodo.addItemDecoration(new LinearLayoutDividerItemDecoration(0, 24, Box.getColor(R.color.background_gray_f8f8f8)));
@@ -97,7 +110,17 @@ public class MsgToDoFragment extends StateBaseFragment {
         });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isAlreadyRefresh=false;
+    }
     @Override
     public IPresenter obtainPresenter() {
         msgTodoPresenter = new MsgTodoPresenter(this);
@@ -114,5 +137,23 @@ public class MsgToDoFragment extends StateBaseFragment {
         msgBeans.clear();
         msgBeans.addAll(object);
         adapter.notifyDataSetChanged();
+        mRefresh.finishRefresh();
+    }
+
+    @Override
+    public void loadDataError(Object... objects) {
+        mRefresh.finishRefresh(false);
+    }
+
+    private void refreshData(){
+        if (!isAlreadyRefresh){
+            isAlreadyRefresh=true;
+            mRefresh.autoRefresh();
+        }
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        msgTodoPresenter.preData();
     }
 }

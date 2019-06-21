@@ -46,8 +46,9 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
     }};
     private ArrayList<MenuBena> menuBottom = new ArrayList<MenuBena>() {
         {
-            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康检测"));
+            add(new MenuBena(R.drawable.healthmanager_ic_health_measure, "健康管理审批"));
             add(new MenuBena(R.drawable.healthmanager_ic_family_doctor, "家庭医生服务"));
+            add(new MenuBena(R.drawable.healthmanager_ic_family_doctor, "医学文献"));
         }
     };
     private BaseQuickAdapter<MenuBena, BaseViewHolder> adapterTop;
@@ -113,13 +114,13 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
 //                    Routerfit.register(HealthManagerRouterApi.class).skipRiskAssessmentReportActivity();
 //                }
                 if (position == 0) {
-                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000506","药物化合物查询");
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000506", "药物化合物查询");
                 } else if (position == 1) {
-                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000507","疾病症状查询");
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000507", "疾病症状查询");
                 } else if (position == 2) {
-                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000508","基因查询");
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000508", "基因查询");
                 } else if (position == 3) {
-                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000519","通用关系查询");
+                    Routerfit.register(HealthManagerRouterApi.class).skipWebViewActivity("http://www.medppp.com/Sheet/SheetViewG?fl=FL0000000519", "通用关系查询");
                 }
             }
         });
@@ -127,11 +128,14 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (position == 0) {
-                    //健康监测
+                    //健康管理审批
                     Routerfit.register(HealthManagerRouterApi.class).skipHealthMeasureActivity();
                 } else if (position == 1) {
                     //家庭医生服务
                     Routerfit.register(HealthManagerRouterApi.class).skipFamilyDoctorServiceActivity();
+                } else if (position == 2) {
+                    //医学文献
+                    Routerfit.register(HealthManagerRouterApi.class).skipMedicalLiteratureActivity();
                 }
             }
         });

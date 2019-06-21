@@ -30,7 +30,7 @@
         android:id="@+id/rv_menu_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/ll_health_video"
@@ -74,5 +74,5 @@
         android:id="@+id/rv_menu_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 </LinearLayout>

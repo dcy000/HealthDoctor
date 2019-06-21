@@ -2,8 +2,10 @@ package com.gcml.module_health_manager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,10 +94,16 @@ public class HealthMeasureActivity extends StateBaseActivity {
 
             }
         });
+        TextView foot = new TextView(this);
+        foot.setText("该功能根据具体需求定制");
+        foot.setGravity(Gravity.CENTER);
+        foot.setTextColor(ContextCompat.getColor(this,R.color.text_normal_color));
+        foot.setTextSize(16);
+        adapter.addFooterView(foot);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Routerfit.register(HealthManagerRouterApi.class).skipHealthMeasureDetailActivity(position+"", familyDoctorServiceBeans);
+                Routerfit.register(HealthManagerRouterApi.class).skipHealthMeasureDetailActivity(position + "", familyDoctorServiceBeans);
 //                if (position == 0) {
 //                    //血压
 //                } else if (position == 1) {

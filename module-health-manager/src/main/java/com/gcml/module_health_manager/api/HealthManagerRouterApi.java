@@ -57,5 +57,8 @@ public interface HealthManagerRouterApi {
     boolean skipRiskAssessmentResultActivity();
 
     @Go("/health/manager/webview")
-    boolean skipWebViewActivity(@Extra("url") String url,@Extra("title")String title);
+    boolean skipWebViewActivity(@Extra("url") String url, @Extra("title") String title);
+
+    @Go("/medical/literature/activity")
+    boolean skipMedicalLiteratureActivity();
 }
