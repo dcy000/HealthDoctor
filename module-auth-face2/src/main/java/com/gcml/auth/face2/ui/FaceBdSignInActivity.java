@@ -79,14 +79,17 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
         binding.ivAnimation.post(new Runnable() {
             @Override
             public void run() {
-                int[] outLocation = new int[2];
-                Timber.i("Face CropRect: %s x %s", outLocation[0], outLocation[1]);
-                binding.ivAnimation.getLocationInWindow(outLocation);
+                int[] rectLocation = new int[2];
+                int[] rootLocation = new int[2];
+                binding.ivAnimation.getLocationInWindow(rectLocation);
+                binding.clRoot.getLocationInWindow(rootLocation);
+                int left = rectLocation[0];
+                int top = rectLocation[1] - rootLocation[1];
                 mPreviewHelper.setCropRect(new Rect(
-                        outLocation[0],
-                        outLocation[1],
-                        outLocation[0] + binding.ivAnimation.getWidth(),
-                        outLocation[1] + binding.ivAnimation.getHeight()
+                        left,
+                        top,
+                        left + binding.ivAnimation.getWidth(),
+                        top + binding.ivAnimation.getHeight()
                 ));
             }
         });
@@ -110,7 +113,7 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
         binding.previewMask.post(new Runnable() {
             @Override
             public void run() {
-                // 适配屏幕比例非 9:16 的屏幕
+                // 适配屏幕
                 int height = binding.clRoot.getHeight();
                 int width = binding.clRoot.getWidth();
                 Timber.w("face preview: width = %s, height = %s", width, height);
