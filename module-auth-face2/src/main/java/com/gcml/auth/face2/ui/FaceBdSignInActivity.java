@@ -97,11 +97,16 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
 //                takeFrames("");
             }
         });
+        compactScreenHeight();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        compactScreenHeight();
+    }
+
+    private void compactScreenHeight() {
         binding.previewMask.post(new Runnable() {
             @Override
             public void run() {

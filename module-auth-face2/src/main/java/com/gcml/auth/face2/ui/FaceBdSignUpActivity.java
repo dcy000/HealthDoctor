@@ -106,15 +106,20 @@ public class FaceBdSignUpActivity extends BaseActivity<FaceActivityBdSignUpBindi
 //                takeFrames("");
             }
         });
+        compactScreenHeight();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        compactScreenHeight();
+    }
+
+    private void compactScreenHeight() {
         binding.previewMask.post(new Runnable() {
             @Override
             public void run() {
-                // 适配屏幕比例
+                // 适配屏幕高度
                 int height = binding.clRoot.getHeight();
                 int width = binding.clRoot.getWidth();
                 Timber.w("face preview: width = %s, height = %s", width, height);

@@ -2,6 +2,7 @@ package com.gzq.lib_core.http.exception;
 
 
 import com.google.gson.reflect.TypeToken;
+import com.gzq.lib_core.BuildConfig;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.model.BaseModel;
 
@@ -12,6 +13,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 /**
  * 加入了对错误处理，已经比较完整了
