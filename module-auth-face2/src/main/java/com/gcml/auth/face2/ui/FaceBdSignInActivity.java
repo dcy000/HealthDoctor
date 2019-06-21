@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -80,7 +81,7 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
             public void run() {
                 int[] outLocation = new int[2];
                 Timber.i("Face CropRect: %s x %s", outLocation[0], outLocation[1]);
-                binding.ivAnimation.getLocationOnScreen(outLocation);
+                binding.ivAnimation.getLocationInWindow(outLocation);
                 mPreviewHelper.setCropRect(new Rect(
                         outLocation[0],
                         outLocation[1],
@@ -94,6 +95,31 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
             public void onClick(View v) {
 //                start();
 //                takeFrames("");
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.previewMask.post(new Runnable() {
+            @Override
+            public void run() {
+                // 适配屏幕比例非 9:16 的屏幕
+                int height = binding.clRoot.getHeight();
+                int width = binding.clRoot.getWidth();
+                Timber.w("face preview: width = %s, height = %s", width, height);
+                int extra = height - width * 15 / 9;
+                ViewGroup.LayoutParams params = binding.extraBottom.getLayoutParams();
+                if (params != null) {
+                    if (extra > 0) {
+                        params.height = extra;
+                    } else {
+                        params.height = 1;
+                    }
+                    binding.extraBottom.setLayoutParams(params);
+                    binding.clRoot.requestLayout();
+                }
             }
         });
     }
