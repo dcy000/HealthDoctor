@@ -42,6 +42,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
     private LinearLayout mLlMyMoney;
     private TextView mTvMoney;
     private int moneyAmmount;
+
     @Override
     public int layoutId(Bundle savedInstanceState) {
         return R.layout.mine_fragment_main;
@@ -78,7 +79,7 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
                 .subscribe(new CommonObserver<Integer>() {
                     @Override
                     public void onNext(Integer integer) {
-                        moneyAmmount=integer;
+                        moneyAmmount = integer;
                         mTvMoney.setText(integer + "元");
                     }
                 });
@@ -88,6 +89,12 @@ public class MainMineFragment extends StateBaseFragment implements View.OnClickL
                 .into(mCivHead);
         mTvName.setText(user.getDoctername());
         mTvCommunity.setText(user.getHosname());
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        fillData();
     }
 
     @Override

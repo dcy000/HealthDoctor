@@ -47,7 +47,7 @@ public class MsgAlreadyDoFragment extends StateBaseFragment implements OnRefresh
     @Override
     public void initView(View view) {
         mRvMsgAlreadyDo = (RecyclerView) view.findViewById(R.id.rv_msg_already_do);
-        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh = view.findViewById(R.id.refresh);
         mRefresh.setOnRefreshListener(this);
         mRefresh.autoRefresh();
         initRv();
@@ -62,6 +62,7 @@ public class MsgAlreadyDoFragment extends StateBaseFragment implements OnRefresh
     @Override
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
+        mRefresh.finishRefresh();
         ArrayList<MsgBean> object = (ArrayList<MsgBean>) objects[0];
         msgBeans.clear();
         msgBeans.addAll(object);
@@ -71,6 +72,18 @@ public class MsgAlreadyDoFragment extends StateBaseFragment implements OnRefresh
     @Override
     public void loadDataError(Object... objects) {
         mRefresh.finishRefresh(false);
+    }
+
+    @Override
+    public void loadDataEmpty() {
+        super.loadDataEmpty();
+        mRefresh.finishRefresh();
+    }
+
+    @Override
+    public void onNetworkError() {
+        super.onNetworkError();
+        mRefresh.finishRefresh();
     }
 
     private void initRv() {

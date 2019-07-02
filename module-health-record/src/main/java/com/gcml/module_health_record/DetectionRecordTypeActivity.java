@@ -19,6 +19,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.KVUtils;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.constants.KVConstants;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
@@ -32,6 +33,7 @@ import java.util.List;
 public class DetectionRecordTypeActivity extends StateBaseActivity {
     private RecyclerView mRvMenu;
     private ArrayList<ChooseDetectionTypeBean> types = new ArrayList<>();
+    private ResidentBean guardianshipBean;
 
     {
         types.add(new ChooseDetectionTypeBean(0, "血压", "", "", "mmHg"));
@@ -58,7 +60,7 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
-
+        guardianshipBean = intentArgument.getParcelableExtra("data");
     }
 
     @Override
@@ -71,8 +73,9 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
     }
 
     private void getData() {
+        int bid = guardianshipBean != null ? guardianshipBean.getBid() : 0;
         Box.getRetrofit(HealthRecordServer.class)
-                .getLatestDetectionData(KVUtils.get(KVConstants.KEY_PATIENTID, 0) + "")
+                .getLatestDetectionData(bid + "")
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<List<LatestDetecBean>>() {
@@ -134,7 +137,7 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
 
     private void setAdapter() {
         mRvMenu.setLayoutManager(new LinearLayoutManager(this));
-        mRvMenu.addItemDecoration(new LinearLayoutDividerItemDecoration(0,24));
+        mRvMenu.addItemDecoration(new LinearLayoutDividerItemDecoration(0, 24));
         adapter = new BaseQuickAdapter<ChooseDetectionTypeBean, BaseViewHolder>(R.layout.item_detection_data_menu, types) {
             @Override
             protected void convert(BaseViewHolder helper, ChooseDetectionTypeBean item) {

@@ -10,6 +10,8 @@ import com.gzq.lib_resource.mvp.base.IView;
 import com.ml.module_shouhuan.api.ShouhuanApi;
 import com.gzq.lib_resource.bean.MsgBean;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MsgTodoPresenter extends BasePresenter {
@@ -28,6 +30,13 @@ public class MsgTodoPresenter extends BasePresenter {
                 .subscribe(new CommonObserver<List<MsgBean>>() {
                     @Override
                     public void onNext(List<MsgBean> msgBeans) {
+                        Collections.sort(msgBeans, new Comparator<MsgBean>() {
+                            @Override
+                            public int compare(MsgBean o1, MsgBean o2) {
+                                return (int) (o2.getWarningTime() - o1.getWarningTime());
+                            }
+                        });
+
                         mView.loadDataSuccess(msgBeans);
                     }
 

@@ -44,10 +44,17 @@ public class AppStore implements AppLifecycle {
     public static MutableLiveData<Integer> guardianship = new MutableLiveData<>();
     public static MutableLiveData<Integer> healthManager = new MutableLiveData<>();
     public static MutableLiveData<Integer> sosDeal = new MutableLiveData<>();
-    public static MutableLiveData<Boolean> sosJpush=new MutableLiveData<>();
+    public static MutableLiveData<Boolean> sosJpush = new MutableLiveData<>();
     public static MutableLiveData<Integer> mine = new MutableLiveData<>();
     public static MutableLiveData<Boolean> isShowMsgFragment = new MutableLiveData<>();
     private int jpushSerialNumber = 12984012;
+
+    public static void clear() {
+        AppStore.guardianship.setValue(0);
+        AppStore.healthManager.setValue(0);
+        AppStore.sosDeal.setValue(0);
+        AppStore.mine.setValue(0);
+    }
 
     @Override
     public void attachBaseContext(@NonNull Context base) {

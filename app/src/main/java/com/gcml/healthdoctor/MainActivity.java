@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.KVUtils;
+import com.gzq.lib_core.utils.PermissionUtils;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.api.CommonApi;
@@ -29,6 +31,7 @@ import com.sjtu.yifei.route.Routerfit;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -76,20 +79,33 @@ public class MainActivity extends StateBaseActivity {
     }
 
     private void requestPermissionss() {
-        RxPermissions permissions = new RxPermissions(this);
-        permissions.requestEach(Manifest.permission.READ_PHONE_STATE,
+        initFragments();
+        PermissionUtils.requestEach(this,
+                Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA)
-                .as(RxUtils.<Permission>autoDisposeConverter(this))
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<Permission>() {
                     @Override
                     public void onNext(Permission permission) {
-                        if (permission.granted) {
-                            initFragments();
-                        } else {
-                            ToastUtils.showLong("请同意相关权限后，再次打开应用");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        String message = e.getMessage();
+                        if (!TextUtils.isEmpty(message)) {
+                            ToastUtils.showLong(message);
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+
                     }
                 });
     }
@@ -165,26 +181,29 @@ public class MainActivity extends StateBaseActivity {
         AppStore.guardianship.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                guardianship.setUnreadCount(integer);
-            }
-        });
-        AppStore.healthManager.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                healthManager.setUnreadCount(integer);
+                guardianship.setUnreadCount(integer != null ? integer : 0);
             }
         });
 
+//        healthManager.setUnreadCount(AppStore.healthManager.getValue()!= null ? AppStore.healthManager.getValue() : 0);
+        AppStore.healthManager.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                healthManager.setUnreadCount(integer != null ? integer : 0);
+            }
+        });
+
+//        sosDeal.setUnreadCount(AppStore.sosDeal.getValue()!= null ? AppStore.sosDeal.getValue() : 0);
         AppStore.sosDeal.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                sosDeal.setUnreadCount(integer);
+                sosDeal.setUnreadCount(integer != null ? integer : 0);
             }
         });
         AppStore.mine.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                mine.setUnreadCount(integer);
+                mine.setUnreadCount(integer != null ? integer : 0);
             }
         });
 
@@ -212,7 +231,7 @@ public class MainActivity extends StateBaseActivity {
         AppStore.isShowMsgFragment.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                if (aBoolean) {
+                if (aBoolean == null ? false : aBoolean) {
                     AppStore.isShowMsgFragment.postValue(false);
                     mBottomBar.setCurrentItem(1);
                     showHideFragment(mFragments[1]);

@@ -1,6 +1,7 @@
 package com.gzq.lib_core.http.exception;
 
 
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.gzq.lib_core.BuildConfig;
 import com.gzq.lib_core.base.Box;
@@ -54,11 +55,17 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
                 }
                 T data = httpResult.getData();
                 if (data == null) {
-                    Type type = new TypeToken<T>() {}.getType();
                     try {
                         data = (T) new ArrayList<>();
                     } catch (Throwable e) {
-                        data =  Box.getGson().fromJson("{}", type);
+                        try {
+                            Type type = new TypeToken<T>() {
+                            }.getType();
+                            data = Box.getGson().fromJson("{}", type);
+                        } catch (Throwable e1) {
+                            data = (T) new Object();
+                            e1.printStackTrace();
+                        }
                     }
                 }
                 if (BuildConfig.DEBUG) {

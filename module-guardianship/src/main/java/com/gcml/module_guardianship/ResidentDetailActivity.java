@@ -214,7 +214,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
 //                    }
                     if (position == 0) {
                         //健康检测记录
-                        Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity();
+                        Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity(guardianshipBean);
                     }
                     return;
                 }
@@ -240,7 +240,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                     Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
                 } else if (position == 1) {
                     //健康检测记录
-                    Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity();
+                    Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity(guardianshipBean);
                 } else if (position == 2) {
                     //远程监控
                     Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(

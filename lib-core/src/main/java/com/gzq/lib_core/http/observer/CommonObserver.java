@@ -9,7 +9,8 @@ public abstract class CommonObserver<T> extends BaseObserver<T> {
 
     @Override
     protected void onError(ApiException ex) {
-        ToastUtils.showShort(ex.message + ":" + ex.code);
+//        ToastUtils.showShort(ex.message + ":" + ex.code);
+        ToastUtils.showShort(ex.message);
         switch (ex.code) {
             case 9001:
             case 9002:

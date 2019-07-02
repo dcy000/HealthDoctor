@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refresh">
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        app:srlTextFailed="刷新完成"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <android.support.v7.widget.RecyclerView

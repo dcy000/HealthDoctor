@@ -52,5 +52,5 @@ public interface GuardianshipRouterApi {
     boolean skipRemoteMeasureActivity(@Extra("watchCode") String watchCode, @Extra("userId") String userId);
 
     @Go("/health/record/detection")
-    boolean skipDetectionRecordTypeActivity();
+    boolean skipDetectionRecordTypeActivity(@Extra("data") ResidentBean guardianshipBean);
 }

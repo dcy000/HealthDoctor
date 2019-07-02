@@ -13,6 +13,7 @@ import com.gcml.module_mine.api.MineRouterApi;
 import com.gcml.module_mine.bean.SetupBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.ToastUtils;
+import com.gzq.lib_resource.app.AppStore;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
@@ -100,6 +101,7 @@ public class SetupActivity extends StateBaseActivity {
         super.onClick(v);
         int id = v.getId();
         if (id == R.id.tv_login_out) {
+            AppStore.clear();
             Box.getSessionManager().clear();
         }
     }

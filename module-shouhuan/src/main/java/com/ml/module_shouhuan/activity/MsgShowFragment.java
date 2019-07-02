@@ -1,7 +1,6 @@
 package com.ml.module_shouhuan.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.RelativeLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.gzq.lib_resource.adapter.PageFragmentAdapter;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.ScreenUtils;
 import com.ml.module_shouhuan.R;

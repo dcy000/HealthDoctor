@@ -203,6 +203,7 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
 
                     @Override
                     protected void onError(ApiException ex) {
+                        super.onError(ex);
                         mRefresh.finishRefresh(false);
                     }
                 });

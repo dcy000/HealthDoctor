@@ -170,6 +170,7 @@ public class NormalResidentFragment extends StateBaseFragment implements OnRefre
 
                     @Override
                     protected void onError(ApiException ex) {
+                        super.onError(ex);
                         mRefresh.finishRefresh(false);
                     }
                 });
