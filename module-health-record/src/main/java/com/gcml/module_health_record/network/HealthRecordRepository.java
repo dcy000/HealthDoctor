@@ -28,7 +28,7 @@ import io.reactivex.Observable;
  * description:TODO
  */
 public class HealthRecordRepository {
-    String userId = KVUtils.get(KVConstants.KEY_PATIENTID, 0) + "";
+    public String userId = KVUtils.get(KVConstants.KEY_PATIENTID, 0) + "";
     private HealthRecordServer healthRecordServer = Box.getRetrofit(HealthRecordServer.class);
 
     public Observable<List<TemperatureHistory>> getTemperatureHistory(String start, String end, String temp) {

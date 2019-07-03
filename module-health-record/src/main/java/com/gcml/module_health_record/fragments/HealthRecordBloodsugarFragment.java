@@ -55,6 +55,8 @@ public class HealthRecordBloodsugarFragment extends RecycleBaseFragment implemen
     private RadioButton mRbTwoHour;
     private RadioGroup mRgXuetangTime;
     private int eatedTime = 0;//默认空腹：0；饭后一小时：1；饭后两小时:2;其他时间：3
+    private int bid;
+    private HealthRecordRepository repository;
 
 
     @Override
@@ -64,6 +66,9 @@ public class HealthRecordBloodsugarFragment extends RecycleBaseFragment implemen
 
     @Override
     protected void initView(View view, Bundle bundle) {
+        bid = bundle.getInt("bid", 0);
+        repository = new HealthRecordRepository();
+        repository.userId = bid + "";
         mRbKongfu = view.findViewById(R.id.rb_kongfu);
         mRbOneHour = view.findViewById(R.id.rb_one_hour);
         mRbTwoHour = view.findViewById(R.id.rb_two_hour);
@@ -123,7 +128,7 @@ public class HealthRecordBloodsugarFragment extends RecycleBaseFragment implemen
         startMillisecond = TimeUtils.string2Milliseconds(selectStartYear + "-" + selectStartMonth + "-" +
                 selectStartDay, new SimpleDateFormat("yyyy-MM-dd")) + "";
 
-        new HealthRecordRepository()
+        repository
                 .getBloodSugarHistory(startMillisecond, endMillisecond, "4")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

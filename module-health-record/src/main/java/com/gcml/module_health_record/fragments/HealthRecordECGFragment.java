@@ -28,6 +28,8 @@ import io.reactivex.schedulers.Schedulers;
 public class HealthRecordECGFragment extends RecycleBaseFragment {
 
     private RecyclerView mXindiantu;
+    private int bid;
+    private HealthRecordRepository repository;
 
     @Override
     protected int initLayout() {
@@ -36,6 +38,9 @@ public class HealthRecordECGFragment extends RecycleBaseFragment {
 
     @Override
     protected void initView(View view, Bundle bundle) {
+        bid = bundle.getInt("bid", 0);
+        repository = new HealthRecordRepository();
+        repository.userId = bid + "";
         mXindiantu = view.findViewById(R.id.xindiantu);
         getData();
     }

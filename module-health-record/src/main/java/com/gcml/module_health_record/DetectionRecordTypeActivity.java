@@ -195,7 +195,10 @@ public class DetectionRecordTypeActivity extends StateBaseActivity {
     }
 
     private void startHealthRecord(int type) {
-        startActivity(new Intent(this, HealthRecordActivity.class).putExtra("type", type));
+        startActivity(new Intent(this, HealthRecordActivity.class)
+                .putExtra("type", type)
+                .putExtra("bid", guardianshipBean.getBid())
+        );
     }
 
     @Override

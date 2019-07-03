@@ -63,6 +63,8 @@ public class HealthRecordBloodoxygenFragment extends RecycleBaseFragment {
     private int selectStartMonth;
     private int selectStartDay;
     private String startMillisecond;
+    private HealthRecordRepository repository;
+    private int bid;
 
     @Override
     protected int initLayout() {
@@ -71,6 +73,9 @@ public class HealthRecordBloodoxygenFragment extends RecycleBaseFragment {
 
     @Override
     protected void initView(View view, Bundle bundle) {
+        bid = bundle.getInt("bid", 0);
+        repository = new HealthRecordRepository();
+        repository.userId = bid + "";
         mRbKongfu = view.findViewById(R.id.rb_kongfu);
         mRbOneHour = view.findViewById(R.id.rb_one_hour);
         mRbTwoHour = view.findViewById(R.id.rb_two_hour);
@@ -89,6 +94,8 @@ public class HealthRecordBloodoxygenFragment extends RecycleBaseFragment {
         mColor1.setBackgroundColor(Box.getColor(R.color.health_record_node_color));
         mIndicator1.setText("血氧");
         mLlSecond.setVisibility(View.GONE);
+        repository = new HealthRecordRepository();
+//        repository.userId =
         getData();
     }
 
@@ -115,7 +122,8 @@ public class HealthRecordBloodoxygenFragment extends RecycleBaseFragment {
         startMillisecond = TimeUtils.string2Milliseconds(selectStartYear + "-" + selectStartMonth + "-" +
                 selectStartDay, new SimpleDateFormat("yyyy-MM-dd")) + "";
 
-        new HealthRecordRepository()
+
+        repository
                 .getBloodOxygenHistory(startMillisecond, endMillisecond, "5")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -54,6 +54,8 @@ public class HealthRecordTemperatureFragment extends RecycleBaseFragment {
     private RadioButton mRbOneHour;
     private RadioButton mRbTwoHour;
     private RadioGroup mRgXuetangTime;
+    private int bid;
+    private HealthRecordRepository repository;
 
     @Override
     protected int initLayout() {
@@ -62,6 +64,9 @@ public class HealthRecordTemperatureFragment extends RecycleBaseFragment {
 
     @Override
     protected void initView(View view, Bundle bundle) {
+        bid = bundle.getInt("bid", 0);
+        repository = new HealthRecordRepository();
+        repository.userId = bid + "";
         mRbKongfu = view.findViewById(R.id.rb_kongfu);
         mRbOneHour = view.findViewById(R.id.rb_one_hour);
         mRbTwoHour = view.findViewById(R.id.rb_two_hour);
@@ -81,6 +86,7 @@ public class HealthRecordTemperatureFragment extends RecycleBaseFragment {
         mLlSecond.setVisibility(View.GONE);
         getData();
     }
+
     private int selectEndYear;
     private int selectEndMonth;
     private int selectEndDay;
@@ -116,14 +122,14 @@ public class HealthRecordTemperatureFragment extends RecycleBaseFragment {
         startMillisecond = TimeUtils.string2Milliseconds(selectStartYear + "-" + selectStartMonth + "-" +
                 selectStartDay, new SimpleDateFormat("yyyy-MM-dd")) + "";
 
-        new HealthRecordRepository()
+        repository
                 .getTemperatureHistory(startMillisecond, endMillisecond, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<List<TemperatureHistory>>() {
                     @Override
                     public void onNext(List<TemperatureHistory> temperatureHistories) {
-                        refreshData(temperatureHistories,"1");
+                        refreshData(temperatureHistories, "1");
                     }
 
                     @Override
@@ -137,6 +143,7 @@ public class HealthRecordTemperatureFragment extends RecycleBaseFragment {
                     }
                 });
     }
+
     private void initChart() {
         //x轴右下角文字描述
         mChart.getDescription().setEnabled(false);

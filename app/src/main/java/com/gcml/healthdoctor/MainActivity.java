@@ -225,20 +225,6 @@ public class MainActivity extends StateBaseActivity {
         return new DefaultVerticalAnimator();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AppStore.isShowMsgFragment.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if (aBoolean == null ? false : aBoolean) {
-                    AppStore.isShowMsgFragment.postValue(false);
-                    mBottomBar.setCurrentItem(1);
-                    showHideFragment(mFragments[1]);
-                }
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
@@ -247,6 +233,5 @@ public class MainActivity extends StateBaseActivity {
         AppStore.healthManager.removeObservers(this);
         AppStore.sosDeal.removeObservers(this);
         AppStore.mine.removeObservers(this);
-        AppStore.isShowMsgFragment.removeObservers(this);
     }
 }

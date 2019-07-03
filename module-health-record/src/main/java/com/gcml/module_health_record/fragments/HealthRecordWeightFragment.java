@@ -52,6 +52,8 @@ public class HealthRecordWeightFragment extends RecycleBaseFragment {
     private RadioButton mRbOneHour;
     private RadioButton mRbTwoHour;
     private RadioGroup mRgXuetangTime;
+    private int bid;
+    private HealthRecordRepository repository;
 
     @Override
     protected int initLayout() {
@@ -60,6 +62,9 @@ public class HealthRecordWeightFragment extends RecycleBaseFragment {
 
     @Override
     protected void initView(View view, Bundle bundle) {
+        bid = bundle.getInt("bid", 0);
+        repository = new HealthRecordRepository();
+        repository.userId = bid + "";
         mRbKongfu = view.findViewById(R.id.rb_kongfu);
         mRbOneHour = view.findViewById(R.id.rb_one_hour);
         mRbTwoHour = view.findViewById(R.id.rb_two_hour);
@@ -115,7 +120,7 @@ public class HealthRecordWeightFragment extends RecycleBaseFragment {
         startMillisecond = TimeUtils.string2Milliseconds(selectStartYear + "-" + selectStartMonth + "-" +
                 selectStartDay, new SimpleDateFormat("yyyy-MM-dd")) + "";
 
-        new HealthRecordRepository()
+        repository
                 .getWeight(startMillisecond, endMillisecond, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

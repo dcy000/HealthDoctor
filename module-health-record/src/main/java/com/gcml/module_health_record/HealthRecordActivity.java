@@ -23,6 +23,7 @@ import com.gzq.lib_resource.mvp.base.IPresenter;
 
 public class HealthRecordActivity extends StateBaseActivity implements View.OnClickListener {
     private int type;
+    private int bid;
     private RecycleBaseFragment baseFragment;
     private ImageView mHealthIvLeft;
     private TextView mHealthTvLeft;
@@ -42,6 +43,7 @@ public class HealthRecordActivity extends StateBaseActivity implements View.OnCl
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         type = intentArgument.getIntExtra("type", 22);
+        bid = intentArgument.getIntExtra("bid", 0);
     }
 
     @Override
@@ -95,6 +97,10 @@ public class HealthRecordActivity extends StateBaseActivity implements View.OnCl
                 break;
         }
         if (baseFragment != null) {
+            if (baseFragment.getArguments() == null) {
+                baseFragment.setArguments(new Bundle());
+            }
+            baseFragment.getArguments().putInt("bid", bid);
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_contain, baseFragment).commitAllowingStateLoss();
         }
 
