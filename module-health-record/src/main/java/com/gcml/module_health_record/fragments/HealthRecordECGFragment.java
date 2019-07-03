@@ -80,7 +80,7 @@ public class HealthRecordECGFragment extends RecycleBaseFragment {
         startMillisecond = TimeUtils.string2Milliseconds(selectStartYear + "-" + selectStartMonth + "-" +
                 selectStartDay, new SimpleDateFormat("yyyy-MM-dd")) + "";
 
-        new HealthRecordRepository()
+        repository
                 .getECGHistory(startMillisecond, endMillisecond, "9")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

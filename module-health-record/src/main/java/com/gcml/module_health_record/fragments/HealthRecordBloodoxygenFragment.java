@@ -94,8 +94,6 @@ public class HealthRecordBloodoxygenFragment extends RecycleBaseFragment {
         mColor1.setBackgroundColor(Box.getColor(R.color.health_record_node_color));
         mIndicator1.setText("血氧");
         mLlSecond.setVisibility(View.GONE);
-        repository = new HealthRecordRepository();
-//        repository.userId =
         getData();
     }
 
