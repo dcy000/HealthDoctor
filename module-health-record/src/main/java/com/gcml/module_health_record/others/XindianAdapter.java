@@ -41,11 +41,11 @@ public class XindianAdapter extends BaseQuickAdapter<ECGHistory, BaseViewHolder>
 
         helper.setText(R.id.item_tv_time, TimeUtils.milliseconds2String(item.time,
                 new SimpleDateFormat("yyyy-MM-dd HH:mm")));
-        if (TextUtils.isEmpty(item.result_url)) {
-            helper.getView(R.id.btn_health_record_detail).setVisibility(View.GONE);
-        } else {
-            helper.getView(R.id.btn_health_record_detail).setVisibility(View.VISIBLE);
-        }
+//        if (TextUtils.isEmpty(item.result_url)) {
+//            helper.getView(R.id.btn_health_record_detail).setVisibility(View.GONE);
+//        } else {
+//            helper.getView(R.id.btn_health_record_detail).setVisibility(View.VISIBLE);
+//        }
         ((TextView) helper.getView(R.id.btn_health_record_detail)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

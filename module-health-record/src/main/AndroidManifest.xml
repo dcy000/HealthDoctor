@@ -6,7 +6,7 @@
             android:name=".DetectionRecordTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HealthRecordActivity"
-            android:screenOrientation="landscape" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".HealthRecordActivity" />
     </application>
 </manifest>

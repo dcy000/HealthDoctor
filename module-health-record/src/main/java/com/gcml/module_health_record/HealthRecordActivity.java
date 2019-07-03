@@ -1,6 +1,7 @@
 package com.gcml.module_health_record;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -44,6 +45,7 @@ public class HealthRecordActivity extends StateBaseActivity implements View.OnCl
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         type = intentArgument.getIntExtra("type", 22);
         bid = intentArgument.getIntExtra("bid", 0);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     @Override
