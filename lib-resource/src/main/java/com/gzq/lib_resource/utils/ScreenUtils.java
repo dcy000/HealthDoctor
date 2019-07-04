@@ -3,7 +3,9 @@ package com.gzq.lib_resource.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -11,6 +13,58 @@ import android.view.WindowManager;
 import com.gzq.lib_core.base.App;
 
 public class ScreenUtils {
+
+    public static int[] getScreenSize(Context context) {
+        int[] size = new int[2];
+
+        WindowManager w = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display d = w.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        d.getMetrics(metrics);
+        // since SDK_INT = 1;
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17)
+            try {
+                widthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
+                heightPixels = (Integer) Display.class.getMethod("getRawHeight").invoke(d);
+            } catch (Exception ignored) {
+            }
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 17)
+            try {
+                Point realSize = new Point();
+                Display.class.getMethod("getRealSize", Point.class).invoke(d, realSize);
+                widthPixels = realSize.x;
+                heightPixels = realSize.y;
+            } catch (Exception ignored) {
+            }
+        size[0] = widthPixels;
+        size[1] = heightPixels;
+        return size;
+    }
+
+    public static int getNavigationBarHeight(Context context) {
+        //如果小米手机开启了全面屏手势隐藏了导航栏则返回 0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (Settings.Global.getInt(context.getContentResolver(), "force_fsg_nav_bar", 0) != 0) {
+                return 0;
+            }
+        }
+        int realHeight = getScreenSize(context)[1];
+
+        Display d = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        d.getMetrics(displayMetrics);
+
+        int displayHeight = displayMetrics.heightPixels;
+
+        return realHeight - displayHeight;
+    }
+
+
     /**
      * 获取状态栏高度
      *
@@ -35,26 +89,29 @@ public class ScreenUtils {
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
     public static int px2dip(float pxValue) {
-        final float scale =App.getApp().getResources().getDisplayMetrics().density;
+        final float scale = App.getApp().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
     /**
-     *   将px值转换为sp值
+     * 将px值转换为sp值
      */
     public static int px2sp(float pxValue) {
-        final float fontScale =App.getApp().getResources().getDisplayMetrics().scaledDensity;
+        final float fontScale = App.getApp().getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
     /**
      * 将sp值转换为px值
+     *
      * @param spValue
      * @return
      */
-    public static int sp2px( float spValue) {
+    public static int sp2px(float spValue) {
         final float fontScale = App.getApp().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
+
     /**
      * 获取屏幕的宽度
      *
@@ -81,6 +138,7 @@ public class ScreenUtils {
     public static float getScreenDensity() {
         return App.getApp().getResources().getDisplayMetrics().density;
     }
+
     /**
      * 获取屏幕内容的实际高度
      *
@@ -113,8 +171,9 @@ public class ScreenUtils {
             }
         return heightPixels;
     }
-    public static boolean isScreenLandscape(){
-        Configuration configuration =App.getApp().getResources().getConfiguration();
+
+    public static boolean isScreenLandscape() {
+        Configuration configuration = App.getApp().getResources().getConfiguration();
         return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 }

@@ -74,9 +74,9 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
         mRvMenuBottom = (RecyclerView) view.findViewById(R.id.rv_menu_bottom);
         mLlHealthVideo = view.findViewById(R.id.ll_health_video);
         mLlHealthVideo.setOnClickListener(this);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
-        layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
-        mRl.setLayoutParams(layoutParams);
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
+//        layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
+//        mRl.setLayoutParams(layoutParams);
         initRv();
     }
 

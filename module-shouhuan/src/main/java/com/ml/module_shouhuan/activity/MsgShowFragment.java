@@ -48,9 +48,9 @@ public class MsgShowFragment extends StateBaseFragment {
         mViewPager.setAdapter(new PageFragmentAdapter(getChildFragmentManager(), msgFragments, titleString));
         mTitleTabLayout.setViewPager(mViewPager);
         mRl = view.findViewById(R.id.rl);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
-        layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
-        mRl.setLayoutParams(layoutParams);
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mRl.getLayoutParams());
+//        layoutParams.topMargin = ScreenUtils.getStatusBarHeight(mContext);
+//        mRl.setLayoutParams(layoutParams);
     }
 
 

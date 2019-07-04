@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.githang.statusbar.StatusBarCompat;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_resource.api.CommonRouterApi;
+import com.jaeger.library.StatusBarUtil;
 import com.sjtu.yifei.route.Routerfit;
 
 public class SplashActivity extends AppCompatActivity {

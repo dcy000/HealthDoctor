@@ -128,10 +128,11 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+//        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
         //设置状态栏的颜色
+        StatusBarCompat.setFitsSystemWindows(getWindow(), true);
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
-        NotchTools.getFullScreenTools().fullScreenDontUseStatus(this);
+//        NotchTools.getFullScreenTools().fullScreenUseStatus(this);
         //加载页面成功
         showSuccess();
         mToolbar.setVisibility(View.GONE);
@@ -155,12 +156,12 @@ public class MainActivity extends StateBaseActivity {
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
-                if (position == 3) {
-                    StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
-                } else {
-                    //设置状态栏的颜色
-                    StatusBarCompat.setStatusBarColor(MainActivity.this, Box.getColor(R.color.white));
-                }
+//                if (position == 3) {
+////                    StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 0, null);
+//                } else {
+//                    //设置状态栏的颜色
+//                    StatusBarCompat.setStatusBarColor(MainActivity.this, Box.getColor(R.color.white));
+//                }
                 showHideFragment(mFragments[position], mFragments[prePosition]);
             }
 
