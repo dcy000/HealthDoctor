@@ -11,4 +11,5 @@ include ':app',
         ':lib-bluetooth',
         ':module-health-record',
         ':notchtools',
-        ':lib-call2'
+        ':lib-call2',
+        ':biz-followup'

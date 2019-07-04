@@ -25,17 +25,17 @@ ext {
     produceUrl = api.xionganTest2
 
     android = [
-            compileSdkVersion: 27,
-            buildToolsVersion: "27.0.3",
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.2",
             minSdkVersion    : 18,
-            targetSdkVersion : 27,
+            targetSdkVersion : 28,
             versionCode      : 1,
             versionName      : "App-CM.Doctor.1.0.0.16.beta"
 //            versionName      : "App-CM.Doctor.1.0.0.16"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.1.1",
+            androidSupportSdkVersion: "28.0.0",
             androidArchSdkVersion   : "1.1.1",
             constraintLayoutVersion : "1.1.2",
             retrofitSdkVersion      : "2.4.0",
