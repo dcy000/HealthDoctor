@@ -6,6 +6,7 @@ import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.LatLonBean;
 import com.gcml.module_guardianship.bean.MeasureDataBean;
+import com.gcml.module_guardianship.bean.UpdateHealthStatusBean;
 import com.gcml.module_guardianship.bean.UserTypeBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.http.model.HttpResult;
@@ -14,6 +15,7 @@ import com.gzq.lib_resource.bean.ResidentBean;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -118,9 +120,12 @@ public interface GuardianshipApi {
             @Query("userId") String userId
     );
 
-    @POST("ZZB//api/type/getItemByCode/")
+    @POST("ZZB/api/type/getItemByCode/")
     Observable<HttpResult<List<UserTypeBean>>> getItemByCode(
             @Query("code") String code
     );
 
+
+    @POST("ZZB/br/updateOneUser")
+    Observable<HttpResult<Object>> updateOneUser(@Body UpdateHealthStatusBean data);
 }

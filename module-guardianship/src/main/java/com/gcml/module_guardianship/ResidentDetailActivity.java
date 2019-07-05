@@ -175,7 +175,8 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         } else if (i == R.id.ivDialPhone) {
             showVoiceOrVideoConnectDialog(guardianshipBean);
         } else if (i == R.id.tvHealthModify) {
-           startActivity(new Intent(this,ModifyHealthStatusActivity.class));
+           startActivity(new Intent(this,ModifyHealthStatusActivity.class)
+                   .putExtra("userId",guardianshipBean.getBid()));
         }
     }
 

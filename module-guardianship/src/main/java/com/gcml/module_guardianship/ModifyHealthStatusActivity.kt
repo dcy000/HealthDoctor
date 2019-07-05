@@ -16,6 +16,8 @@ import io.reactivex.observers.DefaultObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_modify_health_status.*
 import android.widget.Toast
+import com.gcml.module_guardianship.bean.UpdateHealthStatusBean
+import com.gzq.lib_core.utils.ToastUtils
 
 
 class ModifyHealthStatusActivity : AppCompatActivity() {
@@ -46,49 +48,77 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
         }
 
         tvConfirm.setOnClickListener {
+            var data = UpdateHealthStatusBean()
+            data.bid = intent.getIntExtra("userId", 0)
+            data.userType = ""
+            when {
+                tvNormal?.isSelected == true -> data.userType = "正常居民"
+                else -> {
+                    professionItems?.filter { it.select }?.forEach { data.userType = data.userType + it.text + "," }
+                    slowItems?.filter { it.select }?.forEach { data.userType = data.userType + it.text + "," }
+                }
+            }
 
+            Box.getRetrofit(GuardianshipApi::class.java)
+                    .updateOneUser(data)
+                    .compose(RxUtils.httpResponseTransformer())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : DefaultObserver<Any?>() {
+                        override fun onNext(t: Any) {
+                            finish()
+                        }
+
+                        override fun onError(e: Throwable) {
+                            ToastUtils.showLong(e.message)
+                        }
+
+                        override fun onComplete() {
+
+                        }
+                    })
         }
 
     }
 
     private fun initRV() {
-           Box.getRetrofit(GuardianshipApi::class.java)
-                   .getItemByCode("professional_user_type")
-                   .compose(RxUtils.httpResponseTransformer())
-                   .subscribeOn(Schedulers.io())
-                   .observeOn(AndroidSchedulers.mainThread())
-                   .subscribe(object : DefaultObserver<List<UserTypeBean>>() {
-                       override fun onNext(list: List<UserTypeBean>) {
-                           professionItems.clear()
-                           professionItems.addAll(list)
+        Box.getRetrofit(GuardianshipApi::class.java)
+                .getItemByCode("professional_user_type")
+                .compose(RxUtils.httpResponseTransformer())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : DefaultObserver<List<UserTypeBean>>() {
+                    override fun onNext(list: List<UserTypeBean>) {
+                        professionItems.clear()
+                        professionItems.addAll(list)
 
-                           rvProfession?.run {
-                               layoutManager = GridLayoutManager(this@ModifyHealthStatusActivity, 3)
-                               adapter = object : BaseQuickAdapter<UserTypeBean, BaseViewHolder>(R.layout.item_user_type, professionItems) {
-                                   override fun convert(helper: BaseViewHolder?, item: UserTypeBean?) {
-                                       helper?.getView<TextView>(R.id.tvItemName)?.isSelected=item?.select!!
-                                       helper?.setText(R.id.tvItemName, item?.text)
-                                   }
-                               }
-                           }
+                        rvProfession?.run {
+                            layoutManager = GridLayoutManager(this@ModifyHealthStatusActivity, 3)
+                            adapter = object : BaseQuickAdapter<UserTypeBean, BaseViewHolder>(R.layout.item_user_type, professionItems) {
+                                override fun convert(helper: BaseViewHolder?, item: UserTypeBean?) {
+                                    helper?.getView<TextView>(R.id.tvItemName)?.isSelected = item?.select!!
+                                    helper?.setText(R.id.tvItemName, item?.text)
+                                }
+                            }
+                        }
 
-                           (rvProfession?.adapter as BaseQuickAdapter<*, *>).onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
-                               professionItems[position].select = !professionItems[position].select
-                               adapter?.notifyItemChanged(position)
+                        (rvProfession?.adapter as BaseQuickAdapter<*, *>).onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, _, position ->
+                            professionItems[position].select = !professionItems[position].select
+                            adapter?.notifyItemChanged(position)
 
-                               tvNormal?.isSelected = false
-                           }
-                       }
+                            tvNormal?.isSelected = false
+                        }
+                    }
 
-                       override fun onError(e: Throwable) {
+                    override fun onError(e: Throwable) {
 
-                       }
+                    }
 
 
-                       override fun onComplete() {
+                    override fun onComplete() {
 
-                       }
-                   })
+                    }
+                })
 
         Box.getRetrofit(GuardianshipApi::class.java)
                 .getItemByCode("chronic_user_type")
@@ -104,7 +134,7 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
                             layoutManager = GridLayoutManager(this@ModifyHealthStatusActivity, 3)
                             adapter = object : BaseQuickAdapter<UserTypeBean, BaseViewHolder>(R.layout.item_user_type, slowItems) {
                                 override fun convert(helper: BaseViewHolder?, item: UserTypeBean?) {
-                                    helper?.getView<TextView>(R.id.tvItemName)?.isSelected=item?.select!!
+                                    helper?.getView<TextView>(R.id.tvItemName)?.isSelected = item?.select!!
                                     helper?.setText(R.id.tvItemName, item?.text)
                                 }
                             }
