@@ -61,4 +61,7 @@ public interface HealthManagerRouterApi {
 
     @Go("/medical/literature/activity")
     boolean skipMedicalLiteratureActivity();
+
+    @Go("/followup/main")
+    boolean skipFollowupMainActivity();
 }

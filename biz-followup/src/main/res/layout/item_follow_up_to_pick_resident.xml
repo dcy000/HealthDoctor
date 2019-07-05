@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="160pt"
+    tools:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivChecked"
+        android:layout_width="40pt"
+        android:layout_height="40pt"
+        android:layout_marginLeft="32pt"
+        android:src="@drawable/followup_ic_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivResidentAvatar"
+        android:layout_width="100pt"
+        android:layout_height="100pt"
+        android:layout_marginLeft="24pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/ivChecked"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvResidentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24pt"
+        android:layout_marginTop="12pt"
+        android:textColor="#303133"
+        android:textSize="36pt"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/ivResidentAvatar"
+        app:layout_constraintTop_toTopOf="@+id/ivResidentAvatar"
+        tools:text="小曾" />
+
+
+    <TextView
+        android:id="@+id/tvResidentTag"
+        android:layout_width="wrap_content"
+        android:layout_height="36pt"
+        android:layout_marginLeft="12pt"
+        android:background="@drawable/followup_bg_tag"
+        android:gravity="center"
+        android:paddingLeft="10pt"
+        android:paddingRight="10pt"
+        android:textColor="#FF5D51"
+        android:textSize="20pt"
+        app:layout_constraintBottom_toBottomOf="@+id/tvResidentName"
+        app:layout_constraintLeft_toRightOf="@+id/tvResidentName"
+        app:layout_constraintTop_toTopOf="@+id/tvResidentName"
+        tools:text="硫化氢中毒" />
+
+    <TextView
+        android:id="@+id/tvResidentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24pt"
+        android:layout_marginBottom="10pt"
+        android:textColor="#909399"
+        android:textSize="24pt"
+        app:layout_constraintBottom_toBottomOf="@+id/ivResidentAvatar"
+        app:layout_constraintLeft_toRightOf="@+id/ivResidentAvatar"
+        tools:text="今年已随访：2次" />
+
+    <TextView
+        android:id="@+id/tvFollowUpLastTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32pt"
+        android:layout_marginBottom="10pt"
+        android:textColor="#909399"
+        android:textSize="24pt"
+        app:layout_constraintBottom_toBottomOf="@+id/ivResidentAvatar"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="上次随访：06-25" />
+
+</android.support.constraint.ConstraintLayout>

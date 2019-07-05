@@ -2,10 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="24pt"
     android:id="@+id/clFollowUp"
+    android:layout_width="match_parent"
+    android:layout_height="397pt"
+    android:layout_marginLeft="24pt"
+    android:layout_marginTop="16pt"
+    android:layout_marginRight="24pt"
+    android:layout_marginBottom="16pt"
     app:cardBackgroundColor="#1468A1FF"
     app:cardCornerRadius="16pt"
     tools:background="#FFFFFF">
@@ -141,5 +144,35 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/line"
         tools:text="查看" />
+
+    <TextView
+        android:id="@+id/tvUpdate"
+        android:layout_width="104pt"
+        android:layout_height="56pt"
+        android:layout_marginTop="32pt"
+        android:layout_marginRight="16pt"
+        android:background="@drawable/followup_bg_gray"
+        android:gravity="center"
+        android:text="修改"
+        android:textColor="#909399"
+        android:textSize="28pt"
+        app:layout_constraintRight_toLeftOf="@+id/tvAction"
+        app:layout_constraintTop_toTopOf="@+id/line"
+        tools:text="修改" />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_width="104pt"
+        android:layout_height="56pt"
+        android:layout_marginTop="32pt"
+        android:layout_marginRight="16pt"
+        android:background="@drawable/followup_bg_gray"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#909399"
+        android:textSize="28pt"
+        app:layout_constraintRight_toLeftOf="@+id/tvUpdate"
+        app:layout_constraintTop_toTopOf="@+id/line"
+        tools:text="取消" />
 
 </android.support.constraint.ConstraintLayout>
