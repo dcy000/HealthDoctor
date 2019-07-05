@@ -43,6 +43,7 @@ dependencies {
     //support
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["cardview-v7"]
     api rootProject.ext.dependencies["constraint-layout"]
     //图片处理框架glide
     api rootProject.ext.dependencies["glide"]
