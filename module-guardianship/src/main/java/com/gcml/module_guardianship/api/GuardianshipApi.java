@@ -6,6 +6,7 @@ import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.LatLonBean;
 import com.gcml.module_guardianship.bean.MeasureDataBean;
+import com.gcml.module_guardianship.bean.UserTypeBean;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gzq.lib_core.http.model.HttpResult;
 import com.gzq.lib_resource.bean.ResidentBean;
@@ -91,9 +92,8 @@ public interface GuardianshipApi {
     );
 
     /**
-     *
      * @param docterId
-     * @param payStatus    0:签约用户 1：已付费 2：未付费
+     * @param payStatus 0:签约用户 1：已付费 2：未付费
      * @return
      */
     @GET("ZZB/api/doctor/{docterId}/users/")
@@ -117,4 +117,10 @@ public interface GuardianshipApi {
     Observable<HttpResult<MeasureDataBean>> getMeasureData(
             @Query("userId") String userId
     );
+
+    @POST("ZZB//api/type/getItemByCode/")
+    Observable<HttpResult<List<UserTypeBean>>> getItemByCode(
+            @Query("code") String code
+    );
+
 }

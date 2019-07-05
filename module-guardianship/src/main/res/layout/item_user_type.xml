@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="194pt"
+    android:layout_height="80pt"
+    android:layout_marginTop="32pt">
+
+    <TextView
+        android:id="@+id/tvItemName"
+        android:layout_width="194pt"
+        android:layout_height="80pt"
+        android:background="@drawable/text_bg_health_status_checked"
+        android:gravity="center"
+        android:text="没毛病"
+        android:textColor="@color/text_color_user_type_item"
+        android:textSize="28pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

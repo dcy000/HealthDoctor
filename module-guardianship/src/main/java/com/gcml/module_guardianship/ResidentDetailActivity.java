@@ -2,11 +2,12 @@ package com.gcml.module_guardianship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -14,10 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
-import com.gcml.module_guardianship.bean.FamilyBean;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
-import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.ResidentDetailPresenter;
 import com.gzq.lib_core.base.Box;
@@ -30,17 +28,13 @@ import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.dialog.DialogViewHolder;
 import com.gzq.lib_resource.dialog.FDialog;
 import com.gzq.lib_resource.dialog.ViewConvertListener;
-import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.gzq.lib_resource.utils.CallPhoneUtils;
-import com.gzq.lib_resource.utils.GPSUtil;
 import com.sjtu.yifei.annotation.Route;
-import com.sjtu.yifei.route.RouteRegister;
 import com.sjtu.yifei.route.Routerfit;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,44 +42,24 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/guardianship/resident/detail")
 public class ResidentDetailActivity extends StateBaseActivity implements View.OnClickListener {
-    private CircleImageView mCvHead;
-    /**
-     * 李晓大
-     */
-    private TextView mTvName;
-    /**
-     * 170cm
-     */
-    private TextView mTvHeight;
-    private LinearLayout mLl1;
-    private View mView1;
-    /**
-     * 56kg
-     */
-    private TextView mTvWeight;
-    private LinearLayout mLl2;
-    private View mView2;
-    /**
-     * A型
-     */
-    private TextView mTvBloodType;
-    private LinearLayout mLl3;
-    /**
-     * 更多
-     */
-    private TextView mTvDataMore;
-    private RecyclerView mRvHealthData;
-    private RecyclerView mRvMenu;
-    private ArrayList<String> dataMenu;
-    private BaseQuickAdapter<String, BaseViewHolder> adapter;
-    private List<HealthDataMenu> healthDataMenus = new ArrayList<>();
-    private BaseQuickAdapter<HealthDataMenu, BaseViewHolder> adapter1;
-    private ResidentDetailPresenter residentDetailPresenter;
+    ResidentDetailPresenter residentDetailPresenter = new ResidentDetailPresenter(this);
     private ResidentBean guardianshipBean;
-    private LinearLayout mLlLocation;
-    private TextView mTvAddress;
     private int vip;
-    private LinearLayout mLlHealthData;
+    private List<String> dataMenu;
+    private CircleImageView mCvHead;
+    private TextView mTvName;
+    private TextView mTvHeight;
+    private TextView mTvWeight;
+    private TextView mTvBloodType;
+    private TextView mTvDataMore;
+    private ConstraintLayout handContainer;
+    private RecyclerView mRvMenu;
+    private TextView mTvAddress;
+    private BaseQuickAdapter<String, BaseViewHolder> adapter;
+    private TextView mTvPressrueValue;
+    private TextView mTvHeatData;
+    private ImageView mIvDialPhone;
+    private TextView mTvHealthModify;
 
     @Override
     protected void onStart() {
@@ -95,35 +69,15 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
 
     @Override
     public int layoutId(Bundle savedInstanceState) {
-        return R.layout.activity_resident_detail;
+        return R.layout.activity_resident_details;
     }
-
 
     @Override
     public void initParams(Intent intentArgument, Bundle bundleArgument) {
         guardianshipBean = intentArgument.getParcelableExtra("data");
         vip = intentArgument.getIntExtra("vip", 0);
-        if (vip == 1) {
-            dataMenu = new ArrayList<String>() {
-                {
-//                    add("家庭医生服务报告");
-//                    add("健康管理报告");
-//                    add("预警信息记录");
-//                    add("健康检测记录");
-//                    add("监护圈");
-                    add("监护圈");
-                    add("健康检测记录");
-                    add("远程监控");
-                }
-            };
-        } else {
-            dataMenu = new ArrayList<String>() {
-                {
-//                    add("家庭医生服务报告");
-                    add("健康检测记录");
-                }
-            };
-        }
+        dataMenu = vip == 1 ? Arrays.asList("监护圈", "健康检测记录", "远程监控")
+                : Arrays.asList("健康检测记录");
     }
 
     @Override
@@ -133,62 +87,44 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mLlRight.setVisibility(View.VISIBLE);
         mTvRight.setVisibility(View.GONE);
         mIvRight.setImageResource(R.drawable.icon_mobile_phone_blue);
-        mCvHead = (CircleImageView) findViewById(R.id.cv_head);
+        mCvHead = findViewById(R.id.ivHead);
         mCvHead.setOnClickListener(this);
-        mTvName = (TextView) findViewById(R.id.tv_name);
-        mTvHeight = (TextView) findViewById(R.id.tv_height);
-        mLl1 = (LinearLayout) findViewById(R.id.ll1);
-        mView1 = (View) findViewById(R.id.view1);
-        mTvWeight = (TextView) findViewById(R.id.tv_weight);
-        mLl2 = (LinearLayout) findViewById(R.id.ll2);
-        mView2 = (View) findViewById(R.id.view2);
-        mTvBloodType = (TextView) findViewById(R.id.tv_blood_type);
-        mLl3 = (LinearLayout) findViewById(R.id.ll3);
-        mTvDataMore = (TextView) findViewById(R.id.tv_data_more);
+        mIvDialPhone = findViewById(R.id.ivDialPhone);
+        mIvDialPhone.setOnClickListener(this);
+
+        mTvName = findViewById(R.id.tvName);
+        mTvHeight = findViewById(R.id.tvHeightValue);
+        mTvWeight = findViewById(R.id.tvWeightValue);
+        mTvPressrueValue = findViewById(R.id.tvPressrueValue);
+        mTvHeatData = findViewById(R.id.tvHeatData);
+        mTvBloodType = findViewById(R.id.tvBloodType);
+        mTvDataMore = findViewById(R.id.tvHandData);
         mTvDataMore.setOnClickListener(this);
-        mRvHealthData = (RecyclerView) findViewById(R.id.rv_health_data);
-        mRvMenu = (RecyclerView) findViewById(R.id.rv_menu);
-        mLlLocation = (LinearLayout) findViewById(R.id.ll_location);
-        mLlLocation.setOnClickListener(this);
-        mTvAddress = findViewById(R.id.tv_address);
-        mLlHealthData = findViewById(R.id.ll_health_data);
+        handContainer = findViewById(R.id.constraintLayout4);
+        mRvMenu = findViewById(R.id.rvMenu);
+        mTvAddress = findViewById(R.id.tvAddress);
+
+        mTvHealthModify = findViewById(R.id.tvHealthModify);
+        mTvHealthModify.setOnClickListener(this);
+
         fillData();
         initMenu();
-        initHealthDataRv();
     }
 
     private void fillData() {
         if (vip == 1) {
-            mLlHealthData.setVisibility(View.VISIBLE);
-            mRvHealthData.setVisibility(View.VISIBLE);
-            mLlLocation.setClickable(true);
+            handContainer.setVisibility(View.VISIBLE);
         } else {
-            mLlHealthData.setVisibility(View.GONE);
-            mRvHealthData.setVisibility(View.GONE);
-            mLlLocation.setClickable(false);
+            handContainer.setVisibility(View.GONE);
         }
         Glide.with(Box.getApp())
                 .load(guardianshipBean.getUserPhoto())
                 .into(mCvHead);
         mTvName.setText(guardianshipBean.getBname());
-        mTvHeight.setText(guardianshipBean.getHeight() == 0 ? "未填写" : guardianshipBean.getHeight() + "cm");
-        mTvWeight.setText(guardianshipBean.getWeight() == 0 ? "未填写" : guardianshipBean.getWeight() + "kg");
-        mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType() + "型");
+        mTvHeight.setText(guardianshipBean.getHeight() == 0 ? "未填写" : guardianshipBean.getHeight() + "");
+        mTvWeight.setText(guardianshipBean.getWeight() == 0 ? "未填写" : guardianshipBean.getWeight() + "");
+        mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType());
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
-    }
-
-    private void initHealthDataRv() {
-        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRvHealthData.setLayoutManager(layout);
-        mRvHealthData.addItemDecoration(new LinearLayoutDividerItemDecoration(10, 0));
-        mRvHealthData.setAdapter(adapter1 = new BaseQuickAdapter<HealthDataMenu, BaseViewHolder>(R.layout.item_health_data_menu_cards, healthDataMenus) {
-            @Override
-            protected void convert(BaseViewHolder helper, HealthDataMenu item) {
-                helper.setText(R.id.tv_title, item.getProject());
-                helper.setText(R.id.tv_project_value, item.getValue() + "");
-                helper.setText(R.id.tv_unit, item.getUnit());
-            }
-        });
     }
 
     private void initMenu() {
@@ -200,59 +136,30 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
             }
         };
         mRvMenu.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (vip == 2) {
-                    //非付费用户
-//                    if (position == 0) {
-//                        //家庭医生服务报告
-//                        ToastUtils.showShort("该功能还在开发中...");
-//                    } else if (position == 1) {
-//                        //健康检测记录
-//                        ToastUtils.showShort("该功能还在开发中...");
-//                    }
-                    if (position == 0) {
-                        //健康检测记录
-                        Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity(guardianshipBean);
-                    }
-                    return;
-                }
-                //vip用户
-//                if (position == 0) {
-//                    //家庭医生服务报告
-//                    ToastUtils.showShort("该功能还在开发中...");
-//                } else if (position == 1) {
-//                    //健康管理报告
-//                    Routerfit.register(GuardianshipRouterApi.class).skipHealthManagerReportActivity();
-//                } else if (position == 2) {
-//                    //预警信息记录
-//                    Routerfit.register(GuardianshipRouterApi.class).skipWarningInformationRecordActivity();
-//                } else if (position == 3) {
-//                    //健康检测记录
-//                    ToastUtils.showShort("该功能还在开发中...");
-//                } else if (position == 4) {
-//                    //监护圈
-//                    Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
-//                }
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            if (vip == 2) {
                 if (position == 0) {
-                    //监护圈
-                    Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
-                } else if (position == 1) {
                     //健康检测记录
                     Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity(guardianshipBean);
-                } else if (position == 2) {
-                    //远程监控
-                    Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(
-                            guardianshipBean.getWatchCode(), guardianshipBean.getBid() + "");
                 }
+                return;
+            }
+            if (position == 0) {
+                //监护圈
+                Routerfit.register(GuardianshipRouterApi.class).skipCustodyCircleActivity(guardianshipBean);
+            } else if (position == 1) {
+                //健康检测记录
+                Routerfit.register(GuardianshipRouterApi.class).skipDetectionRecordTypeActivity(guardianshipBean);
+            } else if (position == 2) {
+                //远程监控
+                Routerfit.register(GuardianshipRouterApi.class).skipRemoteMeasureActivity(
+                        guardianshipBean.getWatchCode(), guardianshipBean.getBid() + "");
             }
         });
     }
 
     @Override
     public IPresenter obtainPresenter() {
-        residentDetailPresenter = new ResidentDetailPresenter(this);
         return residentDetailPresenter;
     }
 
@@ -261,29 +168,29 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     public void onClick(View v) {
         super.onClick(v);
         int i = v.getId();
-        if (i == R.id.tv_data_more) {
+        if (i == R.id.tvHandData) {
             ToastUtils.showShort("该功能还在开发中...");
-        } else if (i == R.id.cv_head) {
+        } else if (i == R.id.ivHead) {
             Routerfit.register(GuardianshipRouterApi.class).skipPersonDetailActivity(guardianshipBean);
-        } else if (i == R.id.ll_location) {
-            Routerfit.register(GuardianshipRouterApi.class).skipResidentLocationDetailActivity(guardianshipBean);
+        } else if (i == R.id.ivDialPhone) {
+            showVoiceOrVideoConnectDialog(guardianshipBean);
+        } else if (i == R.id.tvHealthModify) {
+           startActivity(new Intent(this,ModifyHealthStatusActivity.class));
         }
     }
 
     @Override
     public void loadDataSuccess(Object... objects) {
         super.loadDataSuccess(objects);
-        healthDataMenus.clear();
         HandRingHealthDataBena handRingHealthDataBena = (HandRingHealthDataBena) objects[0];
-        healthDataMenus.add(new HealthDataMenu("高压", handRingHealthDataBena.getHighPressure(), "mmHg"));
-        healthDataMenus.add(new HealthDataMenu("低压", handRingHealthDataBena.getLowPressure(), "mmHg"));
-        healthDataMenus.add(new HealthDataMenu("心率", handRingHealthDataBena.getHeartRate(), "bpm"));
-        adapter1.notifyDataSetChanged();
+        String pressureValue = String.format("%s/%s", handRingHealthDataBena.getLowPressure(), handRingHealthDataBena.getHighPressure());
+        mTvPressrueValue.setText(pressureValue);
+        mTvHeatData.setText(handRingHealthDataBena.getHeartRate());
     }
 
     @Override
     protected void clickToolbarRight() {
-        showVoiceOrVideoConnectDialog(guardianshipBean);
+        Routerfit.register(GuardianshipRouterApi.class).skipResidentLocationDetailActivity(guardianshipBean);
     }
 
     private void showVoiceOrVideoConnectDialog(ResidentBean familyBean) {
@@ -295,32 +202,22 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                 .setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
-                        holder.getView(R.id.tv_video_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ToastUtils.showShort("视频通话");
-                                String wyyxId = familyBean.getWyyxId();
-                                String wyyxPwd = familyBean.getWyyxPwd();
-                                if (!TextUtils.isEmpty(wyyxId)) {
-                                    Routerfit.register(CommonRouterApi.class).getCallServiceImp()
-                                            .launchNoCheckWithCallFamily(ResidentDetailActivity.this, wyyxId);
-                                }
-                                dialog.dismiss();
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(v -> {
+                            ToastUtils.showShort("视频通话");
+                            String wyyxId = familyBean.getWyyxId();
+                            if (!TextUtils.isEmpty(wyyxId)) {
+                                Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                        .launchNoCheckWithCallFamily(ResidentDetailActivity.this, wyyxId);
                             }
+                            dialog.dismiss();
                         });
-                        holder.getView(R.id.tv_voice_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                getWatchInfo(familyBean);
-                                dialog.dismiss();
-                            }
+
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(v -> {
+                            getWatchInfo(familyBean);
+                            dialog.dismiss();
                         });
-                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(v -> dialog.dismiss());
                     }
                 })
                 .setOutCancel(false)
@@ -359,19 +256,13 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                     protected void convertView(DialogViewHolder holder, FDialog dialog) {
                         holder.setText(R.id.tv_title, name + "的电话号码");
                         holder.setText(R.id.tv_message, phone);
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, phone);
-                                dialog.dismiss();
-                            }
+
+                        holder.setOnClickListener(R.id.tv_confirm, v -> {
+                            CallPhoneUtils.instance().callPhone(ResidentDetailActivity.this, phone);
+                            dialog.dismiss();
                         });
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
                     }
                 })
                 .show();
