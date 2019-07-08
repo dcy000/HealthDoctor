@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -16,6 +17,7 @@ import com.gcml.module_health_manager.api.HealthManageService
 import com.gzq.lib_core.base.Box
 import com.gzq.lib_core.http.observer.CommonObserver
 import com.gzq.lib_core.utils.RxUtils
+import com.gzq.lib_core.utils.ToastUtils
 import com.gzq.lib_resource.LazyFragment
 import com.gzq.lib_resource.bean.ResidentBean
 import com.gzq.lib_resource.bean.UserEntity
@@ -54,6 +56,10 @@ class ContractedResidenFragment : LazyFragment() {
                     Glide.with(activity!!)
                             .load(item?.userPhoto)
                             .into(helper?.getView<View>(R.id.ivHead) as ImageView)
+
+                    helper?.getView<TextView>(R.id.tvSee).setOnClickListener {
+                        ToastUtils.showLong(item?.bname)
+                    }
                 }
             }
         }

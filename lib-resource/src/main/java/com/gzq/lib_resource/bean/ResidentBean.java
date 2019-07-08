@@ -33,7 +33,7 @@ public class ResidentBean implements Parcelable {
     private String smoke;
     private int state;
     private String tel;
-    @SerializedName("user_photo")
+    @SerializedName(value = "userPhoto", alternate = "user_photo")
     private String userPhoto;
     private String vipState;
     private int waist;
