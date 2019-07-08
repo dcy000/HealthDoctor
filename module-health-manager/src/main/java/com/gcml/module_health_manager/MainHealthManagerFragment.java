@@ -3,10 +3,7 @@ package com.gcml.module_health_manager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,9 +15,7 @@ import com.gcml.module_health_manager.api.HealthManagerRouterApi;
 import com.gcml.module_health_manager.bean.MenuBena;
 import com.gzq.lib_resource.divider.LinearLayoutDividerItemDecoration;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
-import com.gzq.lib_resource.utils.ScreenUtils;
 import com.sjtu.yifei.annotation.Route;
 import com.sjtu.yifei.route.Routerfit;
 
@@ -29,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by gzq on 19-2-3.
  */
-@Route(path = "/healthmanager/main")
+//@Route(path = "/healthmanager/main")
 public class MainHealthManagerFragment extends StateBaseFragment implements View.OnClickListener {
     /**
      * 智能健康管理
