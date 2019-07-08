@@ -88,6 +88,8 @@ public class FollowUpTabFragment extends LazyFragment {
     @Override
     protected void onPageResume() {
         super.onPageResume();
+        //设置状态栏的颜色
+
         autoRefresh();
     }
 

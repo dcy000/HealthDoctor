@@ -130,7 +130,8 @@ public class MainHealthManagerFragment extends StateBaseFragment implements View
                     Routerfit.register(HealthManagerRouterApi.class).skipFamilyDoctorServiceActivity();
                 } else if (position == 2) {
                     //医学文献
-                    Routerfit.register(HealthManagerRouterApi.class).skipMedicalLiteratureActivity();
+//                    Routerfit.register(HealthManagerRouterApi.class).skipMedicalLiteratureActivity();
+                    Routerfit.register(HealthManagerRouterApi.class).skipFollowupMainActivity();
                 }
             }
         });
