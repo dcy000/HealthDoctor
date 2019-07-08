@@ -26,23 +26,92 @@
         android:layout_height="1pt"
         android:background="#dcdcdc" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_menu_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-
     <LinearLayout
-        android:id="@+id/ll_health_video"
+        android:id="@+id/llAbnormalData"
         android:layout_width="match_parent"
         android:layout_height="92pt"
         android:layout_marginTop="24pt"
-        android:layout_marginBottom="24pt"
         android:background="@drawable/selector_linearlayout_item"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:clickable="true"
-        android:visibility="gone">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/ic_approval" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="异常数据确认"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llSignDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:layout_marginTop="24pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/ic_approval" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="签约医生服务"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="686pt"
+        android:layout_height="2pt"
+        android:background="#ffeeeeee" />
+
+    <LinearLayout
+        android:id="@+id/llHealthManage"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="40pt"
@@ -70,9 +139,119 @@
             android:src="@drawable/common_ic_goto_next" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_menu_bottom"
+    <LinearLayout
+        android:id="@+id/llContractmanage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"/>
+        android:layout_height="92pt"
+        android:layout_marginTop="24pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/ic_approval" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="签约管理"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="686pt"
+        android:layout_height="2pt"
+        android:background="#ffeeeeee" />
+
+    <LinearLayout
+        android:id="@+id/llFllowUpManage"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/ic_approval" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="随访管理"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="686pt"
+        android:layout_height="2pt"
+        android:background="#ffeeeeee" />
+
+    <LinearLayout
+        android:id="@+id/llMedicalLterature"
+        android:layout_width="match_parent"
+        android:layout_height="92pt"
+        android:background="@drawable/selector_linearlayout_item"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40pt"
+            android:layout_height="40pt"
+            android:layout_marginLeft="32pt"
+            android:src="@drawable/ic_approval" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16pt"
+            android:text="医学文献"
+            android:textColor="@color/text_normal_color"
+            android:textSize="@dimen/text_normal_size" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="19pt"
+            android:layout_height="28pt"
+            android:layout_marginRight="32pt"
+            android:src="@drawable/common_ic_goto_next" />
+    </LinearLayout>
 </LinearLayout>

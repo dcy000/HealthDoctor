@@ -3,6 +3,8 @@
     package="com.gcml.module_health_manager">
 
     <application>
+        <activity android:name=".activity.ContractManageActivity"></activity>
+
         <meta-data
             android:name="com.gcml.module_health_manager.webview.WebApp"
             android:value="AppLifecycle" />

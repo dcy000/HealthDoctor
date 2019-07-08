@@ -3,6 +3,8 @@ package com.gzq.lib_resource.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ResidentBean implements Parcelable {
 
     private int age;
@@ -31,6 +33,7 @@ public class ResidentBean implements Parcelable {
     private String smoke;
     private int state;
     private String tel;
+    @SerializedName("user_photo")
     private String userPhoto;
     private String vipState;
     private int waist;
