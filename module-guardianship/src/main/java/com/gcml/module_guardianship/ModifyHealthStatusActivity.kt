@@ -111,7 +111,7 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: Throwable) {
-
+                        ToastUtils.showLong(e.message)
                     }
 
 
@@ -149,7 +149,7 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: Throwable) {
-
+                        ToastUtils.showLong(e.message)
                     }
 
 
