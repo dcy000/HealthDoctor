@@ -33,6 +33,155 @@ public class ResidentBean implements Parcelable {
     private String smoke;
     private int state;
     private String tel;
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
+
+    public void setBid(int bid) {
+        this.bid = bid;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public void setBname(String bname) {
+        this.bname = bname;
+    }
+
+    public void setCategoryid(int categoryid) {
+        this.categoryid = categoryid;
+    }
+
+    public void setDoid(int doid) {
+        this.doid = doid;
+    }
+
+    public void setDrink(String drink) {
+        this.drink = drink;
+    }
+
+    public void setDz(String dz) {
+        this.dz = dz;
+    }
+
+    public void setEatingHabits(String eatingHabits) {
+        this.eatingHabits = eatingHabits;
+    }
+
+    public void setEqid(String eqid) {
+        this.eqid = eqid;
+    }
+
+    public void setExerciseHabits(String exerciseHabits) {
+        this.exerciseHabits = exerciseHabits;
+    }
+
+    public void setFetation(String fetation) {
+        this.fetation = fetation;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setHypertensionHand(String hypertensionHand) {
+        this.hypertensionHand = hypertensionHand;
+    }
+
+    public void setHypertensionLevel(String hypertensionLevel) {
+        this.hypertensionLevel = hypertensionLevel;
+    }
+
+    public void setHypertensionPrimaryState(String hypertensionPrimaryState) {
+        this.hypertensionPrimaryState = hypertensionPrimaryState;
+    }
+
+    public void setHypertensionTarget(String hypertensionTarget) {
+        this.hypertensionTarget = hypertensionTarget;
+    }
+
+    public void setMh(String mh) {
+        this.mh = mh;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public void setSfz(String sfz) {
+        this.sfz = sfz;
+    }
+
+    public void setSmoke(String smoke) {
+        this.smoke = smoke;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
+    }
+
+    public void setVipState(String vipState) {
+        this.vipState = vipState;
+    }
+
+    public void setWaist(int waist) {
+        this.waist = waist;
+    }
+
+    public void setWatchBindTime(String watchBindTime) {
+        this.watchBindTime = watchBindTime;
+    }
+
+    public void setWatchCode(String watchCode) {
+        this.watchCode = watchCode;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setWyyxId(String wyyxId) {
+        this.wyyxId = wyyxId;
+    }
+
+    public void setWyyxPwd(String wyyxPwd) {
+        this.wyyxPwd = wyyxPwd;
+    }
+
+    public void setXfid(String xfid) {
+        this.xfid = xfid;
+    }
+
+    public void setXfuserid(String xfuserid) {
+        this.xfuserid = xfuserid;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     @SerializedName(value = "userPhoto", alternate = "user_photo")
     private String userPhoto;
     private String vipState;
@@ -40,10 +189,165 @@ public class ResidentBean implements Parcelable {
     private String watchBindTime;
     private String watchCode;
     private float weight;
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getAllergy() {
+        return allergy;
+    }
+
+    public int getBid() {
+        return bid;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public String getBname() {
+        return bname;
+    }
+
+    public int getCategoryid() {
+        return categoryid;
+    }
+
+    public int getDoid() {
+        return doid;
+    }
+
+    public String getDrink() {
+        return drink;
+    }
+
+    public String getDz() {
+        return dz;
+    }
+
+    public String getEatingHabits() {
+        return eatingHabits;
+    }
+
+    public String getEqid() {
+        return eqid;
+    }
+
+    public String getExerciseHabits() {
+        return exerciseHabits;
+    }
+
+    public String getFetation() {
+        return fetation;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public String getHypertensionHand() {
+        return hypertensionHand;
+    }
+
+    public String getHypertensionLevel() {
+        return hypertensionLevel;
+    }
+
+    public String getHypertensionPrimaryState() {
+        return hypertensionPrimaryState;
+    }
+
+    public String getHypertensionTarget() {
+        return hypertensionTarget;
+    }
+
+    public String getMh() {
+        return mh;
+    }
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public String getSfz() {
+        return sfz;
+    }
+
+    public String getSmoke() {
+        return smoke;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public String getVipState() {
+        return vipState;
+    }
+
+    public int getWaist() {
+        return waist;
+    }
+
+    public String getWatchBindTime() {
+        return watchBindTime;
+    }
+
+    public String getWatchCode() {
+        return watchCode;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public String getWyyxId() {
+        return wyyxId;
+    }
+
+    public String getWyyxPwd() {
+        return wyyxPwd;
+    }
+
+    public String getXfid() {
+        return xfid;
+    }
+
+    public String getXfuserid() {
+        return xfuserid;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public static Creator<ResidentBean> getCREATOR() {
+        return CREATOR;
+    }
+
     private String wyyxId;
     private String wyyxPwd;
     private String xfid;
     private String xfuserid;
+    private String userType;
+
 
     protected ResidentBean(Parcel in) {
         age = in.readInt();
@@ -82,6 +386,7 @@ public class ResidentBean implements Parcelable {
         wyyxPwd = in.readString();
         xfid = in.readString();
         xfuserid = in.readString();
+        userType = in.readString();
     }
 
     public static final Creator<ResidentBean> CREATOR = new Creator<ResidentBean>() {
@@ -95,294 +400,6 @@ public class ResidentBean implements Parcelable {
             return new ResidentBean[size];
         }
     };
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getAllergy() {
-        return allergy;
-    }
-
-    public void setAllergy(String allergy) {
-        this.allergy = allergy;
-    }
-
-    public int getBid() {
-        return bid;
-    }
-
-    public void setBid(int bid) {
-        this.bid = bid;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(String bloodType) {
-        this.bloodType = bloodType;
-    }
-
-    public String getBname() {
-        return bname;
-    }
-
-    public void setBname(String bname) {
-        this.bname = bname;
-    }
-
-    public int getCategoryid() {
-        return categoryid;
-    }
-
-    public void setCategoryid(int categoryid) {
-        this.categoryid = categoryid;
-    }
-
-    public int getDoid() {
-        return doid;
-    }
-
-    public void setDoid(int doid) {
-        this.doid = doid;
-    }
-
-    public String getDrink() {
-        return drink;
-    }
-
-    public void setDrink(String drink) {
-        this.drink = drink;
-    }
-
-    public String getDz() {
-        return dz;
-    }
-
-    public void setDz(String dz) {
-        this.dz = dz;
-    }
-
-    public String getEatingHabits() {
-        return eatingHabits;
-    }
-
-    public void setEatingHabits(String eatingHabits) {
-        this.eatingHabits = eatingHabits;
-    }
-
-    public String getEqid() {
-        return eqid;
-    }
-
-    public void setEqid(String eqid) {
-        this.eqid = eqid;
-    }
-
-    public String getExerciseHabits() {
-        return exerciseHabits;
-    }
-
-    public void setExerciseHabits(String exerciseHabits) {
-        this.exerciseHabits = exerciseHabits;
-    }
-
-    public String getFetation() {
-        return fetation;
-    }
-
-    public void setFetation(String fetation) {
-        this.fetation = fetation;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public String getHypertensionHand() {
-        return hypertensionHand;
-    }
-
-    public void setHypertensionHand(String hypertensionHand) {
-        this.hypertensionHand = hypertensionHand;
-    }
-
-    public String getHypertensionLevel() {
-        return hypertensionLevel;
-    }
-
-    public void setHypertensionLevel(String hypertensionLevel) {
-        this.hypertensionLevel = hypertensionLevel;
-    }
-
-    public String getHypertensionPrimaryState() {
-        return hypertensionPrimaryState;
-    }
-
-    public void setHypertensionPrimaryState(String hypertensionPrimaryState) {
-        this.hypertensionPrimaryState = hypertensionPrimaryState;
-    }
-
-    public String getHypertensionTarget() {
-        return hypertensionTarget;
-    }
-
-    public void setHypertensionTarget(String hypertensionTarget) {
-        this.hypertensionTarget = hypertensionTarget;
-    }
-
-    public String getMh() {
-        return mh;
-    }
-
-    public void setMh(String mh) {
-        this.mh = mh;
-    }
-
-    public int getServerId() {
-        return serverId;
-    }
-
-    public void setServerId(int serverId) {
-        this.serverId = serverId;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getSfz() {
-        return sfz;
-    }
-
-    public void setSfz(String sfz) {
-        this.sfz = sfz;
-    }
-
-    public String getSmoke() {
-        return smoke;
-    }
-
-    public void setSmoke(String smoke) {
-        this.smoke = smoke;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getUserPhoto() {
-        return userPhoto;
-    }
-
-    public void setUserPhoto(String userPhoto) {
-        this.userPhoto = userPhoto;
-    }
-
-    public String getVipState() {
-        return vipState;
-    }
-
-    public void setVipState(String vipState) {
-        this.vipState = vipState;
-    }
-
-    public int getWaist() {
-        return waist;
-    }
-
-    public void setWaist(int waist) {
-        this.waist = waist;
-    }
-
-    public String getWatchBindTime() {
-        return watchBindTime;
-    }
-
-    public void setWatchBindTime(String watchBindTime) {
-        this.watchBindTime = watchBindTime;
-    }
-
-    public String getWatchCode() {
-        return watchCode;
-    }
-
-    public void setWatchCode(String watchCode) {
-        this.watchCode = watchCode;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public String getWyyxId() {
-        return wyyxId;
-    }
-
-    public void setWyyxId(String wyyxId) {
-        this.wyyxId = wyyxId;
-    }
-
-    public String getWyyxPwd() {
-        return wyyxPwd;
-    }
-
-    public void setWyyxPwd(String wyyxPwd) {
-        this.wyyxPwd = wyyxPwd;
-    }
-
-    public String getXfid() {
-        return xfid;
-    }
-
-    public void setXfid(String xfid) {
-        this.xfid = xfid;
-    }
-
-    public String getXfuserid() {
-        return xfuserid;
-    }
-
-    public void setXfuserid(String xfuserid) {
-        this.xfuserid = xfuserid;
-    }
 
     @Override
     public int describeContents() {
@@ -427,5 +444,6 @@ public class ResidentBean implements Parcelable {
         dest.writeString(wyyxPwd);
         dest.writeString(xfid);
         dest.writeString(xfuserid);
+        dest.writeString(userType);
     }
 }

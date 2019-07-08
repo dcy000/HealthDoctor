@@ -104,18 +104,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="86pt"
-                android:layout_marginStart="32pt"
+            <LinearLayout
                 android:layout_marginTop="32pt"
-                android:layout_marginEnd="32pt"
-                android:background="@drawable/shape_bg_green"
-                android:gravity="center_vertical"
-                android:paddingLeft="24pt"
-                android:text="健康居民"
-                android:textColor="#ffffffff"
-                android:textSize="28pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginRight="32pt"
+                android:id="@+id/llHealtStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />

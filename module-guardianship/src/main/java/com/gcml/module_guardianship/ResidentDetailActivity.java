@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,7 @@ import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
 import com.gcml.module_guardianship.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.ResidentDetailPresenter;
+import com.gcml.module_guardianship.wrap.StatusTextView;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
@@ -60,6 +62,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     private TextView mTvHeatData;
     private ImageView mIvDialPhone;
     private TextView mTvHealthModify;
+    private LinearLayout statusLayout;
 
     @Override
     protected void onStart() {
@@ -91,6 +94,8 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mCvHead.setOnClickListener(this);
         mIvDialPhone = findViewById(R.id.ivDialPhone);
         mIvDialPhone.setOnClickListener(this);
+
+        statusLayout = findViewById(R.id.llHealtStatus);
 
         mTvName = findViewById(R.id.tvName);
         mTvHeight = findViewById(R.id.tvHeightValue);
@@ -125,6 +130,19 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mTvWeight.setText(guardianshipBean.getWeight() == 0 ? "未填写" : guardianshipBean.getWeight() + "");
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType());
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
+
+        String userType = guardianshipBean.getUserType();
+        if (userType != null) {
+            String[] status = userType.split(",");
+            for (int i = 0; i < status.length; i++) {
+                if (TextUtils.isEmpty(status[i])) {
+                    continue;
+                }
+                StatusTextView statusTextView = new StatusTextView(this);
+                statusTextView.setStatus(status[i]);
+                statusLayout.addView(statusTextView);
+            }
+        }
     }
 
     private void initMenu() {
@@ -175,8 +193,8 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         } else if (i == R.id.ivDialPhone) {
             showVoiceOrVideoConnectDialog(guardianshipBean);
         } else if (i == R.id.tvHealthModify) {
-           startActivity(new Intent(this,ModifyHealthStatusActivity.class)
-                   .putExtra("userId",guardianshipBean.getBid()));
+            startActivity(new Intent(this, ModifyHealthStatusActivity.class)
+                    .putExtra("userId", guardianshipBean.getBid()));
         }
     }
 
