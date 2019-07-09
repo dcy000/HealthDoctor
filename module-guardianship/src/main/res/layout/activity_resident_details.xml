@@ -105,12 +105,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:layout_marginTop="32pt"
-                android:layout_marginLeft="32pt"
-                android:layout_marginRight="32pt"
                 android:id="@+id/llHealtStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:layout_marginTop="32pt"
+                android:layout_marginRight="32pt"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,7 +126,8 @@
             android:layout_marginTop="24pt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_goneMarginTop="88pt">
 
             <TextView
                 android:id="@+id/textView6"

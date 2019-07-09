@@ -1,7 +1,8 @@
 package com.gcml.module_health_manager.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -13,17 +14,15 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gcml.module_health_manager.R
+import com.gcml.module_health_manager.activity.DealSignActivity
 import com.gcml.module_health_manager.api.HealthManageService
 import com.gcml.module_health_manager.bean.ConstractBean
 import com.gzq.lib_core.base.Box
 import com.gzq.lib_core.http.observer.CommonObserver
 import com.gzq.lib_core.utils.RxUtils
-import com.gzq.lib_core.utils.ToastUtils
 import com.gzq.lib_resource.LazyFragment
 import com.gzq.lib_resource.bean.ResidentBean
 import com.gzq.lib_resource.bean.UserEntity
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_contracted_residen.view.*
@@ -61,11 +60,15 @@ class ContractNotResidenFragment : LazyFragment() {
                             .into(helper?.getView<View>(R.id.ivHead) as ImageView)
 
                     helper?.getView<TextView>(R.id.tvSee).setOnClickListener {
-                        ToastUtils.showLong(item?.bname)
+
+                        startActivityForResult(Intent(this@ContractNotResidenFragment.activity, DealSignActivity::class.java)
+                                .putExtra("userInfo", item)
+                                .putExtra("showButton", true), 120)
                     }
                 }
             }
         }
+
 
 
         view?.refresh?.apply {
@@ -84,6 +87,17 @@ class ContractNotResidenFragment : LazyFragment() {
 
         inflateView = view
         return view
+    }
+
+    override fun onPageResume() {
+        refresh()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            refresh()
+        }
     }
 
     private val limit = 20

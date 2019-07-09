@@ -133,7 +133,11 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType());
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
 
-        updateHealthStatus(guardianshipBean.getUserType());
+        String userType = guardianshipBean.getUserType();
+        updateHealthStatus(userType);
+        if (TextUtils.isEmpty(userType)) {
+            findViewById(R.id.constraintLayout2).setVisibility(View.GONE);
+        }
     }
 
     public void updateHealthStatus(String userType) {
@@ -227,7 +231,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         HandRingHealthDataBena handRingHealthDataBena = (HandRingHealthDataBena) objects[0];
         String pressureValue = String.format("%s/%s", handRingHealthDataBena.getLowPressure(), handRingHealthDataBena.getHighPressure());
         mTvPressrueValue.setText(pressureValue);
-        mTvHeatData.setText(handRingHealthDataBena.getHeartRate()+"");
+        mTvHeatData.setText(handRingHealthDataBena.getHeartRate() + "");
     }
 
     @Override

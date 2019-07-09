@@ -1,5 +1,7 @@
 package com.gcml.module_health_manager.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gcml.module_health_manager.R
+import com.gcml.module_health_manager.activity.DealSignActivity
 import com.gcml.module_health_manager.api.HealthManageService
 import com.gcml.module_health_manager.bean.ConstractBean
 import com.gzq.lib_core.base.Box
@@ -62,7 +65,10 @@ class ContractedResidenFragment : LazyFragment() {
                             .into(helper?.getView<View>(R.id.ivHead) as ImageView)
 
                     helper?.getView<TextView>(R.id.tvSee).setOnClickListener {
-                        ToastUtils.showLong(item?.bname)
+
+                        startActivityForResult(Intent(this@ContractedResidenFragment.activity, DealSignActivity::class.java)
+                                .putExtra("userInfo", item)
+                                .putExtra("showButton", false), 120)
                     }
                 }
             }
@@ -84,6 +90,14 @@ class ContractedResidenFragment : LazyFragment() {
 
         inflateView = view
         return view
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            refresh()
+        }
     }
 
     override fun onPageResume() {

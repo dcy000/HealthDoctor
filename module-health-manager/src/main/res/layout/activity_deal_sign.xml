@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400pt"
+        android:src="@drawable/img_bg_deal_sign"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="84pt"
+        android:layout_height="100pt"
+        android:layout_marginTop="32pt"
+        android:padding="32pt"
+        android:src="@drawable/common_ic_back_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="686pt"
+        android:layout_height="930pt"
+        android:layout_marginTop="244pt"
+        android:background="@drawable/bg_shadow"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40pt"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="174pt">
+
+            <TextView
+                android:id="@+id/tvSexValue"
+                android:layout_width="100pt"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="384pt"
+                android:gravity="center"
+                android:text="性别"
+                android:textColor="#ff909399"
+                android:textSize="28pt" />
+
+            <View
+                android:layout_width="2pt"
+                android:layout_height="28pt"
+                android:layout_centerInParent="true"
+                android:background="#ffdddddd" />
+
+            <TextView
+                android:id="@+id/tvAgeValue"
+                android:layout_width="100pt"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="384pt"
+                android:gravity="center"
+                android:text="年龄"
+                android:textColor="#ff909399"
+                android:textSize="28pt" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24pt"
+            android:layout_marginTop="24pt"
+            android:layout_marginRight="24pt"
+            android:overScrollMode="never" />
+    </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivHead"
+        android:layout_width="190pt"
+        android:layout_height="190pt"
+        android:layout_marginTop="136pt"
+        app:civ_border_color="#333F86FC"
+        app:civ_border_width="8pt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25pt"
+        android:text="李小打"
+        android:textColor="@color/text_normal_color"
+        android:textSize="36pt"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/ivHead"
+        app:layout_constraintRight_toRightOf="@id/ivHead"
+        app:layout_constraintTop_toBottomOf="@id/ivHead" />
+
+    <LinearLayout
+        android:id="@+id/lldDealButton"
+        android:layout_width="match_parent"
+        android:layout_height="100pt"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvRefuse"
+            android:layout_width="0dp"
+            android:layout_height="100pt"
+            android:layout_weight="1"
+            android:background="@drawable/shape_btn_refuse"
+            android:gravity="center"
+            android:text="拒绝"
+            android:textColor="#ff3f86fc"
+            android:textSize="32pt" />
+
+        <TextView
+            android:id="@+id/tvAgree"
+            android:layout_width="0dp"
+            android:layout_height="100pt"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_agress"
+            android:gravity="center"
+            android:text="同意"
+            android:textColor="#ffffffff"
+            android:textSize="32pt" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
