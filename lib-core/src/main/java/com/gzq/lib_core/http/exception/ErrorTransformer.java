@@ -1,20 +1,22 @@
 package com.gzq.lib_core.http.exception;
 
 
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.gzq.lib_core.BuildConfig;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.model.BaseModel;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.functions.Function;
-import timber.log.Timber;
 
 /**
  * 加入了对错误处理，已经比较完整了
@@ -46,32 +48,38 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
 
     @Override
     public ObservableSource<T> apply(Observable<BaseModel<T>> responseObservable) {
-        return responseObservable.map(new Function<BaseModel<T>, T>() {
+        return responseObservable.flatMap(new Function<BaseModel<T>, Observable<T>>() {
             @Override
-            public T apply(BaseModel<T> httpResult) throws Exception {
-                // 通过对返回码进行业务判断决定是返回错误还是正常取数据
+            public Observable<T> apply(BaseModel<T> httpResult) throws Exception {
                 if (httpResult.getCode() != ErrorType.SUCCESS) {
-                    throw new ServerException(httpResult.getMessage(), httpResult.getCode());
+                    return Observable.error(new ServerException(httpResult.getMessage(), httpResult.getCode()));
                 }
                 T data = httpResult.getData();
                 if (data == null) {
+                    Throwable error = new RuntimeException("data == null");
                     try {
-                        data = (T) new ArrayList<>();
-                    } catch (Throwable e) {
                         try {
-                            Type type = new TypeToken<T>() {
-                            }.getType();
-                            data = Box.getGson().fromJson("{}", type);
+                            data = (T) new ArrayList<>();
+//                            Type type = new TypeToken<T>() {}.getType();
+//                            data = Box.getGson().fromJson("[]", type);
                         } catch (Throwable e1) {
-                            data = (T) new Object();
                             e1.printStackTrace();
+                            data = null;
                         }
+                        if (data == null) {
+                            Type type = new TypeToken<T>() {}.getType();
+                            data = Box.getGson().fromJson("{}", type);
+                        }
+
+                        if (data != null) {
+                            return Observable.just(data);
+                        }
+                    } catch (Throwable e) {
+                        error = e;
                     }
+                    return Observable.error(new RuntimeException("未知异常", error));
                 }
-                if (BuildConfig.DEBUG) {
-                    Timber.i("返回的数据：" + Box.getGson().toJson(data));
-                }
-                return data;
+                return Observable.just(data);
             }
         }).onErrorResumeNext(new Function<Throwable, ObservableSource<? extends T>>() {
             @Override
@@ -82,4 +90,39 @@ public class ErrorTransformer<T> implements ObservableTransformer<BaseModel<T>, 
             }
         });
     }
+
+
+    static Class<?> getRawType(Type type) {
+//        checkNotNull(type, "type == null");
+
+        if (type instanceof Class<?>) {
+            // Type is a normal class.
+            return (Class<?>) type;
+        }
+        if (type instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+
+            // I'm not exactly sure why getRawType() returns Type instead of Class. Neal isn't either but
+            // suspects some pathological case related to nested classes exists.
+            Type rawType = parameterizedType.getRawType();
+            if (!(rawType instanceof Class)) throw new IllegalArgumentException();
+            return (Class<?>) rawType;
+        }
+        if (type instanceof GenericArrayType) {
+            Type componentType = ((GenericArrayType) type).getGenericComponentType();
+            return Array.newInstance(getRawType(componentType), 0).getClass();
+        }
+        if (type instanceof TypeVariable) {
+            // We could use the variable's bounds, but that won't work if there are multiple. Having a raw
+            // type that's more general than necessary is okay.
+            return Object.class;
+        }
+        if (type instanceof WildcardType) {
+            return getRawType(((WildcardType) type).getUpperBounds()[0]);
+        }
+
+        throw new IllegalArgumentException("Expected a Class, ParameterizedType, or "
+                + "GenericArrayType, but <" + type + "> is of type " + type.getClass().getName());
+    }
 }
+

@@ -4,8 +4,10 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 public class LazyFragment extends Fragment implements LifecycleObserver {
     public static final String TAG = "LazyFragment";
@@ -26,8 +28,22 @@ public class LazyFragment extends Fragment implements LifecycleObserver {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getView() != null && !isPageResume && !isHidden() && getUserVisibleHint()) {
+            isPageResume = true;
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    onPageResume();
+                }
+            });
+        }
+    }
+
+    @Override
     public void onResume() {
-        if (!isPageResume && !isHidden() && getUserVisibleHint()) {
+        if (getView() != null && !isPageResume && !isHidden() && getUserVisibleHint()) {
             isPageResume = true;
             onPageResume();
         }
@@ -54,7 +70,7 @@ public class LazyFragment extends Fragment implements LifecycleObserver {
                 onPagePause();
             }
         } else {
-            if (!isPageResume && getUserVisibleHint()) {
+            if (getView() != null && !isPageResume && getUserVisibleHint()) {
                 isPageResume = true;
 
                 handleEvent(Lifecycle.Event.ON_RESUME);
@@ -75,7 +91,7 @@ public class LazyFragment extends Fragment implements LifecycleObserver {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
-            if (!isPageResume && !isHidden()) {
+            if (getView() != null && !isPageResume && !isHidden()) {
                 isPageResume = true;
 
                 handleEvent(Lifecycle.Event.ON_RESUME);
