@@ -105,8 +105,8 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
 
     @Override
     protected void onResume() {
-        super.onResume();
         compactScreenHeight();
+        super.onResume();
     }
 
     private void compactScreenHeight() {

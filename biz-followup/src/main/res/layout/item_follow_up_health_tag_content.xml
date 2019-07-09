@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clHealthTag"
+    android:layout_width="216pt"
+    android:layout_height="102pt">
+
+    <TextView
+        android:id="@+id/tvHealthTag"
+        android:layout_width="194pt"
+        android:layout_height="80pt"
+        android:layout_marginLeft="11pt"
+        android:layout_marginTop="16pt"
+        android:background="@drawable/followup_bg_health_tag"
+        android:gravity="center"
+        android:textColor="@color/follow_up_health_tag_text_color"
+        android:textSize="28pt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="健康居民" />
+
+</android.support.constraint.ConstraintLayout>

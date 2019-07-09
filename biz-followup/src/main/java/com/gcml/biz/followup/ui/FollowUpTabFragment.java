@@ -12,10 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gcml.biz.followup.R;
+import com.gcml.biz.followup.model.FollowUpRepository;
+import com.gcml.biz.followup.model.entity.FollowUpEntity;
+import com.gcml.biz.followup.model.entity.FollowUpList;
+import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.LazyFragment;
+import com.gzq.lib_resource.bean.UserEntity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 public class FollowUpTabFragment extends LazyFragment {
 
@@ -37,6 +50,8 @@ public class FollowUpTabFragment extends LazyFragment {
     private ConstraintLayout clTip;
 
     private FollowUpAdapter adapter;
+
+    private FollowUpRepository repository = new FollowUpRepository();
 
     public FollowUpTabFragment() {
         // Required empty public constructor
@@ -81,9 +96,53 @@ public class FollowUpTabFragment extends LazyFragment {
     private OnRefreshListener onRefreshListener = new OnRefreshListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+            refreshData();
         }
     };
+
+    private void refreshData() {
+        UserEntity user = Box.getSessionManager().getUser();
+        if (user == null) {
+            srlRefresh.finishRefresh();
+            return;
+        }
+
+        repository.followUpList(user.getDocterid() + "", label, 1, 1000)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        srlRefresh.finishRefresh();
+                    }
+                })
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<FollowUpList>() {
+                    @Override
+                    public void onNext(FollowUpList followUpList) {
+                        if (followUpList.getCount() == 0
+                                || followUpList.getData() == null
+                                || followUpList.getData().size() == 0) {
+                            clTip.setVisibility(View.VISIBLE);
+
+                            if (!followUps.isEmpty()) {
+                                followUps.clear();
+                                adapter.notifyDataSetChanged();
+                            }
+                            return;
+                        }
+                        clTip.setVisibility(View.GONE);
+                        followUps.clear();
+                        followUps.addAll(followUpList.getData());
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
+    }
 
     @Override
     protected void onPageResume() {
@@ -98,6 +157,8 @@ public class FollowUpTabFragment extends LazyFragment {
             srlRefresh.autoRefresh();
         }
     }
+
+    private ArrayList<FollowUpEntity> followUps = new ArrayList<>();
 
     private int itemFollowUpLayout = R.layout.item_follow_up;
 

@@ -1,0 +1,8 @@
+
+
+# 根据医生 id 和 随访状态获取 随访信息
+###
+GET http://47.96.98.60:8020/ZZB/api/web/follow/getFollowsNew?planDoctorId=0&followStatus=待随访&page=1&limit=1000
+
+equipmentId: 866817039503651
+serverId: 1

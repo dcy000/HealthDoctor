@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.TextView;
 
 import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
+import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gzq.lib_resource.LazyFragment;
 
 
@@ -180,7 +185,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void onPickResidentHealthStatus() {
-
+        showPickHealthStatusFragment();
     }
 
     private void onAction() {
@@ -189,6 +194,40 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
     private void onBack() {
         FragmentUtils.finish(getActivity());
+    }
+
+    FollowUpPickHealthStatusFragment.Callback callback = new FollowUpPickHealthStatusFragment.Callback() {
+        @Override
+        public void onPickedHealthStatus(HealthTagEntity entity) {
+
+        }
+    };
+
+    private void showPickHealthStatusFragment() {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        String tag = FollowUpPickHealthStatusFragment.class.getName();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new FollowUpPickHealthStatusFragment();
+        }
+
+        ((FollowUpPickHealthStatusFragment) fragment).setCallback(callback);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.flContainer, fragment, tag);
+        }
+
+        transaction.addToBackStack(tag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
     }
 
 }

@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="36pt"
         android:layout_marginLeft="16pt"
-        android:background="@drawable/followup_bg_tag"
+        android:background="@drawable/followup_bg_tag_abnormal"
         android:gravity="center"
         android:paddingLeft="10pt"
         android:paddingRight="10pt"
@@ -91,7 +91,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivFollowAvatar"
         app:layout_constraintLeft_toRightOf="@+id/tvFollowName"
         app:layout_constraintTop_toTopOf="@+id/ivFollowAvatar"
-        tools:text="硫化氢中毒" />
+        tools:text="硫化氢中毒"
+        tools:textColor="#00b77c" />
 
     <TextView
         android:id="@+id/tvFollower"
