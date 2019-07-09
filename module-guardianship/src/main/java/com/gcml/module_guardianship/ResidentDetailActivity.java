@@ -1,7 +1,9 @@
 package com.gcml.module_guardianship;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -131,9 +133,13 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType());
         mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
 
-        String userType = guardianshipBean.getUserType();
+        updateHealthStatus(guardianshipBean.getUserType());
+    }
+
+    public void updateHealthStatus(String userType) {
         if (userType != null) {
             String[] status = userType.split(",");
+            statusLayout.removeAllViews();
             for (int i = 0; i < status.length; i++) {
                 if (TextUtils.isEmpty(status[i])) {
                     continue;
@@ -144,6 +150,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
             }
         }
     }
+
 
     private void initMenu() {
         mRvMenu.setLayoutManager(new LinearLayoutManager(this));
@@ -193,8 +200,24 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         } else if (i == R.id.ivDialPhone) {
             showVoiceOrVideoConnectDialog(guardianshipBean);
         } else if (i == R.id.tvHealthModify) {
-            startActivity(new Intent(this, ModifyHealthStatusActivity.class)
-                    .putExtra("userId", guardianshipBean.getBid()));
+            startActivityForResult(new Intent(this, ModifyHealthStatusActivity.class)
+                            .putExtra("userId", guardianshipBean.getBid())
+                            .putExtra("healthStatus", guardianshipBean.getUserType()),
+
+                    119);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 119) {
+            if (data == null) {
+                return;
+            }
+
+            guardianshipBean.setUserType(data.getStringExtra("userType"));
+            updateHealthStatus(data.getStringExtra("userType"));
         }
     }
 
@@ -285,5 +308,11 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
                     }
                 })
                 .show();
+        List<String> list = null;
+
+        for (int i = 0; i < list.size(); i++) {
+            if (TextUtils.equals("", list.get(i))) {
+            }
+        }
     }
 }

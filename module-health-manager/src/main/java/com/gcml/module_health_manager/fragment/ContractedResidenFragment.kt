@@ -21,6 +21,8 @@ import com.gzq.lib_core.utils.ToastUtils
 import com.gzq.lib_resource.LazyFragment
 import com.gzq.lib_resource.bean.ResidentBean
 import com.gzq.lib_resource.bean.UserEntity
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_contracted_residen.view.*
@@ -63,6 +65,27 @@ class ContractedResidenFragment : LazyFragment() {
                 }
             }
         }
+
+        view?.refresh?.apply {
+            setEnableRefresh(true)
+            setEnableLoadMore(true)
+
+            setOnLoadMoreListener {
+                OnLoadMoreListener {
+
+                    finishLoadMore()
+                }
+            }
+
+            setOnRefreshListener {
+                OnLoadMoreListener {
+
+                    finishRefresh(1000)
+                }
+            }
+
+        }
+
         inflateView = view
         return view
     }
