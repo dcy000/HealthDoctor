@@ -24,7 +24,6 @@ import com.gzq.lib_resource.bean.ResidentBean
 import com.gzq.lib_resource.bean.UserEntity
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_contracted_residen.view.*
@@ -32,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_contracted_residen.view.*
 private const val ARG_PARAM1 = "state"//签约类型
 private const val ARG_PARAM2 = "param2"
 
-class ContractedResidenFragment : LazyFragment() {
+class ContractNotResidenFragment : LazyFragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -51,7 +50,7 @@ class ContractedResidenFragment : LazyFragment() {
         val view = inflater.inflate(R.layout.fragment_contracted_residen, container, false)
 
         view?.rvResident?.apply {
-            layoutManager = LinearLayoutManager(this@ContractedResidenFragment.activity)
+            layoutManager = LinearLayoutManager(this@ContractNotResidenFragment.activity)
 
             adapter = object : BaseQuickAdapter<ResidentBean, BaseViewHolder>(R.layout.item_resident, residents) {
                 override fun convert(helper: BaseViewHolder?, item: ResidentBean?) {
@@ -67,6 +66,7 @@ class ContractedResidenFragment : LazyFragment() {
                 }
             }
         }
+
 
         view?.refresh?.apply {
             setEnableRefresh(true)
@@ -86,16 +86,13 @@ class ContractedResidenFragment : LazyFragment() {
         return view
     }
 
-    override fun onPageResume() {
-        refresh()
-    }
-
+    private val limit = 20
     private fun refresh() {
         page = 1
         Box.getRetrofit(HealthManageService::class.java)
                 .getResidents(
                         Box.getSessionManager()?.getUser<UserEntity>()?.docterid!!,
-                        1,
+                        0,
                         page,
                         limit
                 )
@@ -112,7 +109,6 @@ class ContractedResidenFragment : LazyFragment() {
                         residents.addAll(bean.data)
 
                         inflateView?.rvResident?.adapter?.notifyDataSetChanged()
-
                     }
 
                     override fun onError(e: Throwable) {
@@ -124,14 +120,13 @@ class ContractedResidenFragment : LazyFragment() {
                 })
     }
 
-    private var page = 1
-    private val limit = 20
+    var page = 1
     private fun loadMore() {
         page++
         Box.getRetrofit(HealthManageService::class.java)
                 .getResidents(
                         Box.getSessionManager()?.getUser<UserEntity>()?.docterid!!,
-                        1,
+                        0,
                         page,
                         limit
                 )
@@ -162,7 +157,7 @@ class ContractedResidenFragment : LazyFragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                ContractedResidenFragment().apply {
+                ContractNotResidenFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)

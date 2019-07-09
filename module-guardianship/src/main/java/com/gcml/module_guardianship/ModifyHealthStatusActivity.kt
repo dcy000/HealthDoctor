@@ -25,8 +25,6 @@ import android.view.WindowManager
 import android.os.Build
 
 
-
-
 class ModifyHealthStatusActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +74,7 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
                     .compose(RxUtils.httpResponseTransformer())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .`as`(RxUtils.autoDisposeConverter(this))
                     .subscribe(object : DefaultObserver<Any?>() {
                         override fun onNext(t: Any) {
                             setResult(RESULT_OK, Intent().putExtra("userType", data.userType))
@@ -106,6 +105,7 @@ class ModifyHealthStatusActivity : AppCompatActivity() {
                 .compose(RxUtils.httpResponseTransformer())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .`as`(RxUtils.autoDisposeConverter(this))
                 .subscribe(object : DefaultObserver<List<UserTypeBean>>() {
                     override fun onNext(list: List<UserTypeBean>) {
                         for (i in list.indices) {

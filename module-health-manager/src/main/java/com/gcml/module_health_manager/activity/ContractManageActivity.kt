@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.gcml.module_health_manager.R
+import com.gcml.module_health_manager.fragment.ContractNotResidenFragment
 import com.gcml.module_health_manager.fragment.ContractedResidenFragment
 import kotlinx.android.synthetic.main.activity_contract_manage.*
 import kotlinx.android.synthetic.main.layout_common_toobar.*
@@ -20,8 +21,8 @@ class ContractManageActivity : AppCompatActivity() {
 
     var fragments = ArrayList<Fragment>()
     private fun initfragments() {
-        fragments.add(ContractedResidenFragment.newInstance("0", ""))
-        fragments.add(ContractedResidenFragment.newInstance("1", ""))
+        fragments.add(ContractNotResidenFragment.newInstance("", ""))
+        fragments.add(ContractedResidenFragment.newInstance("", ""))
     }
 
     private fun initView() {
