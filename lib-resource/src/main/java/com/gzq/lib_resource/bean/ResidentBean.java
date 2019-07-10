@@ -3,6 +3,8 @@ package com.gzq.lib_resource.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ResidentBean implements Parcelable {
 
     private int age;
@@ -31,6 +33,7 @@ public class ResidentBean implements Parcelable {
     private String smoke;
     private int state;
     private String tel;
+    @SerializedName(value = "userPhoto", alternate = "user_photo")
     private String userPhoto;
     private String vipState;
     private int waist;
@@ -41,9 +44,12 @@ public class ResidentBean implements Parcelable {
     private String wyyxPwd;
     private String xfid;
     private String xfuserid;
-
     private int currentYearCount;
     private String recentResultData;
+    private String userType;
+
+    public ResidentBean() {
+    }
 
     protected ResidentBean(Parcel in) {
         age = in.readInt();
@@ -84,6 +90,7 @@ public class ResidentBean implements Parcelable {
         xfuserid = in.readString();
         currentYearCount = in.readInt();
         recentResultData = in.readString();
+        userType = in.readString();
     }
 
     public static final Creator<ResidentBean> CREATOR = new Creator<ResidentBean>() {
@@ -386,20 +393,28 @@ public class ResidentBean implements Parcelable {
         this.xfuserid = xfuserid;
     }
 
+    public int getCurrentYearCount() {
+        return currentYearCount;
+    }
+
     public void setCurrentYearCount(int currentYearCount) {
         this.currentYearCount = currentYearCount;
     }
 
-    public int getCurrentYearCount() {
-        return currentYearCount;
+    public String getRecentResultData() {
+        return recentResultData;
     }
 
     public void setRecentResultData(String recentResultData) {
         this.recentResultData = recentResultData;
     }
 
-    public String getRecentResultData() {
-        return recentResultData;
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     @Override
@@ -447,5 +462,6 @@ public class ResidentBean implements Parcelable {
         dest.writeString(xfuserid);
         dest.writeInt(currentYearCount);
         dest.writeString(recentResultData);
+        dest.writeString(userType);
     }
 }

@@ -1,7 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gcml.module_health_manager">
 
     <application>
+        <activity android:name=".activity.DealSignActivity"></activity>
+        <activity android:name=".activity.ContractManageActivity" />
+
         <meta-data
             android:name="com.gcml.module_health_manager.webview.WebApp"
             android:value="AppLifecycle" />
@@ -61,4 +65,5 @@
             android:name=".MedicalLiteratureActivity"
             android:screenOrientation="portrait" />
     </application>
+
 </manifest>

@@ -1,7 +1,11 @@
 apply from: rootProject.file('auto-dependences.gradle')
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //webview缓存框架
     implementation 'ren.yale.android:cachewebviewlib:2.1.8'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

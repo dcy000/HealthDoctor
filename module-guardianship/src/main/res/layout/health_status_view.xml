@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="686pt"
+    android:layout_height="92pt"
+    tools:ignore="MissingDefaultResource">
+
+    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="686pt"
+        android:layout_height="92pt"
+        tools:ignore="MissingDefaultResource">
+
+        <TextView
+            android:id="@+id/tvStatusName"
+            android:layout_width="686pt"
+            android:layout_height="68pt"
+            android:background="@drawable/shape_bg_green"
+            android:gravity="center_vertical"
+            android:paddingLeft="24pt"
+            android:text="健康居民"
+            android:textColor="#ffffffff"
+            android:textSize="28pt" />
+    </FrameLayout>
+</FrameLayout>
