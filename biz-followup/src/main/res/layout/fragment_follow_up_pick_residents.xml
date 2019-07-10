@@ -9,9 +9,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvResidentsPicked"
-        android:layout_width="400pt"
+        android:layout_width="wrap_content"
         android:layout_height="140pt"
         android:background="@color/white"
+        android:maxWidth="400pt"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clToolbar">
 
@@ -21,18 +22,18 @@
         android:id="@+id/etSearch"
         android:layout_width="0dp"
         android:layout_height="140pt"
-        android:layout_marginRight="32pt"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:hint="搜索"
         android:paddingLeft="24pt"
+        android:paddingRight="32pt"
         android:textColor="#303133"
         android:textColorHint="#C0C4CC"
         android:textSize="32pt"
-        app:layout_constraintBottom_toBottomOf="@+id/rvResidents"
-        app:layout_constraintLeft_toRightOf="@+id/rvResidents"
+        app:layout_constraintBottom_toBottomOf="@+id/rvResidentsPicked"
+        app:layout_constraintLeft_toRightOf="@+id/rvResidentsPicked"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rvResidents" />
+        app:layout_constraintTop_toTopOf="@+id/rvResidentsPicked" />
 
     <TextView
         android:id="@+id/tvLabel"
@@ -43,7 +44,7 @@
         android:textColor="#909399"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvResidents"
+        app:layout_constraintTop_toBottomOf="@+id/rvResidentsPicked"
         tools:text="硫化氢中毒" />
 
     <android.support.v7.widget.RecyclerView

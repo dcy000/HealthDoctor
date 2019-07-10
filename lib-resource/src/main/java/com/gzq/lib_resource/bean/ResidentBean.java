@@ -42,6 +42,9 @@ public class ResidentBean implements Parcelable {
     private String xfid;
     private String xfuserid;
 
+    private int currentYearCount;
+    private String recentResultData;
+
     protected ResidentBean(Parcel in) {
         age = in.readInt();
         allergy = in.readString();
@@ -79,6 +82,8 @@ public class ResidentBean implements Parcelable {
         wyyxPwd = in.readString();
         xfid = in.readString();
         xfuserid = in.readString();
+        currentYearCount = in.readInt();
+        recentResultData = in.readString();
     }
 
     public static final Creator<ResidentBean> CREATOR = new Creator<ResidentBean>() {
@@ -381,6 +386,22 @@ public class ResidentBean implements Parcelable {
         this.xfuserid = xfuserid;
     }
 
+    public void setCurrentYearCount(int currentYearCount) {
+        this.currentYearCount = currentYearCount;
+    }
+
+    public int getCurrentYearCount() {
+        return currentYearCount;
+    }
+
+    public void setRecentResultData(String recentResultData) {
+        this.recentResultData = recentResultData;
+    }
+
+    public String getRecentResultData() {
+        return recentResultData;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -424,5 +445,7 @@ public class ResidentBean implements Parcelable {
         dest.writeString(wyyxPwd);
         dest.writeString(xfid);
         dest.writeString(xfuserid);
+        dest.writeInt(currentYearCount);
+        dest.writeString(recentResultData);
     }
 }

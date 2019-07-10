@@ -181,7 +181,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void onPickResidents() {
-
+        showPickResidentsFragment();
     }
 
     private void onPickResidentHealthStatus() {
@@ -196,10 +196,12 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         FragmentUtils.finish(getActivity());
     }
 
-    FollowUpPickHealthStatusFragment.Callback callback = new FollowUpPickHealthStatusFragment.Callback() {
+    private HealthTagEntity tagEntity;
+
+    private FollowUpPickHealthStatusFragment.Callback callback = new FollowUpPickHealthStatusFragment.Callback() {
         @Override
         public void onPickedHealthStatus(HealthTagEntity entity) {
-
+            tagEntity = entity;
         }
     };
 
@@ -230,4 +232,35 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         fm.executePendingTransactions();
     }
 
+
+    private void showPickResidentsFragment() {
+        if (tagEntity == null) {
+            return;
+        }
+
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        String tag = FollowUpPickResidentsFragment.class.getName();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = FollowUpPickResidentsFragment.newInstacne(tagEntity);
+        }
+
+//        ((FollowUpPickResidentsFragment) fragment).setCallback(callback);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.flContainer, fragment, tag);
+        }
+
+        transaction.addToBackStack(tag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
+    }
 }
