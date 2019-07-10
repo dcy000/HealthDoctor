@@ -1,5 +1,6 @@
 package com.gcml.biz.followup.model;
 
+import com.gcml.biz.followup.model.entity.DoctorList;
 import com.gcml.biz.followup.model.entity.FollowUpList;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
@@ -48,6 +49,13 @@ public interface FollowUpService {
     @POST("ZZB/br/searchPatientAndFollow")
     Observable<HttpResult<ResidentList>> residentList(
             @Body ResidentListBody residentListBody
+    );
+
+    @POST("ZZB/docter/docters_all")
+    Observable<HttpResult<DoctorList>> doctorList(
+            @Query("doname") String name,
+            @Query("page") int page,
+            @Query("limit") int limit
     );
 
 }

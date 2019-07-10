@@ -133,6 +133,9 @@ public class FollowUpMainFragment extends LazyFragment {
             fragment = new FollowUpAddOrUpdateFragment();
         }
         FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
         if (fragment.isAdded()) {
             transaction.show(fragment);
         } else {

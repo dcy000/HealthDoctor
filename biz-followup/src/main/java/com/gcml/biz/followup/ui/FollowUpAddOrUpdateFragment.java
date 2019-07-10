@@ -21,6 +21,7 @@ import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gzq.lib_resource.LazyFragment;
+import com.gzq.lib_resource.bean.UserEntity;
 
 
 /**
@@ -169,8 +170,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void onPickFollower() {
-
+        showPickFollowerFragment();
     }
+
 
     private void onPickTime() {
 
@@ -194,6 +196,45 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
     private void onBack() {
         FragmentUtils.finish(getActivity());
+    }
+
+    private UserEntity follower;
+
+    private FollowUpPickFollowerFragment.Callback followerCallback = new FollowUpPickFollowerFragment.Callback() {
+        @Override
+        public void onPickedFollower(UserEntity entity) {
+            follower = entity;
+        }
+    };
+
+    private void showPickFollowerFragment() {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        String tag = FollowUpPickFollowerFragment.class.getName();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new FollowUpPickFollowerFragment();
+        }
+
+        ((FollowUpPickFollowerFragment) fragment).setCallback(followerCallback);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.flContainer, fragment, tag);
+        }
+
+        transaction.addToBackStack(tag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
     }
 
     private HealthTagEntity tagEntity;
@@ -221,6 +262,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         ((FollowUpPickHealthStatusFragment) fragment).setCallback(callback);
 
         FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
         if (fragment.isAdded()) {
             transaction.show(fragment);
         } else {
@@ -253,6 +297,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 //        ((FollowUpPickResidentsFragment) fragment).setCallback(callback);
 
         FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
         if (fragment.isAdded()) {
             transaction.show(fragment);
         } else {

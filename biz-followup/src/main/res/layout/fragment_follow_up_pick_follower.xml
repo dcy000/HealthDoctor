@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8F8F8"
     tools:context=".ui.FollowUpPickFollowerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvFollowerToPick"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSearch">
 
-</FrameLayout>
+    </android.support.v7.widget.RecyclerView>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="0dp"
+        android:layout_height="140pt"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/followup_ic_search"
+        android:drawablePadding="6pt"
+        android:gravity="center_vertical"
+        android:hint="搜索"
+        android:minWidth="350pt"
+        android:paddingLeft="24pt"
+        android:paddingRight="32pt"
+        android:textColor="#303133"
+        android:textColorHint="#C0C4CC"
+        android:textSize="32pt"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clToolbar" />
+
+    <include layout="@layout/common_cl_toolbar" />
+</android.support.constraint.ConstraintLayout>

@@ -65,7 +65,7 @@ public class MainHealthManagerFragment extends StateBaseFragment {
             startActivity(new Intent(getActivity(), ContractManageActivity.class));
         });
         view.findViewById(R.id.llFllowUpManage).setOnClickListener(v -> {
-
+            Routerfit.register(HealthManagerRouterApi.class).skipFollowupMainActivity();
         });
         view.findViewById(R.id.llMedicalLterature).setOnClickListener(v -> {
             Routerfit.register(HealthManagerRouterApi.class).skipMedicalLiteratureActivity();

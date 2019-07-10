@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +122,8 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         tvLabel = (TextView) view.findViewById(R.id.tvLabel);
         rvResidentsToPick = (RecyclerView) view.findViewById(R.id.rvResidentsToPick);
 
+        tvLabel.setText(tagEntity.getText());
+
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         layoutManager1.setReverseLayout(true);
@@ -179,17 +182,57 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         FragmentUtils.finish(getActivity());
     }
 
+    public boolean containsPicked(ResidentBean resident) {
+        boolean contains = false;
+        for (ResidentBean residentBean : residentsPicked) {
+            if (residentBean != null && residentBean.getBid() == resident.getBid()) {
+                contains = true;
+            }
+        }
+        return contains;
+    }
+
+    public boolean removePicked(ResidentBean resident) {
+        ResidentBean removed = null;
+        for (ResidentBean residentBean : residentsPicked) {
+            if (residentBean != null && residentBean.getBid() == resident.getBid()) {
+                removed = residentBean;
+            }
+        }
+
+        if (removed != null) {
+            return residentsPicked.remove(removed);
+        }
+
+        return false;
+    }
+
     private View.OnClickListener onToPickClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            int position = rvResidentsToPick.getChildAdapterPosition(v);
+            ResidentBean residentBean = residentsToPick.get(position);
 
+            if (containsPicked(residentBean)) {
+                removePicked(residentBean);
+            } else {
+                residentsPicked.add(residentBean);
+            }
+
+            toPickAdapter.notifyDataSetChanged();
+            pickedAdapter.notifyDataSetChanged();
         }
     };
 
     private View.OnClickListener onPickedClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            int position = rvResidentsPicked.getChildAdapterPosition(v);
+            boolean removed = residentsPicked.remove(residentsPicked.get(position));
+            if (removed) {
+                pickedAdapter.notifyDataSetChanged();
+                toPickAdapter.notifyDataSetChanged();
+            }
         }
     };
 
@@ -213,6 +256,7 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
             String userPhoto = resident.getUserPhoto();
             Glide.with(FollowUpPickResidentsFragment.this)
                     .load(userPhoto)
+                    .apply(RequestOptions.placeholderOf(R.drawable.common_ic_avatar_default))
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivResidentAvatar);
         }
@@ -268,12 +312,22 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
             ResidentBean resident = residentsToPick.get(i);
             Glide.with(FollowUpPickResidentsFragment.this)
                     .load(resident.getUserPhoto())
+                    .apply(RequestOptions.placeholderOf(R.drawable.common_ic_avatar_default))
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivResidentAvatar);
             tvResidentName.setText(resident.getBname());
             tvResidentTag.setText(tagEntity.getText());
-            tvResidentCount.setText(resident.getCurrentYearCount() + "");
-            tvFollowUpLastTime.setText(resident.getRecentResultData());
+
+            String countDesc = "今年已随访：" + resident.getCurrentYearCount() + "次";
+            tvResidentCount.setText(countDesc);
+
+            String time = resident.getRecentResultData();
+            String timeDesc = TextUtils.isEmpty(time) ? "" : "上次随访：" + time;
+            tvFollowUpLastTime.setText(timeDesc);
+
+            boolean contains = containsPicked(resident);
+
+            ivChecked.setSelected(contains);
         }
     }
 

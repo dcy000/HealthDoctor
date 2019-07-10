@@ -1,5 +1,6 @@
 package com.gcml.biz.followup.model;
 
+import com.gcml.biz.followup.model.entity.DoctorList;
 import com.gcml.biz.followup.model.entity.FollowUpList;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
@@ -7,6 +8,7 @@ import com.gcml.biz.followup.model.entity.ResidentListBody;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.ResidentBean;
+import com.gzq.lib_resource.bean.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +101,23 @@ public class FollowUpRepository {
                             return new ArrayList<>();
                         }
                         return residentList.getData();
+                    }
+                });
+    }
+
+    public Observable<List<UserEntity>> doctorList(
+            String doctorName,
+            int page,
+            int limit) {
+        return service.doctorList(doctorName, 1, 1000)
+                .compose(RxUtils.httpResponseTransformer())
+                .map(new Function<DoctorList, List<UserEntity>>() {
+                    @Override
+                    public List<UserEntity> apply(DoctorList doctorList) throws Exception {
+                        if (doctorList.getData() == null) {
+                            return new ArrayList<>();
+                        }
+                        return doctorList.getData();
                     }
                 });
     }

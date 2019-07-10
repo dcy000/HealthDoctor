@@ -3,6 +3,8 @@ package com.gzq.lib_resource.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserEntity implements Parcelable {
 
     private int docterid;
@@ -11,25 +13,44 @@ public class UserEntity implements Parcelable {
     private String hosname;
     private String adds;
     private String duty;
+    private String bill;
     private String department;
     private String documents;
     private String card;
     private int rankid;
-    private int state;
+    private String state;
     private int priority;
     private double amount;
     private String gat;
     private String pro;
     private int pend;
     private int evaluation;
+    @SerializedName("apply_amount")
     private int applyAmount;
+    @SerializedName("service_amount")
     private int serviceAmount;
+    @SerializedName("docter_photo")
     private String docterPhoto;
     private int onlineStatus;
     private String wyyxId;
     private String wyyxPwd;
     private String faceId;
     private String faceGroup;
+
+    /**
+     * {
+     * "evaluation": 30,
+     * "doctername": "吴正",
+     * "service_amount": 0,
+     * "docter_photo": null,
+     * "duty": "院长",
+     * "bill": "查看账单",
+     * "state": "查看详情",
+     * "hosname": "309医院",
+     * "docterid": 10111,
+     * "apply_amount": 0
+     * }
+     **/
 
     public UserEntity() {
     }
@@ -41,11 +62,12 @@ public class UserEntity implements Parcelable {
         hosname = in.readString();
         adds = in.readString();
         duty = in.readString();
+        bill = in.readString();
         department = in.readString();
         documents = in.readString();
         card = in.readString();
         rankid = in.readInt();
-        state = in.readInt();
+        state = in.readString();
         priority = in.readInt();
         amount = in.readDouble();
         gat = in.readString();
@@ -154,11 +176,11 @@ public class UserEntity implements Parcelable {
         this.rankid = rankid;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -287,11 +309,12 @@ public class UserEntity implements Parcelable {
         dest.writeString(hosname);
         dest.writeString(adds);
         dest.writeString(duty);
+        dest.writeString(bill);
         dest.writeString(department);
         dest.writeString(documents);
         dest.writeString(card);
         dest.writeInt(rankid);
-        dest.writeInt(state);
+        dest.writeString(state);
         dest.writeInt(priority);
         dest.writeDouble(amount);
         dest.writeString(gat);

@@ -20,7 +20,7 @@
         android:id="@+id/ivResidentDelete"
         android:layout_width="32pt"
         android:layout_height="32pt"
-        android:src="@drawable/follow_up_ic_delete"
+        android:src="@drawable/followup_ic_delete"
         app:layout_constraintBottom_toBottomOf="@+id/ivResidentAvatar"
         app:layout_constraintRight_toRightOf="@+id/ivResidentAvatar" />
 </android.support.constraint.ConstraintLayout>
