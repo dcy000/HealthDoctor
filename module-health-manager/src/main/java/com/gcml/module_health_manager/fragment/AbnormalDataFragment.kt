@@ -14,12 +14,13 @@ import com.gcml.module_health_manager.bean.DetectionBean
 import com.gzq.lib_core.base.Box
 import com.gzq.lib_core.http.observer.CommonObserver
 import com.gzq.lib_core.utils.RxUtils
-import com.gzq.lib_core.utils.ToastUtils
 import com.gzq.lib_resource.LazyFragment
 import com.gzq.lib_resource.bean.UserEntity
+import com.gzq.lib_resource.utils.data.TimeUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_abnormal_data.view.*
+import java.text.SimpleDateFormat
 
 
 private const val ARG_PARAM1 = "param1States"
@@ -51,8 +52,14 @@ class AbnormalDataFragment : LazyFragment() {
                 override fun convert(helper: BaseViewHolder?, item: DetectionBean?) {
                     helper?.setText(R.id.tvName, item?.userName)
 
-                    var time: String = parseTime(item?.detectionTime)
-                    helper?.setText(R.id.tvTime, time)
+                    helper?.setText(R.id.tvTime, when (states) {
+                        0 -> {
+                            parseTime(item?.verifyModify)
+                        }
+                        else -> {
+                            parseTime(item?.detectionTime)
+                        }
+                    })
 
                     if (item?.lowPressure == 0) {
                         helper?.setText(R.id.textView2, "血糖（mmol/L）")
@@ -62,9 +69,21 @@ class AbnormalDataFragment : LazyFragment() {
                         helper?.setText(R.id.tvPressrueValue, String.format("%s/%s", item?.lowPressure, item?.highPressure))
                     }
 
-                   /* helper?.getView<TextView>(R.id.tvConfirm)?.setOnClickListener {
-                        ToastUtils.showLong("")
-                    }*/
+                    when (states) {
+                        0 -> {
+                            helper?.getView<TextView>(R.id.tvConfirm)?.isEnabled = true
+                            helper?.getView<TextView>(R.id.tvConfirm)?.setOnClickListener {
+
+                                item?.dataAnomalyId?.apply {
+                                    updateAnomalyId(this)
+                                }
+                            }
+                        }
+                        1 -> {
+                            helper?.getView<TextView>(R.id.tvConfirm)?.isEnabled = false
+                        }
+                    }
+
                 }
             }
 
@@ -86,6 +105,30 @@ class AbnormalDataFragment : LazyFragment() {
         }
         inflateView = view
         return view
+    }
+
+    private fun updateAnomalyId(id: String?) {
+        Box.getRetrofit(HealthManageService::class.java)
+                .updateAnomalyId(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.httpResponseTransformer())
+                .doFinally {
+
+                }
+                .`as`(RxUtils.autoDisposeConverter(this))
+                .subscribe(object : CommonObserver<Any>() {
+                    override fun onNext(list: Any) {
+                        refresh()
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+
+                    override fun onComplete() {
+
+                    }
+                })
     }
 
     override fun onPageResume() {
@@ -167,16 +210,18 @@ class AbnormalDataFragment : LazyFragment() {
 
 
     private fun parseTime(detectionTime: Long?): String {
-        return "昨天"
+        return detectionTime?.let {
+            TimeUtils.milliseconds2String(detectionTime, SimpleDateFormat("yyyy.MM.dd HH:mm"))
+        } ?: ""
     }
 
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Int, param2: String) =
                 AbnormalDataFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
+                        putInt(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }

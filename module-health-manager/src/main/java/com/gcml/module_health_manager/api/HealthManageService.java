@@ -9,6 +9,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface HealthManageService {
@@ -29,9 +30,12 @@ public interface HealthManageService {
     @GET("ZZB/api/detection/anomaly/")
     Observable<HttpResult<List<DetectionBean>>> getAbNomalDatas(
             @Query("doctorId") int doctorId,
-            @Query("reviewStatus") int reviewStatus,
+            @Query("verifyStatus") int reviewStatus,
             @Query("page") int page,
             @Query("limit") int limit
     );
+
+    @POST("ZZB/api/detection/anomaly/{dataAnomalyId}/")
+    Observable<HttpResult<Object>> updateAnomalyId(@Path("dataAnomalyId") String updateAnomalyId);
 
 }

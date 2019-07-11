@@ -23,8 +23,8 @@ class AbnormalDataConfirmActivity : AppCompatActivity() {
 
     var fragments = ArrayList<Fragment>()
     private fun initfragments() {
-        fragments?.add(AbnormalDataFragment.newInstance("0", ""))
-        fragments?.add(AbnormalDataFragment.newInstance("1", ""))
+        fragments?.add(AbnormalDataFragment.newInstance(0, ""))
+        fragments?.add(AbnormalDataFragment.newInstance(1, ""))
     }
 
     private fun initView() {

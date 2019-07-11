@@ -2,11 +2,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="686pt"
-    android:background="@color/white"
-    android:elevation="2pt"
+    android:background="@drawable/shape_bg_abnormal"
     android:layout_marginBottom="24pt"
     android:layout_height="258pt">
 
+    <!--android:elevation="2pt"-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivHead"
         android:layout_width="48pt"
