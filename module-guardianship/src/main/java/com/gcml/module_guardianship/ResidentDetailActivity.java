@@ -2,6 +2,8 @@ package com.gcml.module_guardianship;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -89,9 +92,24 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
     public void initView() {
         showSuccess();
         mTvTitle.setText("居民详情");
+
         mLlRight.setVisibility(View.VISIBLE);
-        mTvRight.setVisibility(View.GONE);
-        mIvRight.setImageResource(R.drawable.icon_mobile_phone_blue);
+
+        ViewGroup.LayoutParams params = mTvRight.getLayoutParams();
+        params.width = 118;
+        params.height = 52;
+        mTvRight.setLayoutParams(params);
+        mTvRight.setText("定位");
+        mTvRight.setTextColor(Color.parseColor("#3F86FC"));
+
+        Drawable drawableLeft = getResources().getDrawable(
+                R.drawable.img_location);
+        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+        mTvRight.setCompoundDrawables(drawableLeft, null, null, null);
+
+        if (mToolbar != null) {
+            mToolbar.setVisibility(View.GONE);
+        }
         mCvHead = findViewById(R.id.ivHead);
         mCvHead.setOnClickListener(this);
         mIvDialPhone = findViewById(R.id.ivDialPhone);
@@ -114,8 +132,15 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mTvHealthModify = findViewById(R.id.tvHealthModify);
         mTvHealthModify.setOnClickListener(this);
 
+
         fillData();
         initMenu();
+        findViewById(R.id.llRight).setOnClickListener(v -> {
+            Routerfit.register(GuardianshipRouterApi.class).skipResidentLocationDetailActivity(guardianshipBean);
+        });
+        findViewById(R.id.llLeft).setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void fillData() {
@@ -319,4 +344,11 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
             }
         }
     }
+
+/*
+    @Override
+    protected boolean isShowToolbar() {
+        super.isShowToolbar();
+        return false;
+    }*/
 }

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment
 import com.gcml.module_health_manager.R
 import com.gcml.module_health_manager.fragment.ContractNotResidenFragment
 import com.gcml.module_health_manager.fragment.ContractedResidenFragment
+import com.githang.statusbar.StatusBarCompat
+import com.gzq.lib_core.base.Box
 import kotlinx.android.synthetic.main.activity_contract_manage.*
 import kotlinx.android.synthetic.main.layout_common_toobar.*
 import java.util.ArrayList
@@ -17,6 +19,7 @@ class ContractManageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_contract_manage)
         initfragments()
         initView()
+        StatusBarCompat.setStatusBarColor(this, Box.getColor(com.gzq.lib_resource.R.color.white))
     }
 
     var fragments = ArrayList<Fragment>()
