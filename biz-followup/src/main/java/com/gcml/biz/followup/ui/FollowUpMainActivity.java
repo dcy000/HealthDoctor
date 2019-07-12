@@ -18,7 +18,7 @@ public class FollowUpMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_up_main);
-        StatusBarCompat.setFitsSystemWindows(getWindow(), true);
+//        StatusBarCompat.setFitsSystemWindows(getWindow(), true);
         StatusBarCompat.setStatusBarColor(this, Box.getColor(R.color.white));
         showFragment();
     }

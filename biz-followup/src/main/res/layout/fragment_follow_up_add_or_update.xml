@@ -150,7 +150,7 @@
             android:id="@+id/rvResidents"
             android:layout_width="400pt"
             android:layout_height="0dp"
-            android:layout_marginRight="16pt"
+            android:layout_marginRight="8pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tvResidentsContent"
             app:layout_constraintTop_toTopOf="parent">
@@ -236,6 +236,7 @@
         android:background="@color/white"
         android:hint="点击输入随访内容"
         android:paddingLeft="32pt"
+        android:gravity="top"
         android:paddingTop="24pt"
         android:paddingRight="32pt"
         android:paddingBottom="24pt"

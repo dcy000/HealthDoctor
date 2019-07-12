@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.FollowUpCancelFragment">
+
+    <View
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="384pt"
+        android:background="#FFFFFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clToolbar" />
+
+    <EditText
+        android:id="@+id/etCancelReason"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="32pt"
+        android:background="@drawable/followup_bg_fff9fafc"
+        android:gravity="top"
+        android:hint="请输入取消原因"
+        android:paddingLeft="24pt"
+        android:paddingTop="20pt"
+        android:paddingRight="24pt"
+        android:paddingBottom="60pt"
+        android:textColor="#303133"
+        android:textColorHint="#C0C4CC"
+        android:textSize="32pt"
+        app:layout_constraintBottom_toBottomOf="@+id/bg"
+        app:layout_constraintLeft_toLeftOf="@+id/bg"
+        app:layout_constraintRight_toRightOf="@+id/bg"
+        app:layout_constraintTop_toTopOf="@+id/bg" />
+
+    <TextView
+        android:id="@+id/tvTextCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24pt"
+        android:layout_marginBottom="24pt"
+        android:text="0/100"
+        android:textColor="#909399"
+        android:textSize="28pt"
+        app:layout_constraintBottom_toBottomOf="@+id/etCancelReason"
+        app:layout_constraintRight_toRightOf="@+id/etCancelReason" />
+
+    <include layout="@layout/common_cl_toolbar" />
+</android.support.constraint.ConstraintLayout>
