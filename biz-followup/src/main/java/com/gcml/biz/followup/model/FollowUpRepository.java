@@ -1,6 +1,7 @@
 package com.gcml.biz.followup.model;
 
 import com.gcml.biz.followup.model.entity.DoctorList;
+import com.gcml.biz.followup.model.entity.FollowUpBody;
 import com.gcml.biz.followup.model.entity.FollowUpList;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
@@ -76,6 +77,14 @@ public class FollowUpRepository {
         return rxObjs;
     }
 
+    public Observable<List<HealthTagEntity>> followUpTempletes() {
+        return healthTagList("follow_up_plan");
+    }
+
+    public Observable<List<HealthTagEntity>> followUpResultTempletes() {
+        return healthTagList("follow_up_tamplate");
+    }
+
     public Observable<List<ResidentBean>> residentList(
             int doctorId,
             String existUserType,
@@ -120,5 +129,10 @@ public class FollowUpRepository {
                         return doctorList.getData();
                     }
                 });
+    }
+
+    public Observable<Object> addFollowUpList(List<FollowUpBody> followUpBodyList) {
+        return service.addFollowUpList(followUpBodyList)
+                .compose(RxUtils.httpResponseTransformer());
     }
 }

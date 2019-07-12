@@ -22,7 +22,7 @@ import com.gzq.lib_resource.LazyFragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 随访
  */
 public class FollowUpDoFragment extends LazyFragment {
 
@@ -88,7 +88,7 @@ public class FollowUpDoFragment extends LazyFragment {
         tvToolbarTitle = (TextView) view.findViewById(R.id.tvToolbarTitle);
         ivToolbarLeft.setVisibility(View.VISIBLE);
         tvToolbarLeft.setVisibility(View.GONE);
-//        tvToolbarRight.setVisibility(View.GONE);
+        tvToolbarRight.setVisibility(View.GONE);
         tvToolbarTitle.setText("随访");
 //        tvToolbarLeft.setText("取消");
 //        tvToolbarRight.setText("提交");

@@ -29,7 +29,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
+import com.gcml.biz.followup.model.FollowUpRepository;
+import com.gcml.biz.followup.model.entity.FollowUpBody;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
+import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.observer.CommonObserver;
+import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.LazyFragment;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
@@ -40,6 +46,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -82,18 +91,22 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     private ImageView ivFollowerContent;
     private ImageView ivFollowerAvatar;
 
+    private FollowUpRepository repository = new FollowUpRepository();
+
     private HealthTagEntity tagEntity;
     private ArrayList<ResidentBean> residentsPicked = new ArrayList<>();
 
     private int templateIndex = 0;
+    private List<HealthTagEntity> tags = new ArrayList<>();
+
     private ArrayList<String> templates = new ArrayList<>();
 
-    {
-        templates.add("健康体检");
-        templates.add("高血压随访");
-        templates.add("糖尿病随访");
-        templates.add("老年人随访");
-    }
+//    {
+//        templates.add("健康体检");
+//        templates.add("高血压随访");
+//        templates.add("糖尿病随访");
+//        templates.add("老年人随访");
+//    }
 
     private Date time;
     private UserEntity follower;
@@ -225,8 +238,12 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
     }
 
-    private void onPickFollower() {
-        showPickFollowerFragment();
+    private void onPickResidentHealthStatus() {
+        showPickHealthStatusFragment();
+    }
+
+    private void onPickResidents() {
+        showPickResidentsFragment();
     }
 
     private void onPickTime() {
@@ -237,15 +254,46 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         showPickTemplateActionSheet();
     }
 
-    private void onPickResidents() {
-        showPickResidentsFragment();
-    }
-
-    private void onPickResidentHealthStatus() {
-        showPickHealthStatusFragment();
+    private void onPickFollower() {
+        showPickFollowerFragment();
     }
 
     private void onAction() {
+        UserEntity user = Box.getSessionManager().getUser();
+        if (user == null) {
+            ToastUtils.showShort("请重新登陆");
+            return;
+        }
+
+        if (tagEntity == null) {
+            ToastUtils.showShort("请选择居民健康状况");
+            return;
+        }
+
+        if (residentsPicked.isEmpty()) {
+            ToastUtils.showShort("请选择居民");
+            return;
+        }
+
+        if (time == null) {
+            ToastUtils.showShort("请选择时间");
+            return;
+        }
+
+        if (follower == null) {
+            ToastUtils.showShort("请选择随访人");
+            return;
+        }
+
+        ArrayList<FollowUpBody> bodies = new ArrayList<>();
+
+        for (ResidentBean resident : residentsPicked) {
+            FollowUpBody body = new FollowUpBody();
+            body.setCreateDoctorId(user.getDocterid());
+            body.setUserId(resident.getBid());
+//            body.setPlanContent(etFollowUpContent);
+
+        }
 
     }
 
@@ -254,9 +302,36 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void showPickTemplateActionSheet() {
-        showPickTemplateActionSheetWithIndex(templates, listener, templateIndex);
-    }
 
+        if (!tags.isEmpty()) {
+            templates.clear();
+            for (HealthTagEntity tag : tags) {
+                templates.add(tag.getText());
+            }
+            showPickTemplateActionSheetWithIndex(templates, listener, templateIndex);
+            return;
+        }
+        repository.followUpTempletes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<List<HealthTagEntity>>() {
+                    @Override
+                    public void onNext(List<HealthTagEntity> tagEntities) {
+                        tags.clear();
+                        tags.addAll(tagEntities);
+                        if (!tags.isEmpty()) {
+                            templates.clear();
+                            for (HealthTagEntity tag : tags) {
+                                templates.add(tag.getText());
+                            }
+                            showPickTemplateActionSheetWithIndex(templates, listener, templateIndex);
+                            return;
+                        }
+                        ToastUtils.showShort("无可选模版");
+                    }
+                });
+    }
 
 
     private OnOptionsSelectListener listener = new OnOptionsSelectListener() {
@@ -306,7 +381,6 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         pickerView.setSelectOptions(index);//设置默认选中
         pickerView.show();
     }
-
 
 
     private OnTimeSelectListener timeListener = new OnTimeSelectListener() {
@@ -360,7 +434,6 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                 .build();
         pvTime.show();
     }
-
 
 
     private FollowUpPickFollowerFragment.Callback followerCallback = new FollowUpPickFollowerFragment.Callback() {
@@ -487,6 +560,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
     private void showPickResidentsFragment() {
         if (tagEntity == null) {
+            ToastUtils.showShort("请先选择居民健康状况");
             return;
         }
 
