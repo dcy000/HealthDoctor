@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.FollowUpDoFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsvContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#F8F8F8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clToolbar">
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFollowUpStatus"
+                android:layout_width="match_parent"
+                android:layout_height="180pt"
+                android:background="@drawable/followup_bg_follow_up_status">
+
+
+                <TextView
+                    android:id="@+id/tvFollowUpName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="44pt"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36pt"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="随访失约" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginBottom="44pt"
+                    android:textColor="#FFFFFF"
+                    android:textSize="28pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    tools:text="2019年 7月3日 周三 15:00" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFollowUpContent"
+                android:layout_width="match_parent"
+                android:layout_height="164pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvFollowUpContentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="随访内容"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpContent"
+                    android:layout_width="482pt"
+                    android:layout_height="98pt"
+                    android:layout_marginTop="22pt"
+                    android:layout_marginRight="32pt"
+                    android:maxLines="2"
+                    android:textColor="#333333"
+                    android:textSize="32pt"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="健康体检的程序一般是在空腹的前提下完成抽血化验（包括血常规、血生化、血免疫、肿瘤标志物、激素、微量元素等项目）和腹部超声检查。" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFollowUpResult"
+                android:layout_width="match_parent"
+                android:layout_height="164pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvFollowUpResultLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="随访结果"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpResult"
+                    android:layout_width="482pt"
+                    android:layout_height="98pt"
+                    android:layout_marginTop="22pt"
+                    android:layout_marginRight="32pt"
+                    android:maxLines="2"
+                    android:textColor="#333333"
+                    android:textSize="32pt"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="健康体检的程序一般是在空腹的前提下完成抽血化验（包括血常规、血生化、血免疫、肿瘤标志物、激素、微量元素等项目）和腹部超声检查。" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFollowUpType"
+                android:layout_width="match_parent"
+                android:layout_height="92pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvFollowUpTypeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="随访方式"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:drawablePadding="16pt"
+                    android:hint="面对面"
+                    android:textColor="#333333"
+                    android:textColorHint="#909399"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clFollowUpDoctor"
+                android:layout_width="match_parent"
+                android:layout_height="92pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvFollowUpDoctorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="随访医生"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpDoctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:maxLines="2"
+                    android:textColor="#333333"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="小汪" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clResident"
+                android:layout_width="match_parent"
+                android:layout_height="92pt"
+                android:layout_marginTop="24pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvFollowUpResidentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="随访居民"
+                    android:textColor="#333333"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowUpResident"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:drawablePadding="16pt"
+                    android:hint="李小大"
+                    android:textColor="#333333"
+                    android:textColorHint="#909399"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clResidentAge"
+                android:layout_width="match_parent"
+                android:layout_height="92pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvResidentAgeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="年龄"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvResidentAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:drawablePadding="16pt"
+                    android:hint="23岁"
+                    android:textColor="#333333"
+                    android:textColorHint="#909399"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clResidentGender"
+                android:layout_width="match_parent"
+                android:layout_height="92pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvResidentGenderLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="性别"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvResidentGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:drawablePadding="16pt"
+                    android:hint="女"
+                    android:textColor="#333333"
+                    android:textColorHint="#909399"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clResidentHealthStatus"
+                android:layout_width="match_parent"
+                android:layout_height="144pt"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tvResidentHealthStatusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginTop="30pt"
+                    android:maxLines="2"
+                    android:text="健康状况"
+                    android:textColor="#303133"
+                    android:textSize="28pt"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvResidentHealthStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32pt"
+                    android:drawablePadding="16pt"
+                    android:hint="女"
+                    android:textColor="#333333"
+                    android:textColorHint="#909399"
+                    android:textSize="32pt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1pt"
+                    android:layout_marginLeft="32pt"
+                    android:layout_marginRight="32pt"
+                    android:background="#EEEEEE"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <include layout="@layout/common_cl_toolbar" />
+</android.support.constraint.ConstraintLayout>

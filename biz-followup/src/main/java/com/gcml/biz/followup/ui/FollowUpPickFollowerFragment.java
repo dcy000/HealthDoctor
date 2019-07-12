@@ -23,6 +23,7 @@ import com.gcml.biz.followup.model.FollowUpRepository;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.LazyFragment;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -39,7 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FollowUpPickFollowerFragment extends Fragment {
+public class FollowUpPickFollowerFragment extends LazyFragment {
 
     private ToPickAdapter toPickAdapter;
 
