@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="686pt"
+    android:background="@drawable/shape_bg_abnormal"
+    android:layout_marginBottom="24pt"
+    android:layout_height="258pt">
+
+    <!--android:elevation="2pt"-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivHead"
+        android:layout_width="48pt"
+        android:layout_height="48pt"
+        android:layout_marginStart="24pt"
+        android:layout_marginTop="30pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24pt"
+        android:layout_marginTop="30pt"
+        android:text="小曾"
+        android:textColor="#ff303133"
+        android:textSize="28pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginLeft="24pt" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24pt"
+        android:text="昨天"
+        android:textColor="#ff909399"
+        android:textSize="28pt"
+        app:layout_constraintBottom_toBottomOf="@+id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvName" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24pt"
+        android:layout_marginTop="40pt"
+        android:text="血压（mmHg）"
+        android:textColor="#ff909399"
+        android:textSize="24pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivHead" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68pt"
+        android:text="血糖（mmol/L）"
+        android:textColor="#ff909399"
+        android:textSize="24pt"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+
+    <TextView
+        android:id="@+id/tvPressrueValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24pt"
+        android:layout_marginTop="16pt"
+        android:text="75/115"
+        android:textColor="#ff606265"
+        android:textSize="48pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/tvHeartValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="75"
+        android:textColor="#ff606265"
+        android:textSize="48pt"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPressrueValue"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/tvPressrueValue" />
+
+
+    <TextView
+        android:id="@+id/tvConfirm"
+        android:layout_width="88pt"
+        android:layout_height="56pt"
+        android:layout_marginEnd="24pt"
+        android:layout_marginBottom="46pt"
+        android:background="@drawable/bg_tv_see"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="#ffffffff"
+        android:textSize="28pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,4 @@
 package com.gcml.module_health_manager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gcml.module_health_manager.activity.AbnormalDataConfirmActivity;
 import com.gcml.module_health_manager.activity.ContractManageActivity;
 import com.gcml.module_health_manager.api.HealthManagerRouterApi;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
@@ -52,7 +52,8 @@ public class MainHealthManagerFragment extends StateBaseFragment {
 
     private void initEvent(View view) {
         view.findViewById(R.id.llAbnormalData).setOnClickListener(v -> {
-
+            //异常数据确认
+            startActivity(new Intent(getActivity(), AbnormalDataConfirmActivity.class));
         });
         view.findViewById(R.id.llSignDoctor).setOnClickListener(v -> {
             Routerfit.register(HealthManagerRouterApi.class).skipFamilyDoctorServiceActivity();
