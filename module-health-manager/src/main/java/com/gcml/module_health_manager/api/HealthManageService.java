@@ -1,5 +1,6 @@
 package com.gcml.module_health_manager.api;
 
+import com.gcml.module_health_manager.bean.AbNormalPageBean;
 import com.gcml.module_health_manager.bean.ConstractBean;
 import com.gcml.module_health_manager.bean.DetectionBean;
 import com.gzq.lib_core.http.model.HttpResult;
@@ -27,8 +28,8 @@ public interface HealthManageService {
             @Query("docter_sign") String docterSign,
             @Query("state") String state);
 
-    @GET("ZZB/api/detection/anomaly/")
-    Observable<HttpResult<List<DetectionBean>>> getAbNomalDatas(
+    @GET("ZZB/api/detection/anomalyPage/")
+    Observable<HttpResult<AbNormalPageBean>> getAbNomalDatas(
             @Query("doctorId") int doctorId,
             @Query("verifyStatus") int reviewStatus,
             @Query("page") int page,

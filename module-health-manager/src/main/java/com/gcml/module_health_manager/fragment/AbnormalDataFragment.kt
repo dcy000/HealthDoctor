@@ -2,6 +2,7 @@ package com.gcml.module_health_manager.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.gcml.module_health_manager.R
 import com.gcml.module_health_manager.api.HealthManageService
+import com.gcml.module_health_manager.bean.AbNormalPageBean
 import com.gcml.module_health_manager.bean.DetectionBean
 import com.gzq.lib_core.base.Box
 import com.gzq.lib_core.http.observer.CommonObserver
@@ -54,10 +56,10 @@ class AbnormalDataFragment : LazyFragment() {
 
                     helper?.setText(R.id.tvTime, when (states) {
                         0 -> {
-                            parseTime(item?.verifyModify)
+                            parseTime(item?.detectionTime)
                         }
                         else -> {
-                            parseTime(item?.detectionTime)
+                            parseTime(item?.verifyModify)
                         }
                     })
 
@@ -73,10 +75,7 @@ class AbnormalDataFragment : LazyFragment() {
                         0 -> {
                             helper?.getView<TextView>(R.id.tvConfirm)?.isEnabled = true
                             helper?.getView<TextView>(R.id.tvConfirm)?.setOnClickListener {
-
-                                item?.dataAnomalyId?.apply {
-                                    updateAnomalyId(this)
-                                }
+                                update(item, helper)
                             }
                         }
                         1 -> {
@@ -105,6 +104,35 @@ class AbnormalDataFragment : LazyFragment() {
         }
         inflateView = view
         return view
+    }
+
+    private fun RecyclerView.update(item: DetectionBean?, helper: BaseViewHolder) {
+        item?.dataAnomalyId?.apply {
+            Box.getRetrofit(HealthManageService::class.java)
+                    .updateAnomalyId(this)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(RxUtils.httpResponseTransformer())
+                    .doFinally {
+
+                    }
+                    .`as`(RxUtils.autoDisposeConverter(this@AbnormalDataFragment))
+                    .subscribe(object : CommonObserver<Any>() {
+                        override fun onNext(list: Any) {
+                           /* abnormalItems.removeAt(helper.layoutPosition)
+                            adapter?.notifyItemChanged(helper.layoutPosition)*/
+
+                            refresh()
+                        }
+
+                        override fun onError(e: Throwable) {
+                        }
+
+                        override fun onComplete() {
+
+                        }
+                    })
+        }
     }
 
     private fun updateAnomalyId(id: String?) {
@@ -156,9 +184,10 @@ class AbnormalDataFragment : LazyFragment() {
                     view?.srefresh?.apply { finishRefresh() }
                 }
                 .`as`(RxUtils.autoDisposeConverter(this))
-                .subscribe(object : CommonObserver<List<DetectionBean>>() {
-                    override fun onNext(list: List<DetectionBean>) {
-                        abnormalItems.addAll(list)
+                .subscribe(object : CommonObserver<AbNormalPageBean>() {
+                    override fun onNext(data: AbNormalPageBean) {
+                        abnormalItems.clear()
+                        abnormalItems.addAll(data?.list)
 
                         inflateView?.rvItems?.adapter?.notifyDataSetChanged()
 
@@ -191,9 +220,9 @@ class AbnormalDataFragment : LazyFragment() {
                     view?.srefresh?.apply { finishLoadMore() }
                 }
                 .`as`(RxUtils.autoDisposeConverter(this))
-                .subscribe(object : CommonObserver<List<DetectionBean>>() {
-                    override fun onNext(list: List<DetectionBean>) {
-                        abnormalItems.addAll(list)
+                .subscribe(object : CommonObserver<AbNormalPageBean>() {
+                    override fun onNext(list: AbNormalPageBean) {
+                        abnormalItems.addAll(list?.list)
 
                         inflateView?.rvItems?.adapter?.notifyDataSetChanged()
 
