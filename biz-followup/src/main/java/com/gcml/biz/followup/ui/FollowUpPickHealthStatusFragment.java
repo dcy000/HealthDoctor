@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -79,9 +80,9 @@ public class FollowUpPickHealthStatusFragment extends LazyFragment {
         tvToolbarTitle = (TextView) view.findViewById(R.id.tvToolbarTitle);
         ivToolbarLeft.setVisibility(View.VISIBLE);
         tvToolbarLeft.setVisibility(View.GONE);
-        tvToolbarRight.setVisibility(View.VISIBLE);
-        tvToolbarRight.setText("新增随访");
-        tvToolbarTitle.setText("随访");
+        tvToolbarRight.setVisibility(View.GONE);
+//        tvToolbarRight.setText("");
+//        tvToolbarTitle.setText("");
         ivToolbarLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +145,14 @@ public class FollowUpPickHealthStatusFragment extends LazyFragment {
         repository.healthTagList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        if (srlRefresh != null) {
+                            srlRefresh.finishRefresh();
+                        }
+                    }
+                })
                 .as(RxUtils.autoDisposeConverter(this))
                 .subscribe(new CommonObserver<List<Object>>() {
                     @Override
@@ -275,7 +284,7 @@ public class FollowUpPickHealthStatusFragment extends LazyFragment {
             Object o = items.get(position);
             if (o instanceof String) {
                 return R.layout.item_follow_up_health_tag_header;
-            } else if (o instanceof HealthTagHolder) {
+            } else if (o instanceof HealthTagEntity) {
                 return R.layout.item_follow_up_health_tag_content;
             }
             return super.getItemViewType(position);

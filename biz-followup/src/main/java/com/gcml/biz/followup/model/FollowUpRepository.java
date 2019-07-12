@@ -1,14 +1,20 @@
 package com.gcml.biz.followup.model;
 
+import com.gcml.biz.followup.model.entity.DoctorList;
 import com.gcml.biz.followup.model.entity.FollowUpList;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
+import com.gcml.biz.followup.model.entity.ResidentList;
+import com.gcml.biz.followup.model.entity.ResidentListBody;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_resource.bean.ResidentBean;
+import com.gzq.lib_resource.bean.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
@@ -30,7 +36,6 @@ public class FollowUpRepository {
         return service.healthTagList(code)
                 .compose(RxUtils.httpResponseTransformer());
     }
-
 
     public Observable<List<Object>> healthTagList() {
         HealthTagEntity item = new HealthTagEntity();
@@ -71,4 +76,49 @@ public class FollowUpRepository {
         return rxObjs;
     }
 
+    public Observable<List<ResidentBean>> residentList(
+            int doctorId,
+            String existUserType,
+            String patientName,
+            int followCountType,
+            int page,
+            int limit) {
+
+        ResidentListBody body = new ResidentListBody();
+        body.setDoctorId(doctorId);
+        body.setExistUserType(existUserType);
+        body.setPatientName(patientName);
+        body.setFollowCountType(followCountType);
+        body.setPage(1);
+        body.setLimit(1000);
+
+        return service.residentList(body)
+                .compose(RxUtils.httpResponseTransformer())
+                .map(new Function<ResidentList, List<ResidentBean>>() {
+                    @Override
+                    public List<ResidentBean> apply(ResidentList residentList) throws Exception {
+                        if (residentList.getData() == null) {
+                            return new ArrayList<>();
+                        }
+                        return residentList.getData();
+                    }
+                });
+    }
+
+    public Observable<List<UserEntity>> doctorList(
+            String doctorName,
+            int page,
+            int limit) {
+        return service.doctorList(doctorName, 1, 1000)
+                .compose(RxUtils.httpResponseTransformer())
+                .map(new Function<DoctorList, List<UserEntity>>() {
+                    @Override
+                    public List<UserEntity> apply(DoctorList doctorList) throws Exception {
+                        if (doctorList.getData() == null) {
+                            return new ArrayList<>();
+                        }
+                        return doctorList.getData();
+                    }
+                });
+    }
 }

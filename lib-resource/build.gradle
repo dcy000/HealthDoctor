@@ -54,7 +54,7 @@ dependencies {
 //        exclude group: 'com.android.support'
 //    }
     //rxbinding
-//    api rootProject.ext.dependencies["rxbinding"]
+    api rootProject.ext.dependencies["rxbinding"]
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
     //fragmentation https://github.com/YoKeyword/Fragmentation

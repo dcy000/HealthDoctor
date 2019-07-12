@@ -21,6 +21,7 @@ import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gzq.lib_resource.LazyFragment;
+import com.gzq.lib_resource.bean.UserEntity;
 
 
 /**
@@ -169,8 +170,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void onPickFollower() {
-
+        showPickFollowerFragment();
     }
+
 
     private void onPickTime() {
 
@@ -181,7 +183,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     }
 
     private void onPickResidents() {
-
+        showPickResidentsFragment();
     }
 
     private void onPickResidentHealthStatus() {
@@ -196,10 +198,51 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         FragmentUtils.finish(getActivity());
     }
 
-    FollowUpPickHealthStatusFragment.Callback callback = new FollowUpPickHealthStatusFragment.Callback() {
+    private UserEntity follower;
+
+    private FollowUpPickFollowerFragment.Callback followerCallback = new FollowUpPickFollowerFragment.Callback() {
+        @Override
+        public void onPickedFollower(UserEntity entity) {
+            follower = entity;
+        }
+    };
+
+    private void showPickFollowerFragment() {
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        String tag = FollowUpPickFollowerFragment.class.getName();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = new FollowUpPickFollowerFragment();
+        }
+
+        ((FollowUpPickFollowerFragment) fragment).setCallback(followerCallback);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.flContainer, fragment, tag);
+        }
+
+        transaction.addToBackStack(tag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
+    }
+
+    private HealthTagEntity tagEntity;
+
+    private FollowUpPickHealthStatusFragment.Callback callback = new FollowUpPickHealthStatusFragment.Callback() {
         @Override
         public void onPickedHealthStatus(HealthTagEntity entity) {
-
+            tagEntity = entity;
         }
     };
 
@@ -219,6 +262,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         ((FollowUpPickHealthStatusFragment) fragment).setCallback(callback);
 
         FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
         if (fragment.isAdded()) {
             transaction.show(fragment);
         } else {
@@ -230,4 +276,38 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         fm.executePendingTransactions();
     }
 
+
+    private void showPickResidentsFragment() {
+        if (tagEntity == null) {
+            return;
+        }
+
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        String tag = FollowUpPickResidentsFragment.class.getName();
+        FragmentManager fm = activity.getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(tag);
+        if (fragment == null) {
+            fragment = FollowUpPickResidentsFragment.newInstacne(tagEntity);
+        }
+
+//        ((FollowUpPickResidentsFragment) fragment).setCallback(callback);
+
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.add(R.id.flContainer, fragment, tag);
+        }
+
+        transaction.addToBackStack(tag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
+    }
 }

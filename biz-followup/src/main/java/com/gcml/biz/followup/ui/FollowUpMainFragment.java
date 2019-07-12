@@ -91,6 +91,8 @@ public class FollowUpMainFragment extends LazyFragment {
             tabFragments.add(FollowUpTabFragment.newInstance(i, tabLables.get(i)));
         }
 
+        vpFollowUp.setOffscreenPageLimit(4);
+
         vpFollowUp.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -131,6 +133,9 @@ public class FollowUpMainFragment extends LazyFragment {
             fragment = new FollowUpAddOrUpdateFragment();
         }
         FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(this);
+
         if (fragment.isAdded()) {
             transaction.show(fragment);
         } else {
