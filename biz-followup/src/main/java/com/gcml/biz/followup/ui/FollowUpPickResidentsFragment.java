@@ -42,12 +42,23 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class FollowUpPickResidentsFragment extends LazyFragment {
 
+    public interface CallBack {
+        void onPickedResidents(List<ResidentBean> residents);
+    }
+
+    private CallBack callBack;
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
+
     private HealthTagEntity tagEntity;
 
-    public static FollowUpPickResidentsFragment newInstacne(HealthTagEntity entity) {
+    public static FollowUpPickResidentsFragment newInstance(HealthTagEntity entity, ArrayList<ResidentBean> residentsPicked) {
         FollowUpPickResidentsFragment fragment = new FollowUpPickResidentsFragment();
         Bundle args = new Bundle();
         args.putParcelable("healthTag", entity);
+        args.putParcelableArrayList("residentsPicked", residentsPicked);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +76,10 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
     private ToPickAdapter toPickAdapter;
     private PickedAdapter pickedAdapter;
 
+    private ArrayList<ResidentBean> residentsPicked = new ArrayList<>();
+
+    private ArrayList<ResidentBean> residentsToPick = new ArrayList<>();
+
     private FollowUpRepository repository = new FollowUpRepository();
 
     public FollowUpPickResidentsFragment() {
@@ -77,6 +92,10 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             tagEntity = arguments.getParcelable("healthTag");
+            ArrayList<ResidentBean> residents = arguments.getParcelableArrayList("residentsPicked");
+            if (residents != null) {
+                residentsPicked.addAll(residents);
+            }
         }
     }
 
@@ -122,7 +141,7 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         tvLabel = (TextView) view.findViewById(R.id.tvLabel);
         rvResidentsToPick = (RecyclerView) view.findViewById(R.id.rvResidentsToPick);
 
-        tvLabel.setText(tagEntity.getText());
+//        tvLabel.setText(tagEntity.getText());
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -175,7 +194,10 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
     }
 
     private void onAction() {
-
+        if (callBack != null && !residentsPicked.isEmpty()) {
+            callBack.onPickedResidents(residentsPicked);
+        }
+        FragmentUtils.finish(getActivity());
     }
 
     private void onBack() {
@@ -236,7 +258,6 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         }
     };
 
-    private ArrayList<ResidentBean> residentsPicked = new ArrayList<>();
 
     int pickedLayout = R.layout.item_follow_picked_residents;
 
@@ -283,8 +304,6 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         }
     }
 
-
-    private ArrayList<ResidentBean> residentsToPick = new ArrayList<>();
 
     private int toPickLayout = R.layout.item_follow_up_to_pick_resident;
 

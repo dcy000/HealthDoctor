@@ -100,37 +100,37 @@ public class FaceBdSignInActivity extends BaseActivity<FaceActivityBdSignInBindi
 //                takeFrames("");
             }
         });
-        compactScreenHeight();
+//        compactScreenHeight();
     }
 
-    @Override
-    protected void onResume() {
-        compactScreenHeight();
-        super.onResume();
-    }
-
-    private void compactScreenHeight() {
-        binding.previewMask.post(new Runnable() {
-            @Override
-            public void run() {
-                // 适配屏幕
-                int height = binding.clRoot.getHeight();
-                int width = binding.clRoot.getWidth();
-                Timber.w("face preview: width = %s, height = %s", width, height);
-                int extra = height - width * 15 / 9;
-                ViewGroup.LayoutParams params = binding.extraBottom.getLayoutParams();
-                if (params != null) {
-                    if (extra > 0) {
-                        params.height = extra;
-                    } else {
-                        params.height = 1;
-                    }
-                    binding.extraBottom.setLayoutParams(params);
-                    binding.clRoot.requestLayout();
-                }
-            }
-        });
-    }
+//    @Override
+//    protected void onResume() {
+//        compactScreenHeight();
+//        super.onResume();
+//    }
+//
+//    private void compactScreenHeight() {
+//        binding.previewMask.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 适配屏幕
+//                int height = binding.clRoot.getHeight();
+//                int width = binding.clRoot.getWidth();
+//                Timber.w("face preview: width = %s, height = %s", width, height);
+//                int extra = height - width * 15 / 9;
+//                ViewGroup.LayoutParams params = binding.extraBottom.getLayoutParams();
+//                if (params != null) {
+//                    if (extra > 0) {
+//                        params.height = extra;
+//                    } else {
+//                        params.height = 1;
+//                    }
+//                    binding.extraBottom.setLayoutParams(params);
+//                    binding.clRoot.requestLayout();
+//                }
+//            }
+//        });
+//    }
 
     @Override
     protected void onStart() {
