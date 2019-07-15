@@ -23,7 +23,6 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.presenter.IResidentLocationView;
 import com.gcml.module_guardianship.presenter.ResidentLocationPresenter;
 import com.gzq.lib_core.utils.ToastUtils;
@@ -63,13 +62,13 @@ public class ResidentLocationDetailActivity extends StateBaseActivity implements
         super.onCreate(savedInstanceState);
         mMapview.onCreate(savedInstanceState);
         aMap = mMapview.getMap();
-        setLocationStyle();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        residentLocationPresenter.getHandRingLatLon(guardianshipBean.getBid());
+        setLocationStyle();
+//        residentLocationPresenter.getHandRingLatLon(guardianshipBean.getBid());
     }
 
     @Override

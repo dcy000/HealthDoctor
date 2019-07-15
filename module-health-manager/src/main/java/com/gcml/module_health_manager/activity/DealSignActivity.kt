@@ -68,6 +68,11 @@ class DealSignActivity : AppCompatActivity() {
             adapter = object : BaseQuickAdapter<Menu, BaseViewHolder>(R.layout.item_user_info, menus) {
                 override fun convert(helper: BaseViewHolder?, item: Menu?) {
                     when (item?.name) {
+                        "手机号" -> {
+                            helper?.setText(R.id.tv_title, item?.name)
+                            helper?.setText(R.id.tv_content, item?.value)
+                        }
+
                         "血型" -> {
                             helper?.setText(R.id.tv_title, item?.name)
                             helper?.setText(R.id.tv_content, item?.value)
