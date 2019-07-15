@@ -56,7 +56,9 @@ class DealSignActivity : AppCompatActivity() {
             }
         }
 
-        var menus = listOf(Menu("血型", userInfo?.bloodType ?: "暂未填写"),
+        var menus = listOf(
+                Menu("手机号", userInfo?.tel ?: "暂未填写"),
+                Menu("血型", userInfo?.bloodType ?: "暂未填写"),
                 Menu("身高", "" + userInfo?.height),
                 Menu("体重", "" + userInfo?.weight))
 

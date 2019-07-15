@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <ImageView
@@ -24,7 +25,7 @@
         android:layout_width="686pt"
         android:layout_height="930pt"
         android:layout_marginTop="244pt"
-        android:background="@drawable/bg_shadow"
+        android:background="@drawable/shape_bg_abnormal"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
