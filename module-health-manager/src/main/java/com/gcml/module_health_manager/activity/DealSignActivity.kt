@@ -44,7 +44,9 @@ class DealSignActivity : AppCompatActivity() {
 
         tvName.text = userInfo?.bname
         tvSexValue.text = "性别  " + userInfo?.sex
-        tvAgeValue.text = "年龄  " + userInfo?.age
+//        tvAgeValue.text = "年龄  " + userInfo?.age //坑啊 这样写在<=6.0的手机上不显示年龄啊
+        tvAgeValue.text = String.format("年龄 %d", userInfo?.age)
+
 
         var showButton: Boolean? = intent?.getBooleanExtra("showButton", false)
         when (showButton) {
@@ -56,7 +58,9 @@ class DealSignActivity : AppCompatActivity() {
             }
         }
 
-        var menus = listOf(Menu("血型", userInfo?.bloodType ?: "暂未填写"),
+        var menus = listOf(
+                Menu("手机号", userInfo?.tel ?: "暂未填写"),
+                Menu("血型", userInfo?.bloodType ?: "暂未填写"),
                 Menu("身高", "" + userInfo?.height),
                 Menu("体重", "" + userInfo?.weight))
 
@@ -66,6 +70,11 @@ class DealSignActivity : AppCompatActivity() {
             adapter = object : BaseQuickAdapter<Menu, BaseViewHolder>(R.layout.item_user_info, menus) {
                 override fun convert(helper: BaseViewHolder?, item: Menu?) {
                     when (item?.name) {
+                        "手机号" -> {
+                            helper?.setText(R.id.tv_title, item?.name)
+                            helper?.setText(R.id.tv_content, item?.value)
+                        }
+
                         "血型" -> {
                             helper?.setText(R.id.tv_title, item?.name)
                             helper?.setText(R.id.tv_content, item?.value)

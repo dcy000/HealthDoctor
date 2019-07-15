@@ -9,6 +9,8 @@ import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IView;
 
+import io.reactivex.observers.DefaultObserver;
+
 public class ResidentDetailPresenter extends BasePresenter {
     public ResidentDetailPresenter(IView view) {
         super(view);
@@ -21,10 +23,20 @@ public class ResidentDetailPresenter extends BasePresenter {
                 .getHandRingHealthData(userId)
                 .compose(RxUtils.httpResponseTransformer())
                 .as(RxUtils.autoDisposeConverter(mLifecycleOwner))
-                .subscribe(new CommonObserver<HandRingHealthDataBena>() {
+                .subscribe(new DefaultObserver<HandRingHealthDataBena>() {
                     @Override
                     public void onNext(HandRingHealthDataBena handRingHealthDataBena) {
                         mView.loadDataSuccess(handRingHealthDataBena);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.loadDataError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

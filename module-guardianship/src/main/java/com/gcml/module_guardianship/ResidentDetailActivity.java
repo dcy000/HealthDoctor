@@ -257,6 +257,12 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         String pressureValue = String.format("%s/%s", handRingHealthDataBena.getLowPressure(), handRingHealthDataBena.getHighPressure());
         mTvPressrueValue.setText(pressureValue);
         mTvHeatData.setText(handRingHealthDataBena.getHeartRate() + "");
+        findViewById(R.id.llRight).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void loadDataError(Object... objects) {
+        findViewById(R.id.llRight).setVisibility(View.GONE);
     }
 
     @Override
