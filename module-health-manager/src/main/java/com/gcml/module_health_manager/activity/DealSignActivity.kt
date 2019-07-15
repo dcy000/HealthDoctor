@@ -44,7 +44,9 @@ class DealSignActivity : AppCompatActivity() {
 
         tvName.text = userInfo?.bname
         tvSexValue.text = "性别  " + userInfo?.sex
-        tvAgeValue.text = "年龄  " + userInfo?.age
+//        tvAgeValue.text = "年龄  " + userInfo?.age //坑啊 这样写在<=6.0的手机上不显示年龄啊
+        tvAgeValue.text = String.format("年龄 %d", userInfo?.age)
+
 
         var showButton: Boolean? = intent?.getBooleanExtra("showButton", false)
         when (showButton) {
