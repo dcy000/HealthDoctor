@@ -2,8 +2,6 @@ package com.gcml.biz.followup.model.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class FollowUpBody {
 
 
@@ -12,7 +10,7 @@ public class FollowUpBody {
      * planDate : 2019-07-11 14:24:00
      * planDoctorId : 10130
      * planTitle : 测试创建模板
-     * planTypeId : 3
+     * planTypeId : 3  模版id
      * userId : 130244
      * createDoctorId : 130244
      * createDoctorName :

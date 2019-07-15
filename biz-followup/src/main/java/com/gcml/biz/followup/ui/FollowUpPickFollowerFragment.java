@@ -38,7 +38,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 选择随访医生
  */
 public class FollowUpPickFollowerFragment extends LazyFragment {
 
