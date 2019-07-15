@@ -18,373 +18,369 @@
 
     </FrameLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clResidentHealthStatus"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="92pt"
-        android:layout_marginTop="24pt"
-        android:background="@color/white"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingTop="24pt"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clToolbar">
 
-        <TextView
-            android:id="@+id/tvResidentHealthStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32pt"
-            android:text="居民健康状况"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clResidentHealthStatus"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tvResidentHealthStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:text="居民健康状况"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivResidentHealthStatus"
+                android:layout_width="20pt"
+                android:layout_height="32pt"
+                android:layout_marginRight="32pt"
+                android:src="@drawable/common_ic_goto_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvResidentHealthStatusContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16pt"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivResidentHealthStatus"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="健康居民"
+                tools:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivResidentHealthStatusContent"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:layout_marginRight="16pt"
+                android:src="@drawable/common_ic_add"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivResidentHealthStatus"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="0dp"
+                android:layout_height="1pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginRight="32pt"
+                android:background="#DCDCDC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clResidents"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:paddingRight="32pt"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tvResidents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:text="居民"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivResidentsNext"
+                android:layout_width="20pt"
+                android:layout_height="32pt"
+                android:visibility="visible"
+                android:src="@drawable/common_ic_goto_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvResidentsContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16pt"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivResidentsNext"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6人" />
+
+            <ImageView
+                android:id="@+id/ivResidentsContent"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:layout_marginRight="16pt"
+                android:src="@drawable/common_ic_add"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivResidentsNext"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvResidents"
+                android:layout_width="400pt"
+                android:layout_height="0dp"
+                android:layout_marginRight="8pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tvResidentsContent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clFollowUp"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:layout_marginTop="24pt"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tvFollowUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:text="随访内容"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivFollowUp"
+                android:layout_width="20pt"
+                android:layout_height="32pt"
+                android:layout_marginRight="32pt"
+                android:src="@drawable/common_ic_goto_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFollowUpContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16pt"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:hint="选择模版"
+                android:textColorHint="#909399"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivFollowUp"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/ivFollowUpContent"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:layout_marginRight="16pt"
+                android:src="@drawable/common_ic_add"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivFollowUp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="0dp"
+                android:layout_height="1pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginRight="32pt"
+                android:background="#DCDCDC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+
+        <EditText
+            android:id="@+id/etFollowUpContent"
+            android:layout_width="match_parent"
+            android:layout_height="240pt"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="点击输入随访内容"
+            android:paddingLeft="32pt"
+            android:paddingTop="24pt"
+            android:paddingRight="32pt"
+            android:paddingBottom="24pt"
             android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColorHint="#C0C4CC"
+            android:textSize="32pt" />
 
-        <ImageView
-            android:id="@+id/ivResidentHealthStatus"
-            android:layout_width="20pt"
-            android:layout_height="32pt"
-            android:layout_marginRight="32pt"
-            android:src="@drawable/common_ic_goto_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clTime"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:layout_marginTop="24pt"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tvResidentHealthStatusContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16pt"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivResidentHealthStatus"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="健康居民"
-            tools:visibility="gone" />
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:text="随访时间"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivResidentHealthStatusContent"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_marginRight="16pt"
-            android:src="@drawable/common_ic_add"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivResidentHealthStatus"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            <ImageView
+                android:id="@+id/ivTime"
+                android:layout_width="20pt"
+                android:layout_height="32pt"
+                android:layout_marginRight="32pt"
+                android:src="@drawable/common_ic_goto_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvTimeContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16pt"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivTime"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="7月3日 周三 15:00" />
 
-    <View
-        android:id="@+id/line1"
-        android:layout_width="0dp"
-        android:layout_height="1pt"
-        android:layout_marginLeft="32pt"
-        android:layout_marginRight="32pt"
-        android:background="#DCDCDC"
-        app:layout_constraintBottom_toBottomOf="@+id/clResidentHealthStatus"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+            <ImageView
+                android:id="@+id/ivTimeContent"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:layout_marginRight="16pt"
+                android:src="@drawable/common_ic_add"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivTime"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clResidents"
-        android:layout_width="0dp"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clResidentHealthStatus">
+            <View
+                android:id="@+id/line3"
+                android:layout_width="0dp"
+                android:layout_height="1pt"
+                android:layout_marginLeft="32pt"
+                android:layout_marginRight="32pt"
+                android:background="#DCDCDC"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tvResidents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32pt"
-            android:text="居民"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivResidents"
-            android:layout_width="20pt"
-            android:layout_height="32pt"
-            android:layout_marginRight="32pt"
-            android:src="@drawable/common_ic_goto_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clFollower"
+            android:layout_width="match_parent"
+            android:layout_height="92pt"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tvResidentsContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16pt"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivResidents"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="6人" />
+            <TextView
+                android:id="@+id/tvFollower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32pt"
+                android:text="随访医生"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivResidentsContent"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_marginRight="16pt"
-            android:src="@drawable/common_ic_add"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivResidents"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/ivFollower"
+                android:layout_width="20pt"
+                android:layout_height="32pt"
+                android:layout_marginRight="32pt"
+                android:src="@drawable/common_ic_goto_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvResidents"
-            android:layout_width="400pt"
-            android:layout_height="0dp"
-            android:layout_marginRight="8pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/tvResidentsContent"
-            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/tvFollowerContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16pt"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivFollower"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="7月3日 周三 15:00" />
 
-        </android.support.v7.widget.RecyclerView>
+            <ImageView
+                android:id="@+id/ivFollowerContent"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:layout_marginRight="16pt"
+                android:src="@drawable/common_ic_add"
+                android:textColor="#303133"
+                android:textSize="32pt"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivFollower"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/ivFollowerAvatar"
+                android:layout_width="60pt"
+                android:layout_height="60pt"
+                android:layout_marginRight="16pt"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/ivFollower"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clFollowUp"
-        android:layout_width="0dp"
-        android:layout_height="92pt"
-        android:layout_marginTop="24pt"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clResidents">
+        </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tvFollowUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32pt"
-            android:text="随访内容"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivFollowUp"
-            android:layout_width="20pt"
-            android:layout_height="32pt"
-            android:layout_marginRight="32pt"
-            android:src="@drawable/common_ic_goto_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvFollowUpContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16pt"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivFollowUp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="健康体检" />
-
-        <ImageView
-            android:id="@+id/ivFollowUpContent"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_marginRight="16pt"
-            android:src="@drawable/common_ic_add"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivFollowUp"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="0dp"
-        android:layout_height="1pt"
-        android:layout_marginLeft="32pt"
-        android:layout_marginRight="32pt"
-        android:background="#DCDCDC"
-        app:layout_constraintBottom_toBottomOf="@+id/clFollowUp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <EditText
-        android:id="@+id/etFollowUpContent"
-        android:layout_width="0pt"
-        android:layout_height="240pt"
-        android:background="@color/white"
-        android:hint="点击输入随访内容"
-        android:paddingLeft="32pt"
-        android:gravity="top"
-        android:paddingTop="24pt"
-        android:paddingRight="32pt"
-        android:paddingBottom="24pt"
-        android:textColor="#303133"
-        android:textColorHint="#C0C4CC"
-        android:textSize="32pt"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clFollowUp" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clTime"
-        android:layout_width="0dp"
-        android:layout_height="92pt"
-        android:layout_marginTop="24pt"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFollowUpContent">
-
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32pt"
-            android:text="随访时间"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivTime"
-            android:layout_width="20pt"
-            android:layout_height="32pt"
-            android:layout_marginRight="32pt"
-            android:src="@drawable/common_ic_goto_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTimeContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16pt"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivTime"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="7月3日 周三 15:00" />
-
-        <ImageView
-            android:id="@+id/ivTimeContent"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_marginRight="16pt"
-            android:src="@drawable/common_ic_add"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivTime"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:id="@+id/line3"
-        android:layout_width="0dp"
-        android:layout_height="1pt"
-        android:layout_marginLeft="32pt"
-        android:layout_marginRight="32pt"
-        android:background="#DCDCDC"
-        app:layout_constraintBottom_toBottomOf="@+id/clTime"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clFollower"
-        android:layout_width="0dp"
-        android:layout_height="92pt"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clTime">
-
-        <TextView
-            android:id="@+id/tvFollower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32pt"
-            android:text="随访人"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivFollower"
-            android:layout_width="20pt"
-            android:layout_height="32pt"
-            android:layout_marginRight="32pt"
-            android:src="@drawable/common_ic_goto_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvFollowerContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16pt"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivFollower"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="7月3日 周三 15:00" />
-
-        <ImageView
-            android:id="@+id/ivFollowerContent"
-            android:layout_width="40pt"
-            android:layout_height="40pt"
-            android:layout_marginRight="16pt"
-            android:src="@drawable/common_ic_add"
-            android:textColor="#303133"
-            android:textSize="32pt"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivFollower"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivFollowerAvatar"
-            android:layout_width="60pt"
-            android:layout_height="60pt"
-            android:layout_marginRight="16pt"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/ivFollower"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <include layout="@layout/common_cl_toolbar" />
 </android.support.constraint.ConstraintLayout>

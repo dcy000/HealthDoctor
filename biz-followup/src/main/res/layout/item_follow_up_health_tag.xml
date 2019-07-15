@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="136pt"
+    android:layout_height="52pt">
+
+    <TextView
+        android:id="@+id/tvTag"
+        android:layout_width="120pt"
+        android:layout_height="36pt"
+        android:background="@drawable/followup_bg_tag"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="8pt"
+        android:paddingRight="8pt"
+        android:textColor="@color/follow_up_text_color_tag"
+        android:textSize="20pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="硫化氢中毒"
+        tools:textColor="#00b77c" />
+
+</android.support.constraint.ConstraintLayout>

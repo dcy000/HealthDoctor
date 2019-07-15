@@ -3,6 +3,7 @@ package com.gcml.biz.followup.model;
 import com.gcml.biz.followup.model.entity.DoctorList;
 import com.gcml.biz.followup.model.entity.FollowUpBody;
 import com.gcml.biz.followup.model.entity.FollowUpList;
+import com.gcml.biz.followup.model.entity.FollowUpUpdateBody;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
 import com.gcml.biz.followup.model.entity.ResidentListBody;
@@ -77,12 +78,28 @@ public class FollowUpRepository {
         return rxObjs;
     }
 
-    public Observable<List<HealthTagEntity>> followUpTempletes() {
+    /**
+     * 随访模版
+     * @return
+     */
+    public Observable<List<HealthTagEntity>> followUpTemplates() {
         return healthTagList("follow_up_plan");
     }
 
-    public Observable<List<HealthTagEntity>> followUpResultTempletes() {
+    /**
+     * 随访结果模版
+     * @return
+     */
+    public Observable<List<HealthTagEntity>> followUpResultTemplates() {
         return healthTagList("follow_up_tamplate");
+    }
+
+    /**
+     * 随访方式
+     * @return
+     */
+    public Observable<List<HealthTagEntity>> followUpTypes() {
+        return healthTagList("follow_up_type");
     }
 
     public Observable<List<ResidentBean>> residentList(
@@ -133,6 +150,20 @@ public class FollowUpRepository {
 
     public Observable<Object> addFollowUpList(List<FollowUpBody> followUpBodyList) {
         return service.addFollowUpList(followUpBodyList)
+                .compose(RxUtils.httpResponseTransformer());
+    }
+
+    public Observable<Object> cancelFollowUp(int followUpId, String reason) {
+        FollowUpUpdateBody body = new FollowUpUpdateBody();
+        body.setId(followUpId);
+        body.setFollowStatus("已取消");
+        body.setResultContent(reason);
+        return service.updateFollowUp(body)
+                .compose(RxUtils.httpResponseTransformer());
+    }
+
+    public Observable<Object> updateFollowUp(FollowUpUpdateBody body) {
+        return service.updateFollowUp(body)
                 .compose(RxUtils.httpResponseTransformer());
     }
 }

@@ -14,20 +14,36 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
+import com.gcml.biz.followup.model.FollowUpRepository;
+import com.gcml.biz.followup.model.entity.FollowUpEntity;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
+import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.LazyFragment;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 取消随访
  */
 public class FollowUpCancelFragment extends LazyFragment {
 
+    private FollowUpEntity followUpEntity;
+
+    public static FollowUpCancelFragment newInstance(FollowUpEntity entity) {
+        FollowUpCancelFragment fragment = new FollowUpCancelFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("followUp", entity);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // toolbar
     private ImageView ivToolbarLeft;
@@ -38,12 +54,22 @@ public class FollowUpCancelFragment extends LazyFragment {
     private EditText etCancelReason;
     private TextView tvTextCount;
 
-    int maxLen = 100;
+    private int maxLen = 100;
+
+    FollowUpRepository repository = new FollowUpRepository();
 
     public FollowUpCancelFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            followUpEntity = arguments.getParcelable("followUp");
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -121,10 +147,36 @@ public class FollowUpCancelFragment extends LazyFragment {
 
 
     private void onAction() {
+        String reason = etCancelReason.getText().toString();
+        if (reason.isEmpty()) {
+            ToastUtils.showShort("请填写取消原因！");
+            return;
+        }
+
+        FollowUpEntity entity = this.followUpEntity;
+
+        int id = entity != null ? entity.getId() : 0;
+
+        repository.cancelFollowUp(id, reason)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        ToastUtils.showShort("正在取消随访...");
+                    }
+                })
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<Object>() {
+                    @Override
+                    public void onNext(Object o) {
+                        ToastUtils.showShort("取消成功");
+                    }
+                });
 
     }
 
     private void onBack() {
-
+        FragmentUtils.finish(getActivity());
     }
 }

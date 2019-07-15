@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
 import com.gcml.biz.followup.model.FollowUpRepository;
 import com.gcml.biz.followup.model.entity.FollowUpBody;
+import com.gcml.biz.followup.model.entity.FollowUpEntity;
+import com.gcml.biz.followup.model.entity.FollowUpUpdateBody;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
@@ -40,6 +43,7 @@ import com.gzq.lib_resource.LazyFragment;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +52,8 @@ import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -55,6 +61,25 @@ import io.reactivex.schedulers.Schedulers;
  * 新增随访 / 修改随访
  */
 public class FollowUpAddOrUpdateFragment extends LazyFragment {
+
+    private FollowUpEntity followUpEntity;
+
+    public static FollowUpAddOrUpdateFragment newInstance(FollowUpEntity entity) {
+        FollowUpAddOrUpdateFragment fragment = new FollowUpAddOrUpdateFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("followUp", entity);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            followUpEntity = arguments.getParcelable("followUp");
+        }
+    }
 
     // toolbar
     private ImageView ivToolbarLeft;
@@ -71,6 +96,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     private ConstraintLayout clResidents;
     private TextView tvResidentsContent;
     private ImageView ivResidentsContent;
+    private ImageView ivResidentsNext;
     private RecyclerView rvResidents;
     private PickedResidentsAdapter residentsAdapter;
 
@@ -109,16 +135,12 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 //    }
 
     private Date time;
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA);
+    private SimpleDateFormat formatUI = new SimpleDateFormat("MM月dd日 E hh:mm", Locale.CHINA);
     private UserEntity follower;
 
     public FollowUpAddOrUpdateFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -134,7 +156,6 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view, savedInstanceState);
-
     }
 
     private void initView(@NonNull View view, Bundle savedInstanceState) {
@@ -147,8 +168,13 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         tvToolbarRight.setVisibility(View.VISIBLE);
         tvToolbarLeft.setText("取消");
         tvToolbarRight.setText("完成");
-        tvToolbarTitle.setText("新增随访");
-//        tvToolbarTitle.setText("修改随访计划");
+
+        if (followUpEntity == null) {
+            tvToolbarTitle.setText("新增随访");
+        } else {
+            tvToolbarTitle.setText("修改随访计划");
+        }
+
         tvToolbarLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,11 +200,10 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         });
         showHealthStatusTag();
 
-
         clResidents = (ConstraintLayout) view.findViewById(R.id.clResidents);
         tvResidentsContent = (TextView) view.findViewById(R.id.tvResidentsContent);
         ivResidentsContent = (ImageView) view.findViewById(R.id.ivResidentsContent);
-
+        ivResidentsNext = (ImageView) view.findViewById(R.id.ivResidentsNext);
         rvResidents = (RecyclerView) view.findViewById(R.id.rvResidents);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -187,19 +212,44 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         rvResidents.setLayoutManager(layoutManager);
         rvResidents.setAdapter(residentsAdapter);
 
-        if (residentsPicked == null || residentsPicked.isEmpty()) {
-            ivResidentsContent.setVisibility(View.VISIBLE);
-        } else {
-            ivResidentsContent.setVisibility(View.GONE);
-            tvResidentsContent.setText(residentsPicked.size() + "人");
+        if (followUpEntity == null) {
+            // 新增随访
+            if (residentsPicked == null || residentsPicked.isEmpty()) {
+                ivResidentsContent.setVisibility(View.VISIBLE);
+            } else {
+                ivResidentsContent.setVisibility(View.GONE);
+                tvResidentsContent.setText(residentsPicked.size() + "人");
+            }
+            clResidents.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPickResidents();
+                }
+            });
         }
 
-        clResidents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPickResidents();
+        if (followUpEntity != null) {
+            // 修改随访
+            clResidentHealthStatus.setVisibility(View.GONE);
+            rvResidents.setVisibility(View.GONE);
+            ivResidentsNext.setVisibility(View.GONE);
+            ResidentBean resident = followUpEntity.getResident();
+            if (resident != null) {
+                String bname = resident.getBname();
+                bname = TextUtils.isEmpty(bname) ? "" : bname;
+                tvResidentsContent.setText(bname);
             }
-        });
+
+            String planContent = followUpEntity.getPlanContent();
+            planContent = TextUtils.isEmpty(planContent) ? "" : planContent;
+            etFollowUpContent.setText(planContent);
+            try {
+                time = format.parse(followUpEntity.getPlanDate());
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            follower = followUpEntity.getPlanDoctor();
+        }
 
         clFollowUp = (ConstraintLayout) view.findViewById(R.id.clFollowUp);
         tvFollowUpContent = (TextView) view.findViewById(R.id.tvFollowUpContent);
@@ -222,7 +272,8 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                 onPickTime();
             }
         });
-        tvTimeContent.setText("选择时间");
+
+        showTime();
 
         clFollower = (ConstraintLayout) view.findViewById(R.id.clFollower);
         tvFollowerContent = (TextView) view.findViewById(R.id.tvFollowerContent);
@@ -234,8 +285,21 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                 onPickFollower();
             }
         });
+
         showFollower();
 
+
+    }
+
+    private void showTime() {
+        if (time == null) {
+            ivTimeContent.setVisibility(View.VISIBLE);
+            tvTimeContent.setVisibility(View.GONE);
+        } else {
+            ivTimeContent.setVisibility(View.GONE);
+            tvTimeContent.setVisibility(View.VISIBLE);
+            tvTimeContent.setText(formatUI.format(time));
+        }
     }
 
     private void onPickResidentHealthStatus() {
@@ -265,12 +329,12 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             return;
         }
 
-        if (tagEntity == null) {
+        if (followUpEntity == null && tagEntity == null) {
             ToastUtils.showShort("请选择居民健康状况");
             return;
         }
 
-        if (residentsPicked.isEmpty()) {
+        if (followUpEntity == null && residentsPicked.isEmpty()) {
             ToastUtils.showShort("请选择居民");
             return;
         }
@@ -281,9 +345,15 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         }
 
         if (follower == null) {
-            ToastUtils.showShort("请选择随访人");
+            ToastUtils.showShort("请选择随访医生");
             return;
         }
+
+        if (followUpEntity != null) {
+            updateFollowUp();
+            return;
+        }
+
 
         ArrayList<FollowUpBody> bodies = new ArrayList<>();
 
@@ -291,10 +361,72 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             FollowUpBody body = new FollowUpBody();
             body.setCreateDoctorId(user.getDocterid());
             body.setUserId(resident.getBid());
-//            body.setPlanContent(etFollowUpContent);
-
+            if (!tags.isEmpty()) {
+                HealthTagEntity tagEntity = tags.get(templateIndex);
+                body.setPlanTitle(tagEntity.getText());
+                body.setPlanTypeId(tagEntity.getTypeId());
+            }
+            body.setPlanContent(etFollowUpContent.getText().toString());
+            body.setPlanDate(format.format(time));
+            body.setPlanDoctorId(follower.getDocterid());
+            bodies.add(body);
         }
 
+        repository.addFollowUpList(bodies)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        ToastUtils.showShort("添加随访...");
+                    }
+                })
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<Object>() {
+                    @Override
+                    public void onNext(Object o) {
+                        ToastUtils.showShort("添加成功");
+                        onBack();
+                    }
+                });
+
+    }
+
+    private void updateFollowUp() {
+        String timeFormat = time == null ? "" : this.format.format(time);
+        String result = etFollowUpContent.getText().toString();
+        FollowUpUpdateBody body = new FollowUpUpdateBody();
+
+        body.setId(followUpEntity.getId());
+        body.setFollowStatus(followUpEntity.getFollowStatus());
+        body.setResultContent(result);
+        body.setResultDate(timeFormat);
+        int planDoctorId = followUpEntity.getPlanDoctorId();
+        body.setResultDoctorId(planDoctorId);
+
+        if (!tags.isEmpty()) {
+            HealthTagEntity t = tags.get(templateIndex);
+            body.setResultTypeId(t.getTypeId());
+            body.setResultTitle(t.getValue());
+        }
+
+        repository.updateFollowUp(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        ToastUtils.showShort("修改随访...");
+                    }
+                })
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        ToastUtils.showShort("修改成功");
+                        onBack();
+                    }
+                });
     }
 
     private void onBack() {
@@ -311,7 +443,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             showPickTemplateActionSheetWithIndex(templates, listener, templateIndex);
             return;
         }
-        repository.followUpTempletes()
+        repository.followUpTemplates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(RxUtils.autoDisposeConverter(this))
@@ -344,6 +476,33 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
     private void showTemplate() {
         if (templates.size() == 0) {
+            repository.followUpTemplates()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .as(RxUtils.autoDisposeConverter(this))
+                    .subscribe(new CommonObserver<List<HealthTagEntity>>() {
+                        @Override
+                        public void onNext(List<HealthTagEntity> tagEntities) {
+                            tags.clear();
+                            tags.addAll(tagEntities);
+                            if (!tags.isEmpty()) {
+                                templates.clear();
+
+                                int size = tags.size();
+                                for (int i = 0; i < size; i++) {
+                                    HealthTagEntity entity = tags.get(i);
+                                    if (followUpEntity != null) {
+                                        if (followUpEntity.getPlanTypeId() == entity.getTypeId()) {
+                                            templateIndex = i;
+                                        }
+                                    }
+                                    templates.add(entity.getText());
+                                }
+                                return;
+                            }
+//                            ToastUtils.showShort("无可选模版");
+                        }
+                    });
             return;
         }
 
@@ -387,9 +546,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         @Override
         public void onTimeSelect(Date date, View v) {//选中事件回调
             time = date;
-            SimpleDateFormat format = new SimpleDateFormat("MM月dd日 E hh:mm", Locale.CHINA);
-            tvTimeContent.setText(format.format(date));
-//                tvTime.setText(getTime(date));
+            showTime();
         }
     };
 

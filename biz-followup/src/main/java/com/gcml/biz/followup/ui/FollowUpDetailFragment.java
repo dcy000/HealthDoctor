@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gcml.biz.followup.FragmentUtils;
 import com.gcml.biz.followup.R;
+import com.gcml.biz.followup.model.entity.FollowUpEntity;
 import com.gzq.lib_resource.LazyFragment;
+import com.gzq.lib_resource.bean.ResidentBean;
+import com.gzq.lib_resource.bean.UserEntity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 随访详情
  */
 public class FollowUpDetailFragment extends LazyFragment {
+
+    private FollowUpEntity followUpEntity;
+    private TagAdapter tagAdapter;
+
+    public static FollowUpDetailFragment newInstance(FollowUpEntity entity) {
+        FollowUpDetailFragment fragment = new FollowUpDetailFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("followUp", entity);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // toolbar
     private ImageView ivToolbarLeft;
@@ -73,6 +93,14 @@ public class FollowUpDetailFragment extends LazyFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            followUpEntity = arguments.getParcelable("followUp");
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -86,6 +114,72 @@ public class FollowUpDetailFragment extends LazyFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
+
+        initData();
+
+    }
+
+    private void initData() {
+        if (followUpEntity == null) {
+            return;
+        }
+
+        String followStatus = followUpEntity.getFollowStatus();
+        followStatus = TextUtils.isEmpty(followStatus) ? "" : followStatus;
+        String planDate = followUpEntity.getPlanDate();
+        planDate = TextUtils.isEmpty(planDate) ? "" : planDate;
+        tvFollowUpTime.setText(planDate);
+        if ("已取消".equals(followStatus)) {
+            tvFollowUpStatus.setText("随访已取消");
+            clFollowUpStatus.setEnabled(false);
+            tvFollowUpResultLabel.setText("取消原因");
+            clFollowUpResult.setVisibility(View.VISIBLE);
+            clFollowUpType.setVisibility(View.GONE);
+        } else if ("已随访".equals(followStatus)) {
+            tvFollowUpStatus.setText("随访成功");
+            clFollowUpStatus.setEnabled(true);
+            tvFollowUpResultLabel.setText("随访结果");
+            clFollowUpResult.setVisibility(View.VISIBLE);
+            clFollowUpType.setVisibility(View.VISIBLE);
+//            tvFollowUpTypeLabel.setText("");
+            tvFollowUpType.setText("");
+        } else if ("随访失约".equals(followStatus)) {
+            tvFollowUpStatus.setText("随访失约");
+            clFollowUpStatus.setEnabled(false);
+            clFollowUpResult.setVisibility(View.GONE);
+            clFollowUpType.setVisibility(View.GONE);
+        }
+
+        UserEntity planDoctor = followUpEntity.getPlanDoctor();
+        String doctorName = planDoctor.getDoctername();
+        doctorName = TextUtils.isEmpty(doctorName) ? "" : doctorName;
+        tvFollowUpDoctor.setText(doctorName);
+
+
+        ResidentBean resident = followUpEntity.getResident();
+        if (resident != null) {
+
+            String bname = resident.getBname();
+            bname = TextUtils.isEmpty(bname) ? "" : bname;
+            tvFollowUpResident.setText(bname);
+
+            int age = resident.getAge();
+            String gender = resident.getSex();
+            gender = TextUtils.isEmpty(gender) ? "" : gender;
+
+            tvResidentAge.setText(age + "岁");
+            tvResidentGender.setText(gender);
+            String userType = resident.getUserType();
+            userType = TextUtils.isEmpty(userType) ? "" : userType;
+            String[] split = userType.split(",");
+            tags.clear();
+            tags.addAll(Arrays.asList(split));
+            tagAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void initView(@NonNull View view) {
         ivToolbarLeft = (ImageView) view.findViewById(R.id.ivToolbarLeft);
         tvToolbarLeft = (TextView) view.findViewById(R.id.tvToolbarLeft);
         tvToolbarRight = (TextView) view.findViewById(R.id.tvToolbarRight);
@@ -150,6 +244,10 @@ public class FollowUpDetailFragment extends LazyFragment {
         tvResidentHealthTagLabel = (TextView) view.findViewById(R.id.tvResidentHealthTagLabel);
         rvHealthTag = (RecyclerView) view.findViewById(R.id.rvHealthTag);
 
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        tagAdapter = new TagAdapter();
+        rvHealthTag.setLayoutManager(layoutManager);
+        rvHealthTag.setAdapter(tagAdapter);
     }
 
     private void onAction() {
@@ -157,6 +255,46 @@ public class FollowUpDetailFragment extends LazyFragment {
     }
 
     private void onBack() {
-
+        FragmentUtils.finish(getActivity());
     }
+
+    private ArrayList<String> tags = new ArrayList<>();
+
+    private class TagHolder extends RecyclerView.ViewHolder {
+
+        private final TextView tvTag;
+
+        public TagHolder(@NonNull View itemView) {
+            super(itemView);
+            tvTag = ((TextView) itemView.findViewById(R.id.tvTag));
+        }
+
+        public void onBind(int i) {
+            String s = tags.get(i);
+            tvTag.setText(s);
+            tvTag.setSelected(!"正常居民".equals(s));
+        }
+    }
+
+    private class TagAdapter extends RecyclerView.Adapter<TagHolder> {
+
+        @NonNull
+        @Override
+        public TagHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+            View view = inflater.inflate(R.layout.item_follow_up_health_tag, viewGroup, false);
+            return new TagHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull TagHolder tagHolder, int i) {
+            tagHolder.onBind(i);
+        }
+
+        @Override
+        public int getItemCount() {
+            return tags != null ? tags.size() : 0;
+        }
+    }
+
 }

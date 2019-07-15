@@ -141,7 +141,7 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
         tvLabel = (TextView) view.findViewById(R.id.tvLabel);
         rvResidentsToPick = (RecyclerView) view.findViewById(R.id.rvResidentsToPick);
 
-//        tvLabel.setText(tagEntity.getText());
+        tvLabel.setText(tagEntity.getText());
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -335,6 +335,8 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
                     .apply(RequestOptions.circleCropTransform())
                     .into(ivResidentAvatar);
             tvResidentName.setText(resident.getBname());
+
+            tvResidentTag.setVisibility(View.GONE);
             tvResidentTag.setText(tagEntity.getText());
 
             String countDesc = "今年已随访：" + resident.getCurrentYearCount() + "次";

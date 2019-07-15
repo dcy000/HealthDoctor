@@ -68,11 +68,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="36pt"
                     android:layout_marginBottom="49pt"
-                    android:background="@drawable/followup_bg_tag_abnormal"
+                    android:background="@drawable/followup_bg_tag"
                     android:gravity="center"
                     android:paddingLeft="10pt"
                     android:paddingRight="10pt"
-                    android:textColor="#FF5D51"
+                    android:textColor="@color/follow_up_text_color_tag"
                     android:textSize="20pt"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@+id/tvResidentName"
@@ -392,21 +392,19 @@
             <EditText
                 android:id="@+id/etFollowUpResult"
                 android:layout_width="match_parent"
-                android:layout_height="240pt"
-                android:layout_marginBottom="122pt"
+                android:layout_height="362pt"
                 android:background="@color/white"
                 android:gravity="top"
                 android:hint="点击输入随访结果"
                 android:paddingLeft="32pt"
                 android:paddingTop="24pt"
                 android:paddingRight="32pt"
-                android:paddingBottom="20pt"
+                android:paddingBottom="144pt"
                 android:textColorHint="#C0C4CC"
                 android:textSize="32pt" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
 
     <TextView
         android:id="@+id/tvAction"

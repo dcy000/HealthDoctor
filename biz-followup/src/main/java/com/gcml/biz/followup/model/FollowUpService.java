@@ -3,6 +3,7 @@ package com.gcml.biz.followup.model;
 import com.gcml.biz.followup.model.entity.DoctorList;
 import com.gcml.biz.followup.model.entity.FollowUpBody;
 import com.gcml.biz.followup.model.entity.FollowUpList;
+import com.gcml.biz.followup.model.entity.FollowUpUpdateBody;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
 import com.gcml.biz.followup.model.entity.ResidentListBody;
@@ -43,9 +44,11 @@ public interface FollowUpService {
      *             ｛
      *             职业病管理：professional_user_type，
      *             慢性病： chronic_user_type,
-     *
+     *             <p>
      *             随访模版：follow_up_plan，
      *             随访结果模版：follow_up_tamplate，
+     *             <p>
+     *             随访方式：follow_up_type， 面对面
      *             ｝
      * @return 健康状态标签列表
      */
@@ -78,13 +81,24 @@ public interface FollowUpService {
     );
 
     /**
-     * 批量添加随访 可按名字模糊搜索
+     * 批量添加随访
      *
-     * @return 医生信息列表
+     * @return
      */
-    @POST("ZZB/docter/docters_all")
+    @POST("ZZB/api/web/follow/fastAdd/")
     Observable<HttpResult<DoctorList>> addFollowUpList(
             @Body List<FollowUpBody> body
+    );
+
+
+    /**
+     * 修改随访状态： 已取消， 已随访
+     *
+     * @return
+     */
+    @POST("ZZB/api/web/follow/updateFollowById")
+    Observable<HttpResult<Object>> updateFollowUp(
+            @Body FollowUpUpdateBody body
     );
 
 }

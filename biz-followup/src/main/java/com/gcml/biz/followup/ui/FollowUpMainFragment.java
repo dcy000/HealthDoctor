@@ -36,7 +36,7 @@ public class FollowUpMainFragment extends LazyFragment {
     private ViewPager vpFollowUp;
 
     private ArrayList<String> tabLables;
-    private ArrayList<FollowUpTabFragment> tabFragments;
+    private ArrayList<FollowUpMainTabFragment> tabFragments;
 
     public FollowUpMainFragment() {
 
@@ -88,7 +88,7 @@ public class FollowUpMainFragment extends LazyFragment {
 
         tabFragments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            tabFragments.add(FollowUpTabFragment.newInstance(i, tabLables.get(i)));
+            tabFragments.add(FollowUpMainTabFragment.newInstance(i, tabLables.get(i)));
         }
 
         vpFollowUp.setOffscreenPageLimit(4);
