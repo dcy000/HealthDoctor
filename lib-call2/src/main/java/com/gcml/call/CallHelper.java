@@ -415,10 +415,12 @@ public enum CallHelper {
                 if (ackInfo.getEvent() == AVChatEventType.CALLEE_ACK_BUSY) {
                     Timber.i("callAckEvent %s", "CALLEE_ACK_BUSY");
                     CallSoundPlayer.instance().play(CallSoundPlayer.RingerType.PEER_BUSY);
-                    closeSessions(CallExitCode.PEER_BUSY);
+                    hangUp(CallExitCode.PEER_BUSY);
+//                    closeSessions(CallExitCode.PEER_BUSY);
                 } else if (ackInfo.getEvent() == AVChatEventType.CALLEE_ACK_REJECT) {
                     Timber.i("callAckEvent %s", "CALLEE_ACK_REJECT");
-                    closeSessions(CallExitCode.REJECT);
+                    hangUp(CallExitCode.REJECT);
+//                    closeSessions(CallExitCode.REJECT);
                 } else if (ackInfo.getEvent() == AVChatEventType.CALLEE_ACK_AGREE) {
                     Timber.i("callAckEvent %s", "CALLEE_ACK_AGREE");
                     mCallEstablished.set(true);
@@ -907,6 +909,7 @@ public enum CallHelper {
         }
         if (avChatData != null && (code == CallExitCode.HANGUP
                 || code == CallExitCode.PEER_NO_RESPONSE
+                || code == CallExitCode.PEER_BUSY
                 || code == CallExitCode.REJECT
                 || code == CallExitCode.CANCEL)) {
             long chatId = avChatData.getChatId();
