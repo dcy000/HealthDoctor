@@ -98,8 +98,18 @@ public interface FollowUpService {
      * @return
      */
     @POST("ZZB/api/web/follow/updateFollowById")
-    Observable<HttpResult<Object>> updateFollowUp(
+    Observable<HttpResult<Object>> updateFollowUpStatus(
             @Body FollowUpUpdateBody body
+    );
+
+    /**
+     * 修改随访： 信息
+     *
+     * @return
+     */
+    @POST("ZZB/api/web/follow/updateFollowById")
+    Observable<HttpResult<Object>> updateFollowUp(
+            @Body FollowUpBody body
     );
 
     /**

@@ -718,7 +718,7 @@ public class FollowUpDoFragment extends LazyFragment {
             body.setResultTitle(t.getText());
         }
 
-        repository.updateFollowUp(body)
+        repository.updateFollowUpStatus(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {

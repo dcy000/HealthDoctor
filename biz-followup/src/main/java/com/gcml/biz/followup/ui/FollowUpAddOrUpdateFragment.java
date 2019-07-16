@@ -433,20 +433,18 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
     private void updateFollowUp() {
         String timeFormat = time == null ? "" : this.format.format(time);
         String result = etFollowUpContent.getText().toString();
-        FollowUpUpdateBody body = new FollowUpUpdateBody();
+        FollowUpBody body = new FollowUpBody();
 
         body.setId(followUpEntity.getId());
-        body.setFollowStatus(followUpEntity.getFollowStatus());
-        body.setResultContent(result);
-        body.setResultDate(timeFormat);
-        int planDoctorId = followUpEntity.getPlanDoctorId();
-        body.setResultDoctorId(planDoctorId);
-
+        body.setUserId(followUpEntity.getResident().getBid());
         if (!tags.isEmpty()) {
             HealthTagEntity t = tags.get(templateIndex);
-            body.setResultTypeId(t.getTypeId());
-            body.setResultTitle(t.getText());
+            body.setPlanTypeId(t.getTypeId());
+            body.setPlanTitle(t.getText());
         }
+        body.setPlanContent(result);
+        body.setPlanDate(timeFormat);
+        body.setPlanDoctorId(follower.getDocterid());
 
         repository.updateFollowUp(body)
                 .subscribeOn(Schedulers.io())

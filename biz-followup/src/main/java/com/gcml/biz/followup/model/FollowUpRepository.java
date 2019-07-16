@@ -159,11 +159,16 @@ public class FollowUpRepository {
         body.setId(followUpId);
         body.setFollowStatus("已取消");
         body.setResultContent(reason);
-        return service.updateFollowUp(body)
+        return service.updateFollowUpStatus(body)
                 .compose(RxUtils.httpResponseTransformer());
     }
 
-    public Observable<Object> updateFollowUp(FollowUpUpdateBody body) {
+    public Observable<Object> updateFollowUpStatus(FollowUpUpdateBody body) {
+        return service.updateFollowUpStatus(body)
+                .compose(RxUtils.httpResponseTransformer());
+    }
+
+    public Observable<Object> updateFollowUp(FollowUpBody body) {
         return service.updateFollowUp(body)
                 .compose(RxUtils.httpResponseTransformer());
     }

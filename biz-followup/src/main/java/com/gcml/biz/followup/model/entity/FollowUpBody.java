@@ -24,6 +24,8 @@ public class FollowUpBody {
     private String planDate;
     @SerializedName("planDoctorId")
     private int planDoctorId;
+    @SerializedName("id")
+    private int id;
     @SerializedName("planTitle")
     private String planTitle;
     @SerializedName("planTypeId")
@@ -34,6 +36,14 @@ public class FollowUpBody {
     private int createDoctorId;
     @SerializedName("createDoctorName")
     private String createDoctorName;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPlanContent() {
         return planContent;
