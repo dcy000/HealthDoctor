@@ -11,6 +11,7 @@ import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +165,11 @@ public class FollowUpRepository {
 
     public Observable<Object> updateFollowUp(FollowUpUpdateBody body) {
         return service.updateFollowUp(body)
+                .compose(RxUtils.httpResponseTransformer());
+    }
+
+    public Observable<WatchInformationBean> getWatchInfo(String watchCode) {
+        return service.getWatchInfo(watchCode)
                 .compose(RxUtils.httpResponseTransformer());
     }
 }

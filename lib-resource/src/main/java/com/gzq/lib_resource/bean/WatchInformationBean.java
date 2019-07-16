@@ -1,4 +1,4 @@
-package com.gcml.module_guardianship.bean;
+package com.gzq.lib_resource.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

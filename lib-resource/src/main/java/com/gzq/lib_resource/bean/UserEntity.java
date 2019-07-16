@@ -26,9 +26,9 @@ public class UserEntity implements Parcelable {
     private int pend;
     private int evaluation;
     @SerializedName("apply_amount")
-    private int applyAmount;
+    private float applyAmount;
     @SerializedName("service_amount")
-    private int serviceAmount;
+    private float serviceAmount;
     @SerializedName("docter_photo")
     private String docterPhoto;
     private int onlineStatus;
@@ -232,19 +232,19 @@ public class UserEntity implements Parcelable {
         this.evaluation = evaluation;
     }
 
-    public int getApplyAmount() {
+    public float getApplyAmount() {
         return applyAmount;
     }
 
-    public void setApplyAmount(int applyAmount) {
+    public void setApplyAmount(float applyAmount) {
         this.applyAmount = applyAmount;
     }
 
-    public int getServiceAmount() {
+    public float getServiceAmount() {
         return serviceAmount;
     }
 
-    public void setServiceAmount(int serviceAmount) {
+    public void setServiceAmount(float serviceAmount) {
         this.serviceAmount = serviceAmount;
     }
 
@@ -321,8 +321,8 @@ public class UserEntity implements Parcelable {
         dest.writeString(pro);
         dest.writeInt(pend);
         dest.writeInt(evaluation);
-        dest.writeInt(applyAmount);
-        dest.writeInt(serviceAmount);
+        dest.writeFloat(applyAmount);
+        dest.writeFloat(serviceAmount);
         dest.writeString(docterPhoto);
         dest.writeInt(onlineStatus);
         dest.writeString(wyyxId);

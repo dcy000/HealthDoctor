@@ -1,16 +1,23 @@
 package com.gcml.biz.followup.ui;
 
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,13 +37,23 @@ import com.gcml.biz.followup.model.FollowUpRepository;
 import com.gcml.biz.followup.model.entity.FollowUpEntity;
 import com.gcml.biz.followup.model.entity.FollowUpUpdateBody;
 import com.gcml.biz.followup.model.entity.HealthTagEntity;
+import com.gzq.lib_core.base.Box;
+import com.gzq.lib_core.http.exception.ApiException;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.LazyFragment;
+import com.gzq.lib_resource.api.CommonRouterApi;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
+import com.gzq.lib_resource.bean.WatchInformationBean;
+import com.gzq.lib_resource.dialog.DialogViewHolder;
+import com.gzq.lib_resource.dialog.FDialog;
+import com.gzq.lib_resource.dialog.ViewConvertListener;
+import com.gzq.lib_resource.utils.CallPhoneUtils;
+import com.gzq.lib_resource.utils.ScreenUtils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.sjtu.yifei.route.Routerfit;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,11 +67,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.utils.AutoSizeUtils;
+import timber.log.Timber;
 
 /**
  * 随访
  */
 public class FollowUpDoFragment extends LazyFragment {
+
+    private ActionCallback actionCallback;
+
+    public void setActionCallback(ActionCallback actionCallback) {
+        this.actionCallback = actionCallback;
+    }
 
     private FollowUpEntity followUpEntity;
 
@@ -162,7 +187,7 @@ public class FollowUpDoFragment extends LazyFragment {
 //        tvToolbarLeft.setText("取消");
 //        tvToolbarRight.setText("提交");
         tvToolbarRight.setTextColor(Color.parseColor("#909399"));
-        tvToolbarLeft.setOnClickListener(new View.OnClickListener() {
+        ivToolbarLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack();
@@ -239,6 +264,30 @@ public class FollowUpDoFragment extends LazyFragment {
             }
         });
 
+        etFollowUpResult.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v == etFollowUpResult && hasFocus) {
+                    getKeyboardHeight();
+                } else {
+                    // 隐藏软键盘
+                    etFollowUpResult.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            etFollowUpResult.getContext().getApplicationContext()
+                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etFollowUpResult.getWindowToken(), 0);
+                }
+            }
+        });
+
+        etFollowUpResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getKeyboardHeight();
+            }
+        });
+
+
         RxTextView.textChanges(etFollowUpResult)
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(RxUtils.autoDisposeConverter(this))
@@ -259,9 +308,137 @@ public class FollowUpDoFragment extends LazyFragment {
         });
     }
 
-    private void call() {
-
+    private void getKeyboardHeight() {
+        Timber.w("KB getKeyboardHeight");
+        //注册布局变化监听
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        Window window = activity.getWindow();
+        if (window == null) {
+            return;
+        }
+        int screenHeight = ScreenUtils.getScreenSize(activity)[1];
+        window.getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //判断窗口可见区域大小
+                Rect r = new Rect();
+                window.getDecorView().getWindowVisibleDisplayFrame(r);
+                int heightDifference = screenHeight - (r.bottom - r.top);
+                boolean isKeyboardShowing = heightDifference > screenHeight / 3;
+                if (isKeyboardShowing) {
+                    changeScrollView();
+                    //移除布局变化监听
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        window.getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        window.getDecorView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                }
+            }
+        });
     }
+
+    private void changeScrollView() {
+        nsvContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //将ScrollView滚动到底
+                nsvContainer.fullScroll(View.FOCUS_DOWN);
+            }
+        }, 100);
+    }
+
+    private void call() {
+        if (followUpEntity == null || followUpEntity.getResident() == null) {
+            return;
+        }
+        showVoiceOrVideoConnectDialog(followUpEntity.getResident());
+    }
+
+    private void showVoiceOrVideoConnectDialog(ResidentBean familyBean) {
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_voice_video_connect)
+                .setWidth(AutoSizeUtils.pt2px(getContext(), 710))
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.getView(R.id.tv_video_connect).setOnClickListener(v -> {
+                            ToastUtils.showShort("视频通话");
+                            String wyyxId = familyBean.getWyyxId();
+                            String wyyxPwd = familyBean.getWyyxPwd();
+                            if (!TextUtils.isEmpty(wyyxId)) {
+                                Routerfit.register(CommonRouterApi.class).getCallServiceImp()
+                                        .launchNoCheckWithCallFamily(getActivity(), wyyxId);
+                            }
+                            dialog.dismiss();
+                        });
+                        holder.getView(R.id.tv_voice_connect).setOnClickListener(v -> {
+                            getWatchInfo(familyBean);
+                            dialog.dismiss();
+                        });
+                        holder.getView(R.id.tv_cancel_connect).setOnClickListener(v -> dialog.dismiss());
+                    }
+                })
+                .setOutCancel(false)
+                .setShowBottom(true)
+                .show();
+    }
+
+    private void getWatchInfo(ResidentBean guardianshipBean) {
+        repository.getWatchInfo(guardianshipBean.getWatchCode())
+                .as(RxUtils.autoDisposeConverter(this))
+                .subscribe(new CommonObserver<WatchInformationBean>() {
+                    @Override
+                    public void onNext(WatchInformationBean watchInformationBean) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(), watchInformationBean.getDeviceMobileNo());
+                    }
+
+                    @Override
+                    protected void onError(ApiException ex) {
+                        showPhoneTipsDialog(guardianshipBean.getBname(), guardianshipBean.getTel());
+                    }
+                });
+    }
+
+    private void showPhoneTipsDialog(String name, String phone) {
+        if (getActivity() == null) {
+            return;
+        }
+
+        FDialog.build()
+                .setSupportFM(getFragmentManager())
+                .setLayoutId(R.layout.dialog_layout_phone_tips)
+                .setWidth(AutoSizeUtils.pt2px(getActivity(), 540))
+                .setOutCancel(false)
+                .setDimAmount(0.5f)
+                .setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(DialogViewHolder holder, FDialog dialog) {
+                        holder.setText(R.id.tv_title, name + "的电话号码");
+                        holder.setText(R.id.tv_message, phone);
+                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CallPhoneUtils.instance().callPhone(getActivity(), phone);
+                                dialog.dismiss();
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .show();
+    }
+
 
     private void showPickResultTemplateActionSheet() {
         if (!templates.isEmpty()) {
@@ -316,6 +493,11 @@ public class FollowUpDoFragment extends LazyFragment {
 
         if (tvFollowUpTemplate != null) {
             tvFollowUpTemplate.setText(templateDescs.get(templateIndex));
+            String result = etFollowUpResult.getText().toString();
+            if (TextUtils.isEmpty(result)) {
+                result = templates.get(templateIndex).getValue();
+            }
+            etFollowUpResult.setText(result);
         }
     }
 
@@ -481,6 +663,10 @@ public class FollowUpDoFragment extends LazyFragment {
 
             String userType = resident.getUserType();
             userType = TextUtils.isEmpty(userType) ? "" : userType;
+            String[] split = userType.split(",");
+            if (split.length >= 1) {
+                userType = split[0];
+            }
             tvResidentTag.setText(userType);
             tvResidentTag.setSelected(!"正常居民".equals(userType));
 
@@ -529,7 +715,7 @@ public class FollowUpDoFragment extends LazyFragment {
         if (!templates.isEmpty()) {
             HealthTagEntity t = templates.get(templateIndex);
             body.setResultTypeId(t.getTypeId());
-            body.setResultTitle(t.getValue());
+            body.setResultTitle(t.getText());
         }
 
         repository.updateFollowUp(body)
@@ -546,6 +732,9 @@ public class FollowUpDoFragment extends LazyFragment {
                     @Override
                     public void accept(Object o) throws Exception {
                         ToastUtils.showShort("提交成功");
+                        if (actionCallback != null) {
+                            actionCallback.onComplete();
+                        }
                         onBack();
                     }
                 });

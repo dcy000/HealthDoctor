@@ -134,21 +134,48 @@ public class FollowUpDetailFragment extends LazyFragment {
             tvFollowUpStatus.setText("随访已取消");
             clFollowUpStatus.setEnabled(false);
             tvFollowUpResultLabel.setText("取消原因");
+            clFollowUpContent.setVisibility(View.VISIBLE);
             clFollowUpResult.setVisibility(View.VISIBLE);
             clFollowUpType.setVisibility(View.GONE);
+
+            String planContent = followUpEntity.getPlanContent();
+            planContent = TextUtils.isEmpty(planContent) ? "" : planContent;
+            tvFollowUpContent.setText(planContent);
+
+            String resultContent = followUpEntity.getResultContent();
+            resultContent = TextUtils.isEmpty(resultContent) ? "" : resultContent;
+            tvFollowUpResult.setText(resultContent);
+
         } else if ("已随访".equals(followStatus)) {
             tvFollowUpStatus.setText("随访成功");
             clFollowUpStatus.setEnabled(true);
             tvFollowUpResultLabel.setText("随访结果");
+            clFollowUpContent.setVisibility(View.VISIBLE);
             clFollowUpResult.setVisibility(View.VISIBLE);
             clFollowUpType.setVisibility(View.VISIBLE);
 //            tvFollowUpTypeLabel.setText("");
-            tvFollowUpType.setText("");
+
+            String planContent = followUpEntity.getPlanContent();
+            planContent = TextUtils.isEmpty(planContent) ? "" : planContent;
+            tvFollowUpContent.setText(planContent);
+
+            String resultContent = followUpEntity.getResultContent();
+            resultContent = TextUtils.isEmpty(resultContent) ? "" : resultContent;
+            tvFollowUpResult.setText(resultContent);
+
+            String categoryName = followUpEntity.getCategoryName();
+            categoryName = TextUtils.isEmpty(categoryName) ? "" : categoryName;
+            tvFollowUpType.setText(categoryName);
         } else if ("随访失约".equals(followStatus)) {
             tvFollowUpStatus.setText("随访失约");
             clFollowUpStatus.setEnabled(false);
+            clFollowUpContent.setVisibility(View.VISIBLE);
             clFollowUpResult.setVisibility(View.GONE);
             clFollowUpType.setVisibility(View.GONE);
+
+            String planContent = followUpEntity.getPlanContent();
+            planContent = TextUtils.isEmpty(planContent) ? "" : planContent;
+            tvFollowUpContent.setText(planContent);
         }
 
         UserEntity planDoctor = followUpEntity.getPlanDoctor();
@@ -191,7 +218,7 @@ public class FollowUpDetailFragment extends LazyFragment {
 //        tvToolbarLeft.setText("取消");
 //        tvToolbarRight.setText("提交");
         tvToolbarRight.setTextColor(Color.parseColor("#909399"));
-        tvToolbarLeft.setOnClickListener(new View.OnClickListener() {
+        ivToolbarLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack();

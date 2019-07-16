@@ -8,6 +8,7 @@ import com.gcml.biz.followup.model.entity.HealthTagEntity;
 import com.gcml.biz.followup.model.entity.ResidentList;
 import com.gcml.biz.followup.model.entity.ResidentListBody;
 import com.gzq.lib_core.http.model.HttpResult;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 
 import java.util.List;
 
@@ -99,6 +100,17 @@ public interface FollowUpService {
     @POST("ZZB/api/web/follow/updateFollowById")
     Observable<HttpResult<Object>> updateFollowUp(
             @Body FollowUpUpdateBody body
+    );
+
+    /**
+     * 根据手环码查用户信息
+     *
+     * @param watchCode
+     * @return
+     */
+    @GET("ZZB/api/user/watch/")
+    Observable<HttpResult<WatchInformationBean>> getWatchInfo(
+            @Query("watchCode") String watchCode
     );
 
 }

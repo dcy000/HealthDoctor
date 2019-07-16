@@ -1,6 +1,7 @@
 package com.gcml.biz.followup.ui;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,7 +45,6 @@ import com.gzq.lib_resource.LazyFragment;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.bean.UserEntity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,6 +62,12 @@ import io.reactivex.schedulers.Schedulers;
  * 新增随访 / 修改随访
  */
 public class FollowUpAddOrUpdateFragment extends LazyFragment {
+
+    private ActionCallback actionCallback;
+
+    public void setActionCallback(ActionCallback actionCallback) {
+        this.actionCallback = actionCallback;
+    }
 
     private FollowUpEntity followUpEntity;
 
@@ -228,6 +235,33 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             });
         }
 
+
+        clFollowUp = (ConstraintLayout) view.findViewById(R.id.clFollowUp);
+        tvFollowUpContent = (TextView) view.findViewById(R.id.tvFollowUpContent);
+        ivFollowUpContent = (ImageView) view.findViewById(R.id.ivFollowUpContent);
+        etFollowUpContent = (EditText) view.findViewById(R.id.etFollowUpContent);
+        etFollowUpContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v == etFollowUpContent && hasFocus) {
+//                    getKeyboardHeight();
+                } else {
+                    // 隐藏软键盘
+                    etFollowUpContent.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            etFollowUpContent.getContext().getApplicationContext()
+                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etFollowUpContent.getWindowToken(), 0);
+                }
+            }
+        });
+        clFollowUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPickFollowUp();
+            }
+        });
+
         if (followUpEntity != null) {
             // 修改随访
             clResidentHealthStatus.setVisibility(View.GONE);
@@ -250,17 +284,6 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             }
             follower = followUpEntity.getPlanDoctor();
         }
-
-        clFollowUp = (ConstraintLayout) view.findViewById(R.id.clFollowUp);
-        tvFollowUpContent = (TextView) view.findViewById(R.id.tvFollowUpContent);
-        ivFollowUpContent = (ImageView) view.findViewById(R.id.ivFollowUpContent);
-        etFollowUpContent = (EditText) view.findViewById(R.id.etFollowUpContent);
-        clFollowUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPickFollowUp();
-            }
-        });
         showTemplate();
 
         clTime = (ConstraintLayout) view.findViewById(R.id.clTime);
@@ -339,6 +362,18 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             return;
         }
 
+        String template = tvFollowUpContent.getText().toString();
+        if (TextUtils.isEmpty(template)) {
+            ToastUtils.showShort("请选择随访模版");
+            return;
+        }
+
+        String s = etFollowUpContent.getText().toString();
+        if (TextUtils.isEmpty(s)) {
+            ToastUtils.showShort("请输入随访内容");
+            return;
+        }
+
         if (time == null) {
             ToastUtils.showShort("请选择时间");
             return;
@@ -386,6 +421,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.showShort("添加成功");
+                        if (actionCallback != null) {
+                            actionCallback.onComplete();
+                        }
                         onBack();
                     }
                 });
@@ -407,7 +445,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         if (!tags.isEmpty()) {
             HealthTagEntity t = tags.get(templateIndex);
             body.setResultTypeId(t.getTypeId());
-            body.setResultTitle(t.getValue());
+            body.setResultTitle(t.getText());
         }
 
         repository.updateFollowUp(body)
@@ -424,6 +462,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                     @Override
                     public void accept(Object o) throws Exception {
                         ToastUtils.showShort("修改成功");
+                        if (actionCallback != null) {
+                            actionCallback.onComplete();
+                        }
                         onBack();
                     }
                 });
@@ -492,13 +533,25 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
                                 for (int i = 0; i < size; i++) {
                                     HealthTagEntity entity = tags.get(i);
                                     if (followUpEntity != null) {
-                                        if (followUpEntity.getPlanTypeId() == entity.getTypeId()) {
+                                        if (TextUtils.equals(followUpEntity.getPlanTitle(), entity.getText())) {
                                             templateIndex = i;
                                         }
                                     }
                                     templates.add(entity.getText());
                                 }
-                                return;
+
+                                if (templateIndex >= templates.size() || templateIndex < 0) {
+                                    templateIndex = 0;
+                                }
+
+                                if (tvFollowUpContent != null && templates.size() > 0) {
+                                    tvFollowUpContent.setText(templates.get(templateIndex));
+                                    if (followUpEntity == null) {
+                                        etFollowUpContent.setText(tags.get(templateIndex).getValue());
+                                    }
+                                } else {
+                                    tvFollowerContent.setText("");
+                                }
                             }
 //                            ToastUtils.showShort("无可选模版");
                         }
@@ -512,6 +565,9 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 
         if (tvFollowUpContent != null) {
             tvFollowUpContent.setText(templates.get(templateIndex));
+            if (followUpEntity == null) {
+                etFollowUpContent.setText(tags.get(templateIndex).getValue());
+            }
         }
     }
 
@@ -792,4 +848,11 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             return residentsPicked != null ? residentsPicked.size() : 0;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        actionCallback = null;
+    }
+
 }

@@ -128,10 +128,22 @@ public class FollowUpMainFragment extends LazyFragment {
 
         String tag = FollowUpAddOrUpdateFragment.class.getName();
         FragmentManager fm = activity.getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag);
+        FollowUpAddOrUpdateFragment fragment = (FollowUpAddOrUpdateFragment) fm.findFragmentByTag(tag);
         if (fragment == null) {
             fragment = new FollowUpAddOrUpdateFragment();
         }
+
+        fragment.setActionCallback(new ActionCallback() {
+            @Override
+            public void onComplete() {
+                FollowUpMainTabFragment tabFragment = tabFragments.get(vpFollowUp.getCurrentItem());
+                for (FollowUpMainTabFragment mainTabFragment : tabFragments) {
+                    mainTabFragment.setCanAutoRefresh(true);
+                }
+                tabFragment.autoRefresh();
+            }
+        });
+
         FragmentTransaction transaction = fm.beginTransaction();
 
         transaction.hide(this);
@@ -145,5 +157,11 @@ public class FollowUpMainFragment extends LazyFragment {
         transaction.addToBackStack(tag);
         transaction.commitAllowingStateLoss();
         fm.executePendingTransactions();
+    }
+
+    @Override
+    protected void onPageResume() {
+        super.onPageResume();
+        vpFollowUp.setCurrentItem(vpFollowUp.getCurrentItem());
     }
 }

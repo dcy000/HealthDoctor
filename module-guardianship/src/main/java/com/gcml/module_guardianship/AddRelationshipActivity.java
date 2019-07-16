@@ -2,12 +2,11 @@ package com.gcml.module_guardianship;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gcml.module_guardianship.api.GuardianshipApi;
-import com.gcml.module_guardianship.bean.WatchInformationBean;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.observer.CommonObserver;
 import com.gzq.lib_core.utils.ActivityUtils;
@@ -15,7 +14,6 @@ import com.gzq.lib_core.utils.RxUtils;
 import com.gzq.lib_core.utils.ToastUtils;
 import com.gzq.lib_resource.bean.UserEntity;
 import com.gzq.lib_resource.mvp.StateBaseActivity;
-import com.gzq.lib_resource.mvp.base.BasePresenter;
 import com.gzq.lib_resource.mvp.base.IPresenter;
 import com.sjtu.yifei.annotation.Route;
 

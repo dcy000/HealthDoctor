@@ -1,14 +1,12 @@
 package com.gcml.module_guardianship.api;
 
 import com.gcml.module_guardianship.bean.FamilyBean;
-import com.gcml.module_guardianship.bean.GuardianshipBean;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
-import com.gcml.module_guardianship.bean.HealthDataMenu;
 import com.gcml.module_guardianship.bean.LatLonBean;
 import com.gcml.module_guardianship.bean.MeasureDataBean;
 import com.gcml.module_guardianship.bean.UpdateHealthStatusBean;
 import com.gcml.module_guardianship.bean.UserTypeBean;
-import com.gcml.module_guardianship.bean.WatchInformationBean;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 import com.gzq.lib_core.http.model.HttpResult;
 import com.gzq.lib_resource.bean.ResidentBean;
 

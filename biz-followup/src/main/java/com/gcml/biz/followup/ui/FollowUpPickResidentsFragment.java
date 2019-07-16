@@ -171,7 +171,7 @@ public class FollowUpPickResidentsFragment extends LazyFragment {
                         int docterid = user == null ? 0 : user.getDocterid();
                         return repository.residentList(
                                 docterid,
-                                null,
+                                tagEntity.getText(),
                                 s,
                                 0,
                                 1,

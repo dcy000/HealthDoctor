@@ -38,7 +38,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class FollowUpMainTabFragment extends LazyFragment {
@@ -78,6 +80,10 @@ public class FollowUpMainTabFragment extends LazyFragment {
         }
     }
 
+    public void setCanAutoRefresh(boolean canAutoRefresh) {
+        this.canAutoRefresh = canAutoRefresh;
+    }
+
     @Override
     public View onCreateView(
             LayoutInflater inflater,
@@ -107,6 +113,7 @@ public class FollowUpMainTabFragment extends LazyFragment {
     private OnRefreshListener onRefreshListener = new OnRefreshListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            clTip.setVisibility(View.GONE);
             refreshData();
         }
     };
@@ -134,7 +141,12 @@ public class FollowUpMainTabFragment extends LazyFragment {
                         if (followUpList.getCount() == 0
                                 || followUpList.getData() == null
                                 || followUpList.getData().size() == 0) {
-                            clTip.setVisibility(View.VISIBLE);
+                            clTip.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    clTip.setVisibility(View.VISIBLE);
+                                }
+                            }, 200);
 
                             if (!followUps.isEmpty()) {
                                 followUps.clear();
@@ -144,7 +156,12 @@ public class FollowUpMainTabFragment extends LazyFragment {
                             return;
                         }
                         canAutoRefresh = false;
-                        clTip.setVisibility(View.GONE);
+                        clTip.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                clTip.setVisibility(View.GONE);
+                            }
+                        });
                         followUps.clear();
                         followUps.addAll(followUpList.getData());
                         adapter.notifyDataSetChanged();
@@ -166,7 +183,7 @@ public class FollowUpMainTabFragment extends LazyFragment {
         autoRefresh();
     }
 
-    private void autoRefresh() {
+    void autoRefresh() {
         if (canAutoRefresh && srlRefresh != null) {
             srlRefresh.autoRefresh();
         }
@@ -179,6 +196,7 @@ public class FollowUpMainTabFragment extends LazyFragment {
      * @param entity
      */
     private void showFollowUp(FollowUpEntity entity) {
+        canAutoRefresh = true;
 
         FragmentActivity activity = getActivity();
         if (activity == null) {
@@ -187,11 +205,18 @@ public class FollowUpMainTabFragment extends LazyFragment {
 
         String tag = FollowUpDoFragment.class.getName();
         FragmentManager fm = activity.getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag);
+        FollowUpDoFragment fragment = (FollowUpDoFragment) fm.findFragmentByTag(tag);
 
         if (fragment == null) {
             fragment = FollowUpDoFragment.newInstance(entity);
         }
+
+        fragment.setActionCallback(new ActionCallback() {
+            @Override
+            public void onComplete() {
+                autoRefresh();
+            }
+        });
 
         FragmentTransaction transaction = fm.beginTransaction();
 
@@ -255,6 +280,7 @@ public class FollowUpMainTabFragment extends LazyFragment {
      * @param entity
      */
     private void showCancelFollowUp(FollowUpEntity entity) {
+        canAutoRefresh = true;
         FragmentActivity activity = getActivity();
         if (activity == null) {
             return;
@@ -262,11 +288,18 @@ public class FollowUpMainTabFragment extends LazyFragment {
 
         String tag = FollowUpCancelFragment.class.getName();
         FragmentManager fm = activity.getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag);
+        FollowUpCancelFragment fragment = (FollowUpCancelFragment) fm.findFragmentByTag(tag);
 
         if (fragment == null) {
             fragment = FollowUpCancelFragment.newInstance(entity);
         }
+
+        fragment.setActionCallback(new ActionCallback() {
+            @Override
+            public void onComplete() {
+                autoRefresh();
+            }
+        });
 
         FragmentTransaction transaction = fm.beginTransaction();
 
@@ -292,6 +325,7 @@ public class FollowUpMainTabFragment extends LazyFragment {
      * @param entity
      */
     private void showUpdateFollowUp(FollowUpEntity entity) {
+        canAutoRefresh = true;
         FragmentActivity activity = getActivity();
         if (activity == null) {
             return;
@@ -299,11 +333,18 @@ public class FollowUpMainTabFragment extends LazyFragment {
 
         String tag = FollowUpAddOrUpdateFragment.class.getName();
         FragmentManager fm = activity.getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag);
+        FollowUpAddOrUpdateFragment fragment = (FollowUpAddOrUpdateFragment) fm.findFragmentByTag(tag);
 
         if (fragment == null) {
             fragment = FollowUpAddOrUpdateFragment.newInstance(entity);
         }
+
+        fragment.setActionCallback(new ActionCallback() {
+            @Override
+            public void onComplete() {
+                autoRefresh();
+            }
+        });
 
         FragmentTransaction transaction = fm.beginTransaction();
 
@@ -409,6 +450,10 @@ public class FollowUpMainTabFragment extends LazyFragment {
 
                 String userType = resident.getUserType();
                 userType = TextUtils.isEmpty(userType) ? "" : userType;
+                String[] split = userType.split(",");
+                if (split.length >= 1) {
+                    userType = split[0];
+                }
                 tvFollowTag.setSelected(!userType.equals("正常居民"));
                 tvFollowTag.setText(userType);
             }

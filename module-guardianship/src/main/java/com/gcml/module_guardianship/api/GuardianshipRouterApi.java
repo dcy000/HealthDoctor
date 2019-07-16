@@ -1,13 +1,10 @@
 package com.gcml.module_guardianship.api;
 
-import com.gcml.module_guardianship.bean.GuardianshipBean;
-import com.gcml.module_guardianship.bean.WatchInformationBean;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 import com.gzq.lib_resource.bean.ResidentBean;
 import com.gzq.lib_resource.mvp.StateBaseFragment;
 import com.sjtu.yifei.annotation.Extra;
 import com.sjtu.yifei.annotation.Go;
-
-import java.util.List;
 
 public interface GuardianshipRouterApi {
     @Go("/guardianship/search/family")

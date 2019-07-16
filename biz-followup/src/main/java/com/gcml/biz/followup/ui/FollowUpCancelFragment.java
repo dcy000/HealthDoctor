@@ -1,6 +1,7 @@
 package com.gcml.biz.followup.ui;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.text.Selection;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +36,12 @@ import io.reactivex.schedulers.Schedulers;
  * 取消随访
  */
 public class FollowUpCancelFragment extends LazyFragment {
+
+    private ActionCallback actionCallback;
+
+    public void setActionCallback(ActionCallback actionCallback) {
+        this.actionCallback = actionCallback;
+    }
 
     private FollowUpEntity followUpEntity;
 
@@ -94,7 +102,7 @@ public class FollowUpCancelFragment extends LazyFragment {
 //        tvToolbarLeft.setText("取消");
         tvToolbarRight.setText("提交");
         tvToolbarRight.setTextColor(Color.parseColor("#909399"));
-        tvToolbarLeft.setOnClickListener(new View.OnClickListener() {
+        ivToolbarLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBack();
@@ -108,6 +116,21 @@ public class FollowUpCancelFragment extends LazyFragment {
         });
 
         etCancelReason = (EditText) view.findViewById(R.id.etCancelReason);
+        etCancelReason.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v == etCancelReason && hasFocus) {
+//                    getKeyboardHeight();
+                } else {
+                    // 隐藏软键盘
+                    etCancelReason.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)
+                            etCancelReason.getContext().getApplicationContext()
+                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(etCancelReason.getWindowToken(), 0);
+                }
+            }
+        });
         tvTextCount = (TextView) view.findViewById(R.id.tvTextCount);
 
         RxTextView.textChanges(etCancelReason)
@@ -171,6 +194,10 @@ public class FollowUpCancelFragment extends LazyFragment {
                     @Override
                     public void onNext(Object o) {
                         ToastUtils.showShort("取消成功");
+                        if (actionCallback != null) {
+                            actionCallback.onComplete();
+                        }
+                        onBack();
                     }
                 });
 

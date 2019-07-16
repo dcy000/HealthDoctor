@@ -22,7 +22,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
 import com.gcml.module_guardianship.bean.HandRingHealthDataBena;
-import com.gcml.module_guardianship.bean.WatchInformationBean;
+import com.gzq.lib_resource.bean.WatchInformationBean;
 import com.gcml.module_guardianship.presenter.ResidentDetailPresenter;
 import com.gcml.module_guardianship.wrap.StatusTextView;
 import com.gzq.lib_core.base.Box;
