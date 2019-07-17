@@ -30,8 +30,8 @@ ext {
             minSdkVersion    : 18,
             targetSdkVersion : 28,
             versionCode      : 1,
-            versionName      : "App-CM.Doctor.1.0.0.18"
-//            versionName      : "App-CM.Doctor.1.0.0.18"
+            versionName      : "App-CM.Doctor.1.0.0.19"
+//            versionName      : "App-CM.Doctor.1.0.0.19"
     ]
 
     version = [
