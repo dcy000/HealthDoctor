@@ -28,11 +28,11 @@ import java.util.ArrayList;
 public class SetupActivity extends StateBaseActivity {
     private ArrayList<SetupBean> menu = new ArrayList<SetupBean>() {
         {
-            try {
-                add(new SetupBean("清除缓存", CacheUtils.getTotalCacheSize()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                add(new SetupBean("清除缓存", CacheUtils.getTotalCacheSize()));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 //            add(new SetupBean("意见反馈", ""));
             add(new SetupBean("关于我们", "版本" + AppUtils.getAppInfo().getVersionName()));
         }
@@ -79,7 +79,7 @@ public class SetupActivity extends StateBaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (position == 0) {
+           /*     if (position == 0) {
                     //清理缓存
                     CacheUtils.clearAllCache();
                     menu.get(position).setContent("0.0K");
@@ -89,7 +89,7 @@ public class SetupActivity extends StateBaseActivity {
 //                    意见反馈
 //                    Routerfit.register(MineRouterApi.class).skipFeedbackActivity();
                     Routerfit.register(MineRouterApi.class).skipAboutUsActivity();
-                } else if (position == 2) {
+                } else*/ if (position == 0) {
                     //关于我们
                     Routerfit.register(MineRouterApi.class).skipAboutUsActivity();
                 }

@@ -147,4 +147,15 @@ public class Time2Utils {
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
     }
+    /**
+     *
+     * @param time  1541569323155
+     * @param pattern yyyy-MM-dd HH:mm:ss
+     * @return 2018-11-07 13:42:03
+     */
+    public static String getDate2String(long time, String pattern) {
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+        return format.format(date);
+    }
 }

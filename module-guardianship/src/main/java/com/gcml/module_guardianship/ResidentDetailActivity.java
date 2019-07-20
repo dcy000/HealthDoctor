@@ -156,7 +156,7 @@ public class ResidentDetailActivity extends StateBaseActivity implements View.On
         mTvHeight.setText(guardianshipBean.getHeight() == 0 ? "未填写" : guardianshipBean.getHeight() + "");
         mTvWeight.setText(guardianshipBean.getWeight() == 0 ? "未填写" : guardianshipBean.getWeight() + "");
         mTvBloodType.setText(TextUtils.isEmpty(guardianshipBean.getBloodType()) ? "未填写" : guardianshipBean.getBloodType());
-        mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "暂未填写" : guardianshipBean.getDz());
+        mTvAddress.setText(TextUtils.isEmpty(guardianshipBean.getDz()) ? "未填写地址" : guardianshipBean.getDz());
 
         String userType = guardianshipBean.getUserType();
         updateHealthStatus(userType);

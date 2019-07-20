@@ -148,6 +148,7 @@ public class LoginActivity extends StateBaseActivity implements View.OnClickList
             public void onActivityResult(int result, Object data) {
                 if (data.toString().equals("success")) {
                     Routerfit.register(LoginRegisterRouterApi.class).skipMainActivity();
+                    finish();
                 } else {
                     ToastUtils.showShort(data.toString());
                 }

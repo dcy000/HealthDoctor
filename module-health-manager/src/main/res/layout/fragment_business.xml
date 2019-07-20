@@ -64,6 +64,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llSignDoctor"
         android:layout_width="match_parent"
         android:layout_height="92pt"
@@ -100,6 +101,7 @@
     </LinearLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1pt"
         android:layout_marginLeft="32pt"
@@ -108,6 +110,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llHealthManage"
         android:layout_width="match_parent"
         android:layout_height="92pt"

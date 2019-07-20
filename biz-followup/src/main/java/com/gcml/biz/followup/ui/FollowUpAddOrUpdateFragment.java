@@ -378,11 +378,11 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             ToastUtils.showShort("请选择时间");
             return;
         }
-
-        if (follower == null) {
-            ToastUtils.showShort("请选择随访医生");
-            return;
-        }
+//
+//        if (follower == null) {
+//            ToastUtils.showShort("请选择随访医生");
+//            return;
+//        }
 
         if (followUpEntity != null) {
             updateFollowUp();
@@ -403,7 +403,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
             }
             body.setPlanContent(etFollowUpContent.getText().toString());
             body.setPlanDate(format.format(time));
-            body.setPlanDoctorId(follower.getDocterid());
+            body.setPlanDoctorId(user.getDocterid());
             bodies.add(body);
         }
 
@@ -615,7 +615,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
         //endDate.set(2020,1,1);
 
         //正确设置方式 原因：注意事项有说明
-        startDate.set(1900, 0, 1);
+        startDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
         endDate.set(2199, 11, 31);
 
         TimePickerView pvTime = new TimePickerBuilder(getActivity(), timeListener)
@@ -628,7 +628,7 @@ public class FollowUpAddOrUpdateFragment extends LazyFragment {
 //                .setTitleText("Title")//标题文字
                 .setLineSpacingMultiplier(1.5f)
                 .setSubCalSize(21)
-                .setContentTextSize(21)
+                .setContentTextSize(18)
                 .setSubmitColor(Color.parseColor("#FF108EE9"))
                 .setCancelColor(Color.parseColor("#FF999999"))
                 .setTextColorOut(Color.parseColor("#FF999999"))

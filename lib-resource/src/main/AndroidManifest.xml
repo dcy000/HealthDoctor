@@ -74,7 +74,7 @@
         <!--高德地图key配置-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="4f52f9c8dec6f91955add3441489f137" />
+            android:value="832a04d72aa148d728fb0ca7988d3bd8" />
         <!--高德地图服务-->
         <service android:name="com.amap.api.location.APSService"/>
 

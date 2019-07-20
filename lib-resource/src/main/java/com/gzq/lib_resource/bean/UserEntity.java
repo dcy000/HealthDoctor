@@ -29,7 +29,7 @@ public class UserEntity implements Parcelable {
     private float applyAmount;
     @SerializedName("service_amount")
     private float serviceAmount;
-    @SerializedName("docter_photo")
+    @SerializedName("docterPhoto")
     private String docterPhoto;
     private int onlineStatus;
     private String wyyxId;

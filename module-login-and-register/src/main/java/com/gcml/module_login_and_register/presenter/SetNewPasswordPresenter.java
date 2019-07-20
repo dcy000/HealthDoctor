@@ -40,6 +40,10 @@ public class SetNewPasswordPresenter extends BasePresenter {
             ToastUtils.showShort("新密码不能为空");
             return;
         }
+        if (newpassword.length()<6) {
+            ToastUtils.showShort("密码长度必须为6位数字");
+            return;
+        }
         String phone = (String) KVUtils.get(KVConstants.KEY_FORGET_PASSWORD_PHONE, "");
         Box.getRetrofit(LoginApi.class)
                 .setNewPassword(phone, newpassword)

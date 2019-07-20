@@ -147,6 +147,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvHandData"
                     android:layout_width="100pt"
                     android:layout_height="wrap_content"
@@ -389,6 +390,7 @@
             android:paddingRight="32pt">
 
             <TextView
+                android:paddingLeft="5pt"
                 android:id="@+id/tv_right"
                 android:layout_width="118pt"
                 android:layout_height="52pt"

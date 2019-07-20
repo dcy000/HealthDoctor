@@ -47,9 +47,12 @@ public class ResidentBean implements Parcelable {
     private int currentYearCount;
     private String recentResultData;
     private String userType;
+    private String blood_type;
 
     public ResidentBean() {
     }
+
+
 
     protected ResidentBean(Parcel in) {
         age = in.readInt();
@@ -91,6 +94,7 @@ public class ResidentBean implements Parcelable {
         currentYearCount = in.readInt();
         recentResultData = in.readString();
         userType = in.readString();
+        blood_type = in.readString();
     }
 
     public static final Creator<ResidentBean> CREATOR = new Creator<ResidentBean>() {
@@ -144,7 +148,13 @@ public class ResidentBean implements Parcelable {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
+    public String getBlood_type() {
+        return blood_type;
+    }
 
+    public void setBlood_type(String blood_type) {
+        this.blood_type = blood_type;
+    }
     public String getBname() {
         return bname;
     }
@@ -463,5 +473,6 @@ public class ResidentBean implements Parcelable {
         dest.writeInt(currentYearCount);
         dest.writeString(recentResultData);
         dest.writeString(userType);
+        dest.writeString(blood_type);
     }
 }

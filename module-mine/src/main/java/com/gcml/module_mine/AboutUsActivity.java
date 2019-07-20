@@ -1,6 +1,7 @@
 package com.gcml.module_mine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -76,7 +77,9 @@ public class AboutUsActivity extends StateBaseActivity implements View.OnClickLi
         if (i == R.id.ll_go_score) {
             ToastUtils.showShort("该功能暂未开放");
         } else if (i == R.id.ll_official_website) {
-            ToastUtils.showShort("该功能暂未开放");
+            Uri uri = Uri.parse("http://gcmlrt.com");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         } else {
         }
     }

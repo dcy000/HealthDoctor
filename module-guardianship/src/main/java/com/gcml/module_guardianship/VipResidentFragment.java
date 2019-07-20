@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gcml.module_guardianship.api.GuardianshipApi;
 import com.gcml.module_guardianship.api.GuardianshipRouterApi;
+import com.gzq.lib_core.utils.RxBus;
 import com.gzq.lib_resource.bean.WatchInformationBean;
 import com.gzq.lib_core.base.Box;
 import com.gzq.lib_core.http.exception.ApiException;
@@ -38,6 +39,7 @@ import com.sjtu.yifei.route.Routerfit;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
 @Route(path = "/fragment/vip/resident")
@@ -69,7 +71,6 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
         mRefresh.setOnRefreshListener(this);
         mRefresh.autoRefresh();
         initRv();
-
     }
 
     private void initRv() {
@@ -206,6 +207,12 @@ public class VipResidentFragment extends StateBaseFragment implements OnRefreshL
                         mRefresh.finishRefresh(false);
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 
     @Override

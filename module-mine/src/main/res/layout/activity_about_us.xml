@@ -30,6 +30,7 @@
         android:textSize="28pt" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_go_score"
         android:layout_width="match_parent"
         android:layout_height="120pt"
@@ -60,6 +61,7 @@
     </LinearLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1pt"
         android:layout_marginLeft="32pt"
@@ -67,6 +69,7 @@
         android:background="#eee" />
 
     <LinearLayout
+        android:layout_marginTop="160pt"
         android:id="@+id/ll_official_website"
         android:layout_width="match_parent"
         android:layout_height="120pt"
@@ -101,6 +104,7 @@
         android:layout_weight="1" />
 
     <TextView
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"

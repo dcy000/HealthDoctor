@@ -55,8 +55,8 @@ public class PersonDetailActivity extends StateBaseActivity {
         guardianshipBean = intentArgument.getParcelableExtra("data");
         menuBeans.add(new PersonDetailMenuBean("手机号", guardianshipBean.getTel(), R.drawable.guardianship_ic_call));
         menuBeans.add(new PersonDetailMenuBean("手环IMEI码", guardianshipBean.getWatchCode(), 0));
-        menuBeans.add(new PersonDetailMenuBean("现住址", TextUtils.isEmpty(guardianshipBean.getDz())?"未填写":guardianshipBean.getDz(), 0));
-        menuBeans.add(new PersonDetailMenuBean("详细地址", "未填写", 0));
+        menuBeans.add(new PersonDetailMenuBean("户籍地址", TextUtils.isEmpty(guardianshipBean.getDz())?"未填写":guardianshipBean.getDz(), 0));
+//        menuBeans.add(new PersonDetailMenuBean("详细地址", "未填写", 0));
     }
 
     @Override

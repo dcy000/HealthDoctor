@@ -19,7 +19,7 @@ ext {
     ]
     //TODO:开发时只更改开发引用即可，下方的生产引用不要轻易更改。
     //开发使用的IP地址
-    developUrl = api.xionganTest2
+    developUrl = api.xionganTest
 
     //线上正式运行的IP地址
     produceUrl = api.xionganTest2
@@ -30,7 +30,7 @@ ext {
             minSdkVersion    : 18,
             targetSdkVersion : 28,
             versionCode      : 1,
-            versionName      : "App-CM.Doctor.1.0.0.19"
+            versionName      : "App-CM.Doctor.1.0.0.20"
 //            versionName      : "App-CM.Doctor.1.0.0.19"
     ]
 

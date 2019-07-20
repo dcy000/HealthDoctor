@@ -5,10 +5,11 @@ package com.gcml.module_health_record.bean;
  */
 
 public class WeightHistory extends BaseBean{
-    public float weight;
+    public float temper_ature;
 
-    public WeightHistory(float weight, long time) {
-        this.weight = weight;
+
+    public WeightHistory(float temper_ature, long time) {
+        this.temper_ature = temper_ature;
         this.time = time;
     }
 }

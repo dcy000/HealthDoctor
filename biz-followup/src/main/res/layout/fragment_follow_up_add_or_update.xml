@@ -316,6 +316,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clFollower"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="92pt"
             android:background="@color/white">

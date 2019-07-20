@@ -62,7 +62,7 @@ public class NormalResidentFragment extends StateBaseFragment implements OnRefre
     @Override
     public void initView(View view) {
         mRv = (RecyclerView) view.findViewById(R.id.rv);
-        mRefresh=view.findViewById(R.id.refresh);
+        mRefresh = view.findViewById(R.id.refresh);
         mRefresh.setOnRefreshListener(this);
         mRefresh.autoRefresh();
         initRv();
@@ -172,6 +172,13 @@ public class NormalResidentFragment extends StateBaseFragment implements OnRefre
                     }
                 });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
+
 
     @Override
     public IPresenter obtainPresenter() {
